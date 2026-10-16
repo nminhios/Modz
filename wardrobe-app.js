@@ -1,3 +1,4 @@
+
 (() => {
   const $ = id => document.getElementById(id);
   const fields = ['hair','top','bottom','shoes','mask','face','action'];
@@ -12,8 +13,8 @@
   const picked = (field, s=selection()) => assets.itemCatalog[field][s[field]];
   let downloading = false,exportAbort;
   function reportMod(p,step){const n=Math.max(Number($('mod-progress-bar').value)||0,Math.min(100,Math.floor(p)));$('mod-progress-bar').value=n;$('mod-progress-percent').textContent=n+'%';$('mod-progress-step').textContent=step;}
-  function startMod(){exportAbort=new AbortController();$('mod-progress-bar').value=0;$('mod-progress-percent').textContent='0%';$('mod-progress').hidden=false;$('mod-cancel').disabled=false;reportMod(0,'Äang kiá»m tra lÆ°á»£t modâ¦');}
-  function checkCancelled(){if(exportAbort.signal.aborted)throw new DOMException('ÄÃ£ há»§y táº¡o file','AbortError');}
+  function startMod(){exportAbort=new AbortController();$('mod-progress-bar').value=0;$('mod-progress-percent').textContent='0%';$('mod-progress').hidden=false;$('mod-cancel').disabled=false;reportMod(0,'Đang kiểm tra lượt mod…');}
+  function checkCancelled(){if(exportAbort.signal.aborted)throw new DOMException('Đã hủy tạo file','AbortError');}
   $('mod-cancel').addEventListener('click',()=>{exportAbort?.abort();window.alokCancelExport();});
 
   let fourDownloadUrls=[];
@@ -82,33 +83,33 @@
   }
   function update() {
     const s=selection(), file=fileForSelection(s);
-    const captions={hair:'TÃ³c',top:'Ão',bottom:'Quáº§n',shoes:'ChÃ¢n',mask:'Náº¡',face:'Máº·t',action:assets.characterId==='ignis'?'Náº¥m Äáº¥m':'HÃ nh Äá»ng'};
-    $('selection-summary').textContent=fields.map(k=>captions[k]+': '+picked(k,s).name).join(' Â· ');
-    if(assets.characterId==='alok')$('selection-summary').textContent+=' Â· Báº£n quyá»n Nguyá»n Minh iOS FF';
+    const captions={hair:'Tóc',top:'Áo',bottom:'Quần',shoes:'Chân',mask:'Nạ',face:'Mặt',action:assets.characterId==='ignis'?'Nấm đấm':'Hành động'};
+    $('selection-summary').textContent=fields.map(k=>captions[k]+': '+picked(k,s).name).join(' · ');
+    if(assets.characterId==='alok')$('selection-summary').textContent+=' · Bản quyền nminhios';
     try { localStorage.setItem(storageKey(),JSON.stringify(Object.fromEntries(fields.map(k=>[k,picked(k,s).id])))); } catch {}
     $('download').disabled = downloading || !file;
     $('download-all').disabled = downloading || !file;
-    $('download-all-label').textContent = downloading ? 'Äang chuáº©n bá» fileâ¦' : 'Táº¡o 4 phiÃªn báº£n';
-    $('download-label').textContent = downloading ? 'Äang chuáº©n bá» fileâ¦' : file
-      ? (file.dynamic ? 'Táº¡o file mod Â· '+(assets.mixEngine.bases[getVersion()].physicalSize/1048576).toFixed(2)+' MB' : (assets.characterId==='ignis'?'Táº£i file Â· ':'Táº£i '+assets.characterName+' gá»c Â· ')+(file.bytes/1048576).toFixed(2)+' MB')
-      : 'Báº£n phá»i nÃ y thiáº¿u dá»¯ liá»u xuáº¥t';
+    $('download-all-label').textContent = downloading ? 'Đang chuẩn bị file…' : 'Tạo 4 phiên bản';
+    $('download-label').textContent = downloading ? 'Đang chuẩn bị file…' : file
+      ? (file.dynamic ? 'Tạo file mod · '+(assets.mixEngine.bases[getVersion()].physicalSize/1048576).toFixed(2)+' MB' : (assets.characterId==='ignis'?'Tải file · ':'Tải '+assets.characterName+' gốc · ')+(file.bytes/1048576).toFixed(2)+' MB')
+      : 'Bản phối này thiếu dữ liệu xuất';
     $('status').classList.remove('error');
     $('status').textContent = file
-      ? (fields.every(k=>picked(k,s).default) ? 'File gá»c cá»§a ÄÃºng phiÃªn báº£n Äang chá»n.' : '')
+      ? (fields.every(k=>picked(k,s).default) ? 'File gốc của đúng phiên bản đang chọn.' : '')
       : assets.mixExportDeferred.includes(getVersion())
-        ? 'Xuáº¥t file phá»i chÃ©o cho phiÃªn báº£n nÃ y sáº½ bá» sung khi cÃ³ thÃªm dá»¯ liá»u.'
-        : 'CÃ¡ch phá»i nÃ y thiáº¿u dá»¯ liá»u xuáº¥t.';
+        ? 'Xuất file phối chéo cho phiên bản này sẽ bổ sung khi có thêm dữ liệu.'
+        : 'Cách phối này thiếu dữ liệu xuất.';
     window.dispatchEvent(new CustomEvent('wardrobe-change',{detail:s}));
   }
   window.alokWardrobe={get assets(){return assets;},selection,getVersion,getVoice,picked,fileForSelection,ready:Promise.resolve(assets.manifest)};
   function updateCharacterLabels(){
     document.querySelector('.character-name').textContent=assets.characterName.toUpperCase();
     document.querySelector('.watermark').textContent=assets.characterName.toUpperCase();
-    document.querySelector('.stage').setAttribute('aria-label','Xem trÆ°á»c nhÃ¢n váº­t '+assets.characterName);
-    $('fallback').alt=assets.characterName+' máº·c bá» trang phá»¥c Äang chá»n';
+    document.querySelector('.stage').setAttribute('aria-label','Xem trước nhân vật '+assets.characterName);
+    $('fallback').alt=assets.characterName+' mặc bộ trang phục đang chọn';
     const isIgnis=assets.characterId==='ignis';
     const actionLabel=document.querySelector('label[for="action"]');
-    actionLabel.lastChild.textContent=assets.characterId==='ignis'?'Náº¥m Äáº¥m':'HÃ nh Äá»ng';
+    actionLabel.lastChild.textContent=assets.characterId==='ignis'?'Nấm đấm':'Hành động';
   }
   $('character').addEventListener('change',()=>{
     if(downloading){$('character').value=assets.characterId;return;}
@@ -133,7 +134,7 @@
     }
     applyFullSetHair();applyTitanRules('top');applyBottomShoes();applyTitanRules('mask');applyMordecai();update();
   });
-  const versionLabels={'android-normal':'Android Â· FF thÆ°á»ng','android-max':'Android Â· FF MAX','ios-normal':'iOS Â· FF thÆ°á»ng','ios-max':'iOS Â· FF MAX'};
+  const versionLabels={'android-normal':'Android · FF thường','android-max':'Android · FF MAX','ios-normal':'iOS · FF thường','ios-max':'iOS · FF MAX'};
   function updateVersionLabels(){
     $('platform-label').textContent=versionLabels[getVersion()];
     const count=$('wardrobe-intro').querySelector('.count');if(count)count.textContent=versionLabels[getVersion()];
@@ -159,27 +160,27 @@
     const controls=[...document.querySelectorAll('select, #randomize, #reset, #download-all')];controls.forEach(el=>el.disabled=true);
     try {
       const ticket=await window.fishCheckExport(1);
-      checkCancelled();await window.alokEnsureExport(p=>reportMod(2+p*.18,'Äang táº£i dá»¯ liá»u xuáº¥t fileâ¦'),exportAbort.signal);checkCancelled();await new Promise(resolve=>requestAnimationFrame(resolve));
+      checkCancelled();await window.alokEnsureExport(p=>reportMod(2+p*.18,'Đang tải dữ liệu xuất file…'),exportAbort.signal);checkCancelled();await new Promise(resolve=>requestAnimationFrame(resolve));
       let bytes;
       if(file.dynamic){
         bytes=await window.alokExport(chosen,version,p=>{
-          reportMod(20+p*.7,'Äang ghÃ©p trang phá»¥câ¦');$('download-label').textContent='Äang táº¡o fileâ¦ '+p+'%';
-          $('status').textContent='Äang táº¡o file ÄÃºng cÃ¡c mÃ³n vÃ  phiÃªn báº£n báº¡n chá»n.';
+          reportMod(20+p*.7,'Đang ghép trang phục…');$('download-label').textContent='Đang tạo file… '+p+'%';
+          $('status').textContent='Đang tạo file đúng các món và phiên bản bạn chọn.';
         });
       }else{
-        const encoded=assets.downloads[file.url];if(!encoded)throw Error('Thiáº¿u dá»¯ liá»u ZIP');
+        const encoded=assets.downloads[file.url];if(!encoded)throw Error('Thiếu dữ liệu ZIP');
         const binary=atob(encoded);bytes=new Uint8Array(binary.length);
         for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
-        if(bytes.length!==file.bytes)throw Error('File khÃ´ng Äáº§y Äá»§');
+        if(bytes.length!==file.bytes)throw Error('File không đầy đủ');
       }
       const packaged=window.alokPackageDownload(bytes,version);
-      checkCancelled();reportMod(95,'Äang hoÃ n táº¥t fileâ¦');$('mod-cancel').disabled=true;await window.fishChargeExport(ticket);
+      checkCancelled();reportMod(95,'Đang hoàn tất file…');$('mod-cancel').disabled=true;await window.fishChargeExport(ticket);
       const url=URL.createObjectURL(new Blob([packaged.bytes],{type:'application/zip'}));
       const link=document.createElement('a');link.href=url;link.download=packaged.name;
       document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
-      controls.forEach(el=>el.disabled=false);downloading=false;$('mod-progress').hidden=true;update();$('status').textContent=(assets.characterId==='ignis'&&picked('top',chosen).id==='top-sasuke'?'ÄÃ£ xuáº¥t Ã¡o Sasuke theo dá»¯ liá»u IG38.':'ÄÃ£ táº£i file ZIP cá»§a ÄÃºng bá» Äang chá»n.');
+      controls.forEach(el=>el.disabled=false);downloading=false;$('mod-progress').hidden=true;update();$('status').textContent=(assets.characterId==='ignis'&&picked('top',chosen).id==='top-sasuke'?'Đã xuất áo Sasuke theo dữ liệu IG38.':'Đã tải file ZIP của đúng bộ đang chọn.');
     } catch(err) {
-      controls.forEach(el=>el.disabled=false);downloading=false;$('mod-progress').hidden=true;update();$('status').classList.add('error');$('status').textContent=err.name==='AbortError'?'ÄÃ£ há»§y táº¡o file.':'KhÃ´ng táº£i ÄÆ°á»£c file: '+err.message;
+      controls.forEach(el=>el.disabled=false);downloading=false;$('mod-progress').hidden=true;update();$('status').classList.add('error');$('status').textContent=err.name==='AbortError'?'Đã hủy tạo file.':'Không tải được file: '+err.message;
     }
   });
   $('download-all').addEventListener('click',async()=>{
@@ -189,16 +190,16 @@
     const controls=[...document.querySelectorAll('select, #randomize, #reset')];controls.forEach(el=>el.disabled=true);
     try{
       const ticket=await window.fishCheckExport(4);
-      checkCancelled();await window.alokEnsureExport(p=>reportMod(2+p*.18,'Äang táº£i dá»¯ liá»u xuáº¥t fileâ¦'),exportAbort.signal);checkCancelled();await new Promise(resolve=>requestAnimationFrame(resolve));
+      checkCancelled();await window.alokEnsureExport(p=>reportMod(2+p*.18,'Đang tải dữ liệu xuất file…'),exportAbort.signal);checkCancelled();await new Promise(resolve=>requestAnimationFrame(resolve));
       const files=await window.alokExportAll(chosen,(p,label)=>{
-        reportMod(20+p*.7,'Äang táº¡o '+label+'â¦');$('download-all-label').textContent='Äang táº¡o 4 phiÃªn báº£nâ¦ '+p+'%';
-        $('status').textContent='Äang táº¡o '+label+' tá»« cÃ¹ng bá» phá»i ÄÃ£ chá»n.';
+        reportMod(20+p*.7,'Đang tạo '+label+'…');$('download-all-label').textContent='Đang tạo 4 phiên bản… '+p+'%';
+        $('status').textContent='Đang tạo '+label+' từ cùng bộ phối đã chọn.';
       });
       fourDownloadUrls.forEach(url=>URL.revokeObjectURL(url));fourDownloadUrls=[];
       const fileVersions={'Android_FF_THUONG.zip':'android-normal','Android_FF_MAX.zip':'android-max','iOS_FF_THUONG.zip':'ios-normal','iOS_FF_MAX.zip':'ios-max'};
       const readyFiles=Object.entries(files).map(([name,bytes])=>window.alokPackageDownload(bytes,fileVersions[name]));
-      if(readyFiles.length!==4)throw Error('ChÆ°a táº¡o Äá»§ 4 phiÃªn báº£n.');
-      checkCancelled();reportMod(95,'Äang hoÃ n táº¥t fileâ¦');$('mod-cancel').disabled=true;await window.fishChargeExport(ticket);
+      if(readyFiles.length!==4)throw Error('Chưa tạo đủ 4 phiên bản.');
+      checkCancelled();reportMod(95,'Đang hoàn tất file…');$('mod-cancel').disabled=true;await window.fishChargeExport(ticket);
       for(const packaged of readyFiles){
         const url=URL.createObjectURL(new Blob([packaged.bytes],{type:'application/zip'}));fourDownloadUrls.push(url);
         const link=document.createElement('a');link.href=url;link.download=packaged.name;link.style.display='none';
@@ -206,11 +207,10 @@
         await new Promise(resolve=>setTimeout(resolve,250));
       }
       controls.forEach(el=>el.disabled=false);downloading=false;$('mod-progress').hidden=true;update();
-      $('status').textContent='ÄÃ£ táº¡o vÃ  báº¯t Äáº§u táº£i 4 phiÃªn báº£n.';
+      $('status').textContent='Đã tạo và bắt đầu tải 4 phiên bản.';
     }catch(err){
-      controls.forEach(el=>el.disabled=false);downloading=false;$('mod-progress').hidden=true;update();$('status').classList.add('error');$('status').textContent=err.name==='AbortError'?'ÄÃ£ há»§y táº¡o file.':'KhÃ´ng táº£i ÄÆ°á»£c 4 phiÃªn báº£n: '+err.message;
+      controls.forEach(el=>el.disabled=false);downloading=false;$('mod-progress').hidden=true;update();$('status').classList.add('error');$('status').textContent=err.name==='AbortError'?'Đã hủy tạo file.':'Không tải được 4 phiên bản: '+err.message;
     }
   });
   update();
 })();
-
