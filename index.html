@@ -458,15 +458,15 @@ self.onmessage=async event=>{
 <style id="nminhios-modz-redesign">
   :root {
     color-scheme: light;
-    --bg: #f3f6fc;
+    --bg: #f4f7fc;
     --panel: #ffffff;
-    --line: #e2e8f2;
-    --muted: #66758c;
+    --line: #e1e7f1;
+    --muted: #687790;
     --text: #17243b;
-    --accent: #3b5bdb;
-    --green: #087f73;
+    --accent: #4f5fd5;
+    --green: #0b8796;
     --surface: #f7f9ff;
-    --shadow: 0 18px 56px rgba(33, 54, 96, .09);
+    --shadow: 0 18px 56px rgba(33, 54, 96, .085);
   }
   *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; background: var(--bg); }
@@ -597,7 +597,7 @@ self.onmessage=async event=>{
   .download-area { margin-top: 23px; border-top: 1px solid #e6ebf4; padding-top: 21px; }
   .selection-caption { color: #76849b; font-size: 9px; text-transform: uppercase; letter-spacing: .15em; font-weight: 850; margin: 0 0 7px; }
   .selection-summary { font-size: 12px; color: #344661; margin: 0 0 17px; min-height: 36px; line-height: 1.75; overflow-wrap: anywhere; }
-  .download { display: flex; width: 100%; gap: 10px; justify-content: center; align-items: center; background: linear-gradient(110deg, #3859d8 0%, #426fe8 53%, #0c9d91 100%); color: #fff; border: 0; border-radius: 13px; padding: 14px 16px; font-weight: 800; font-size: 13px; box-shadow: 0 8px 20px rgba(58, 91, 213, .18); transition: transform .18s ease, box-shadow .18s ease, filter .18s ease; }
+  .download { display: flex; width: 100%; gap: 10px; justify-content: center; align-items: center; background: linear-gradient(115deg, #4f46e5 0%, #3b6fe8 58%, #0891b2 100%); color: #fff; border: 0; border-radius: 13px; padding: 14px 16px; font-weight: 800; font-size: 13px; box-shadow: 0 8px 20px rgba(58, 91, 213, .18); transition: transform .18s ease, box-shadow .18s ease, filter .18s ease; }
   .download:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 12px 25px rgba(58, 91, 213, .25); filter: saturate(1.08); }
   .download:disabled { background: #e5eaf3; color: #8b97aa; box-shadow: none; }
   .download svg { width: 17px; height: 17px; }
@@ -723,39 +723,72 @@ self.onmessage=async event=>{
 </style>
 
 
+
+<style id="nminhios-contrast-font-fixes">
+  :root { color-scheme: light; }
+  #wardrobe-workspace .panel button, #wardrobe-workspace .panel select, #wardrobe-workspace .panel option { font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+  #wardrobe-workspace .panel select { color:#1d2b45 !important; background-color:#f8faff !important; border-color:#d5deed !important; }
+  #wardrobe-workspace .panel select option { color:#1d2b45; background:#fff; }
+  #wardrobe-workspace .panel button[aria-pressed="true"],
+  #wardrobe-workspace .panel button[aria-selected="true"],
+  #wardrobe-workspace .panel button.selected,
+  #wardrobe-workspace .panel button.is-selected,
+  #wardrobe-workspace .panel button.active { color:#17243b !important; background:#e7edff !important; border-color:#536fe0 !important; box-shadow:inset 0 0 0 1px rgba(83,111,224,.16) !important; }
+  #wardrobe-workspace .panel button[aria-pressed="true"] *,
+  #wardrobe-workspace .panel button[aria-selected="true"] *,
+  #wardrobe-workspace .panel button.selected *,
+  #wardrobe-workspace .panel button.is-selected *,
+  #wardrobe-workspace .panel button.active * { color:#17243b !important; }
+  #wardrobe-workspace .preset[aria-pressed="true"] { background:#e7edff !important; color:#17243b !important; }
+  #wardrobe-workspace .choice-card.active { background:#e7edff !important; color:#17243b !important; border-color:#536fe0 !important; }
+  #wardrobe-workspace .choice-card.active small { color:#465b91 !important; }
+  .web-toggle { color:#304361 !important; background:rgba(255,255,255,.92) !important; border-color:#d5deed !important; }
+</style>
 <style id="web-mode-style">
 #web-skeleton-overlay{position:absolute!important;inset:0;z-index:2!important;width:100%;height:100%;pointer-events:none;display:none}
 #viewport.web-mode #web-skeleton-overlay{display:block}
-#viewport.web-mode canvas:not(#web-skeleton-overlay){opacity:.38;filter:saturate(.55)}
-#viewport.web-mode #fallback{opacity:.38}
+/* Fade the render modestly to suggest translucency without washing out the whole scene. */
+#viewport.web-mode canvas:not(#web-skeleton-overlay){opacity:.34;filter:saturate(.72)}
+#viewport.web-mode #fallback{opacity:.34}
 .web-toggle{display:inline-flex;align-items:center;gap:6px;cursor:pointer;user-select:none}
-.web-toggle input{accent-color:#fff;width:14px;height:14px}
+.web-toggle input{accent-color:#3b5bdb;width:14px;height:14px}
 @media(max-width:520px){.web-toggle{font-size:10px;padding:8px 7px}}
 </style>
 <script id="web-mode-effect">
 (()=>{
- const viewport=document.getElementById('viewport'), overlay=document.getElementById('web-skeleton-overlay'), toggle=document.getElementById('web-mode-toggle');
+ const viewport=document.getElementById('viewport'),overlay=document.getElementById('web-skeleton-overlay'),toggle=document.getElementById('web-mode-toggle');
  if(!viewport||!overlay||!toggle)return;
- const ctx=overlay.getContext('2d');let raf=0,t0=0;
- function resize(){const r=viewport.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);overlay.width=Math.max(1,Math.round(r.width*d));overlay.height=Math.max(1,Math.round(r.height*d));ctx.setTransform(d,0,0,d,0,0);}
- function draw(t){if(!toggle.checked){raf=0;return;}const w=viewport.clientWidth,h=viewport.clientHeight,cx=w*.5,top=h*.16,scale=Math.min(w*.9,h*.72);ctx.clearRect(0,0,w,h);ctx.save();ctx.translate(cx,h*.52);ctx.scale(scale/500,scale/500);ctx.rotate(Math.sin(t*.00045)*.035);
- // approximate human-shaped rig silhouette with joints and limb bones
- const pts={head:[0,-190],neck:[0,-145],chest:[0,-90],pelvis:[0,5],lShoulder:[-65,-118],rShoulder:[65,-118],lElbow:[-105,-35],rElbow:[105,-35],lHand:[-125,45],rHand:[125,45],lHip:[-35,12],rHip:[35,12],lKnee:[-42,105],rKnee:[42,105],lFoot:[-48,190],rFoot:[48,190]};
- const bones=[['head','neck'],['neck','chest'],['chest','pelvis'],['chest','lShoulder'],['chest','rShoulder'],['lShoulder','lElbow'],['lElbow','lHand'],['rShoulder','rElbow'],['rElbow','rHand'],['pelvis','lHip'],['pelvis','rHip'],['lHip','lKnee'],['lKnee','lFoot'],['rHip','rKnee'],['rKnee','rFoot']];
- ctx.lineWidth=1.35;ctx.strokeStyle='rgba(255,255,255,.86)';ctx.shadowColor='rgba(255,255,255,.55)';ctx.shadowBlur=5;
- for(const [a,b] of bones){ctx.beginPath();ctx.moveTo(...pts[a]);ctx.lineTo(...pts[b]);ctx.stroke();}
- for(const p of Object.values(pts)){ctx.beginPath();ctx.arc(p[0],p[1],3.2,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,.9)';ctx.fill();}
- // dense criss-cross web strands around a body-like oval; animated drift adds shimmer
- ctx.shadowBlur=2;ctx.lineWidth=.65;const layers=5;
- for(let layer=0;layer<layers;layer++){const rx=90+layer*17,ry=180+layer*9, n=26+layer*5;const nodes=[];for(let i=0;i<n;i++){const a=i/n*Math.PI*2;nodes.push([Math.cos(a)*rx,Math.sin(a)*ry]);}
- ctx.strokeStyle=`rgba(255,255,255,${.28+layer*.08})`;for(let i=0;i<n;i++){const a=nodes[i],b=nodes[(i+1)%n];ctx.beginPath();ctx.moveTo(...a);ctx.lineTo(...b);ctx.stroke();for(let k=2;k<7;k++){const j=(i+k*3+layer*7)%n;ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(nodes[j][0],nodes[j][1]);ctx.stroke();}}
+ const ctx=overlay.getContext('2d');let raf=0,lastFrame=0;
+ function resize(){const r=viewport.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,1.5);overlay.width=Math.max(1,Math.round(r.width*d));overlay.height=Math.max(1,Math.round(r.height*d));ctx.setTransform(d,0,0,d,0,0);}
+ function draw(t){if(!toggle.checked){raf=0;return;}if(t-lastFrame<32){raf=requestAnimationFrame(draw);return;}lastFrame=t;
+  const w=viewport.clientWidth,h=viewport.clientHeight,cx=w*.5,bodyH=Math.min(h*.67,390),bodyW=Math.min(w*.43,170),top=h*.17;
+  ctx.clearRect(0,0,w,h);ctx.save();ctx.translate(cx,h*.51);ctx.scale(bodyW/170,bodyH/390);ctx.rotate(Math.sin(t*.00022)*.009);
+  // Thin, softly glowing contour following a compact human silhouette.
+  const silhouette=new Path2D();
+  silhouette.moveTo(0,-150);silhouette.bezierCurveTo(24,-150,31,-126,25,-108);
+  silhouette.bezierCurveTo(39,-103,54,-96,63,-83);silhouette.lineTo(77,-31);
+  silhouette.bezierCurveTo(82,-17,76,-7,68,-10);silhouette.lineTo(48,-63);
+  silhouette.lineTo(40,-27);silhouette.lineTo(36,20);silhouette.lineTo(28,83);
+  silhouette.lineTo(23,143);silhouette.bezierCurveTo(22,157,8,157,5,144);
+  silhouette.lineTo(0,84);silhouette.lineTo(-5,144);silhouette.bezierCurveTo(-8,157,-22,157,-23,143);
+  silhouette.lineTo(-28,83);silhouette.lineTo(-36,20);silhouette.lineTo(-40,-27);
+  silhouette.lineTo(-48,-63);silhouette.lineTo(-68,-10);silhouette.bezierCurveTo(-76,-7,-82,-17,-77,-31);
+  silhouette.lineTo(-63,-83);silhouette.bezierCurveTo(-54,-96,-39,-103,-25,-108);
+  silhouette.bezierCurveTo(-31,-126,-24,-150,0,-150);silhouette.closePath();
+  ctx.strokeStyle='rgba(255,255,255,.36)';ctx.lineWidth=1.05;ctx.shadowColor='rgba(235,246,255,.22)';ctx.shadowBlur=3;ctx.stroke(silhouette);
+  // Web filaments clipped inside the silhouette: fine, sparse crossing curves, not a bulky cage.
+  ctx.save();ctx.clip(silhouette);ctx.lineWidth=.62;ctx.strokeStyle='rgba(255,255,255,.31)';ctx.shadowBlur=1.5;
+  for(let y=-142;y<=145;y+=17){ctx.beginPath();ctx.moveTo(-82,y);ctx.bezierCurveTo(-32,y-7,32,y+7,82,y);ctx.stroke();}
+  for(let x=-76;x<=76;x+=15){ctx.beginPath();ctx.moveTo(x,-158);ctx.bezierCurveTo(x+Math.sin(x*.07)*9,-65,x-Math.sin(x*.05)*8,65,x,158);ctx.stroke();}
+  // A few anatomical contour arcs keep the strands visually wrapped around head, shoulders and limbs.
+  ctx.strokeStyle='rgba(255,255,255,.43)';ctx.lineWidth=.72;
+  for(const [x,y,rx,ry] of [[0,-128,24,25],[0,-70,53,30],[0,-12,35,31],[-48,-45,13,35],[48,-45,13,35],[-18,73,12,48],[18,73,12,48]]){
+   for(let k=0;k<3;k++){ctx.beginPath();ctx.ellipse(x,y,rx,ry,k*.52,0,Math.PI*2);ctx.stroke();}
+  }
+  ctx.restore();ctx.restore();raf=requestAnimationFrame(draw);
  }
- // web lattice rings across torso, limbs and head
- for(const [x,y,rx,ry] of [[0,-190,35,43],[0,-82,76,83],[-95,-25,27,83],[95,-25,27,83],[-40,95,27,96],[40,95,27,96]]){for(let k=0;k<9;k++){const a=k*Math.PI/9;ctx.beginPath();ctx.ellipse(x,y,rx,ry,a,0,Math.PI*2);ctx.strokeStyle='rgba(255,255,255,.48)';ctx.stroke();}}
- ctx.restore();raf=requestAnimationFrame(draw);
- }
- toggle.addEventListener('change',()=>{viewport.classList.toggle('web-mode',toggle.checked);if(toggle.checked){resize();raf=requestAnimationFrame(draw);}else{if(raf)cancelAnimationFrame(raf);raf=0;ctx.clearRect(0,0,overlay.width,overlay.height);}});
- new ResizeObserver(()=>{if(toggle.checked)resize();}).observe(viewport);
+ toggle.addEventListener('change',()=>{viewport.classList.toggle('web-mode',toggle.checked);if(toggle.checked){resize();lastFrame=0;raf=requestAnimationFrame(draw);}else{if(raf)cancelAnimationFrame(raf);raf=0;ctx.clearRect(0,0,overlay.width,overlay.height);}});
+ if('ResizeObserver'in window)new ResizeObserver(()=>{if(toggle.checked)resize();}).observe(viewport);else window.addEventListener('resize',()=>{if(toggle.checked)resize();});
 })();
 </script>
 
@@ -772,14 +805,14 @@ self.onmessage=async event=>{
   .nzm-primary{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:48px;padding:13px 17px;border-radius:14px;background:linear-gradient(110deg,#3a5de0,#316fe2 57%,#0b9f91);color:#fff!important;text-decoration:none!important;font-weight:850;font-size:13px;box-shadow:0 9px 20px rgba(59,94,220,.22);transition:transform .18s ease,filter .18s ease}
   .nzm-primary:hover{transform:translateY(-1px);filter:saturate(1.12)}
   .nzm-primary svg{width:18px;height:18px;flex:none}
-  .nzm-skip{display:inline-block;margin-top:14px;padding:5px 8px;border:0;background:transparent;color:#7c879a;text-decoration:underline;text-underline-offset:3px;font:500 11px/1.5 inherit;cursor:pointer}
+  .nzm-skip{display:inline-block;margin-top:14px;padding:5px 8px;border:0;background:transparent;color:#7c879a;text-decoration:underline;text-underline-offset:3px;font:500 11px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;cursor:pointer}
   .nzm-skip:hover{color:#304dc0}
   .nzm-foot{margin:8px 0 0;color:#9aa4b5;font-size:9px;line-height:1.5}
   @keyframes nzm-pop{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
   @media(max-width:480px){.nzm-backdrop{padding:16px}.nzm-card{padding:25px 20px 19px;border-radius:23px}.nzm-logo{width:74px;height:74px;border-radius:21px}.nzm-desc{font-size:12px}}
   @media(prefers-reduced-motion:reduce){.nzm-card{animation:none}.nzm-primary{transition:none}}
 </style>
-<div id="nminhios-zalo-modals" aria-live="polite">
+<div id="nzm-zalo-modal-root" aria-live="polite">
   <section id="nzm-welcome" class="nzm-backdrop" role="dialog" aria-modal="true" aria-labelledby="nzm-welcome-title" aria-describedby="nzm-welcome-desc" hidden>
     <div class="nzm-card"><div class="nzm-glow"></div>
       <img class="nzm-logo" src="https://cdn.upanhlaylink.com/i/TLOGJDhT.png" alt="Logo nminhios modz" loading="eager">
@@ -875,7 +908,7 @@ self.onmessage=async event=>{
   .nzm-choice-option .nzm-co-icon{font-size:21px;line-height:1.3;width:28px;text-align:center;flex:none}
   .nzm-choice-option b{display:block;font-size:13px;margin:0 0 4px}
   .nzm-choice-option small{display:block;color:#697892;font-size:10px;line-height:1.6}
-  .nzm-choice-cancel{display:block;margin:14px auto 0;border:0;background:transparent;color:#77839a;text-decoration:underline;text-underline-offset:3px;font:600 11px inherit;cursor:pointer;padding:6px 10px}
+  .nzm-choice-cancel{display:block;margin:14px auto 0;border:0;background:transparent;color:#77839a;text-decoration:underline;text-underline-offset:3px;font:600 11px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;cursor:pointer;padding:6px 10px}
   .nzm-choice-progress{margin-top:14px}
   .nzm-choice-progress[hidden]{display:none}
   .nzm-choice-progress p{margin:0 0 8px;color:#556581;font-size:11px;line-height:1.5}
@@ -887,7 +920,7 @@ self.onmessage=async event=>{
 <section id="nzm-download-choice" class="nzm-choice-backdrop" role="dialog" aria-modal="true" aria-labelledby="nzm-choice-title" aria-describedby="nzm-choice-desc" hidden>
   <div class="nzm-choice-card">
     <div class="nzm-choice-top"><div class="nzm-choice-icon" aria-hidden="true">⇩</div><div><p class="nzm-choice-eyebrow">nminhios modz · Xuất file</p><h2 class="nzm-choice-title" id="nzm-choice-title">Bạn muốn tải định dạng nào?</h2></div></div>
-    <p class="nzm-choice-desc" id="nzm-choice-desc">Chọn ZIP gốc để tự giải nén, hoặc tạo gói patch .3105 để nhập vào 3105. Gói .3105 đang cấu hình đích Application cho Free Fire thường trên iOS.</p>
+    <p class="nzm-choice-desc" id="nzm-choice-desc">Chọn ZIP gốc để tự giải nén, hoặc tạo gói patch .3105 để nhập vào 3105. Gói .3105 hỗ trợ Application cho Free Fire thường hoặc MAX trên iOS theo phiên bản đã chọn.</p>
     <button type="button" class="nzm-choice-option" id="nzm-download-zip"><span class="nzm-co-icon" aria-hidden="true">🗜️</span><span><b>Tải file gốc .ZIP</b><small>Giữ nguyên cách xuất file hiện có của web.</small></span></button>
     <button type="button" class="nzm-choice-option" id="nzm-download-3105"><span class="nzm-co-icon" aria-hidden="true">📦</span><span><b>Tải file đã build thành .3105</b><small>Tạo gói patch định dạng 3105PATCH, tên “nminhios modz”, tác giả “nminhios”.</small></span></button>
     <div id="nzm-choice-progress" class="nzm-choice-progress" hidden><p id="nzm-choice-progress-text">Đang tạo file…</p><progress id="nzm-choice-progress-bar" max="100" value="0"></progress></div>
@@ -906,9 +939,10 @@ self.onmessage=async event=>{
   const progressText = document.getElementById('nzm-choice-progress-text');
   const progressBar = document.getElementById('nzm-choice-progress-bar');
   const errorBox = document.getElementById('nzm-choice-error');
-  const targetPath = 'Documents/contentcache/Optional/ios/optionalavatarres/gameassetbundles/optionalab_avatar_66.1GZrX1l5Sm~2FgqXYqB7dDyULWdn4~3D';
-  const targetBundleID = 'com.dts.freefireth';
-  const assetFilename = targetPath.slice(targetPath.lastIndexOf('/') + 1);
+  const targetConfigs = {
+    'ios-normal': { bundleID: 'com.dts.freefireth', path: 'Documents/contentcache/Optional/ios/optionalavatarres/gameassetbundles/optionalab_avatar_66.1GZrX1l5Sm~2FgqXYqB7dDyULWdn4~3D' },
+    'ios-max': { bundleID: 'com.dts.freefiremax', path: 'Documents/contentcache/Optional/ios/optionalavatarres/gameassetbundles/optionalab_avatar_66.PB9xjBkeW6coem1hSCiGvokg7O8~3D' }
+  };
   let sourceButton = null;
   let bypassNextClick = false;
   let building = false;
@@ -1043,7 +1077,8 @@ self.onmessage=async event=>{
     document.body.appendChild(link); link.click(); link.remove();
     setTimeout(() => URL.revokeObjectURL(url), 2500);
   }
-  async function make3105Package(bundleBytes) {
+  async function make3105Package(bundleBytes, targetPath, targetBundleID) {
+    const assetFilename = targetPath.slice(targetPath.lastIndexOf('/') + 1);
     const projectID = uuidString(), ruleID = uuidString();
     const contentKey = crypto.getRandomValues(new Uint8Array(32));
     const now = new Date();
@@ -1080,23 +1115,28 @@ self.onmessage=async event=>{
     const envelopeData = encodeBinaryPlist(envelope);
     return concatBytes([new TextEncoder().encode('3105PATCH\0'), envelopeData]);
   }
-  function chooseAssetFile(entries) {
+  function chooseAssetFile(entries, targetPath) {
+    const assetFilename = targetPath.slice(targetPath.lastIndexOf('/') + 1);
+    const names = Object.keys(entries).filter(name => !name.endsWith('/') && !name.toLowerCase().endsWith('.txt'));
     if (entries[targetPath]) return asBytes(entries[targetPath]);
-    const files = Object.keys(entries).filter(name => !name.endsWith('/') && !name.endsWith('.TXT'));
-    const basenameMatch = files.find(name => name.slice(name.lastIndexOf('/') + 1) === assetFilename);
+    const basenameMatch = names.find(name => name.slice(name.lastIndexOf('/') + 1) === assetFilename);
     if (basenameMatch) return asBytes(entries[basenameMatch]);
-    const bundleFiles = files.filter(name => name.includes('/gameassetbundles/'));
+    const bundleFiles = names.filter(name => name.includes('/gameassetbundles/'));
     if (bundleFiles.length === 1) return asBytes(entries[bundleFiles[0]]);
-    throw new Error('Không tìm thấy duy nhất file bundle trong ZIP xuất ra. Hãy kiểm tra lại dữ liệu đầu vào; web chưa tạo file .3105 để tránh đóng gói sai nội dung.');
+    // Some exported source archives contain only the bundle file at archive root.
+    const rootCandidates = names.filter(name => !name.includes('/') && /avatar|bundle|\.ab$/i.test(name));
+    if (rootCandidates.length === 1) return asBytes(entries[rootCandidates[0]]);
+    throw new Error('ZIP đã xuất nhưng không xác định được duy nhất bundle cần thay thế ('+names.filter(n=>n.includes('gameassetbundles')).join(', ')+'). Hãy thử tạo ZIP gốc để kiểm tra phiên bản/dữ liệu.');
   }
   async function build3105() {
     if (building) return;
     const version = document.getElementById('version')?.value || window.currentAlokVersion;
-    if (version !== 'ios-normal') {
-      throw new Error('Gói .3105 hiện được cấu hình cho Application com.dts.freefireth với đường dẫn iOS bạn cung cấp. Hãy chọn “iOS · FF thường”; các bản Android/FF MAX vẫn có thể tải ZIP gốc.');
+    const target = targetConfigs[version];
+    if (!target) {
+      throw new Error('Tạo .3105 chỉ hỗ trợ iOS · FF thường và iOS · FF MAX hiện tại. Hãy chọn một trong hai phiên bản iOS.');
     }
-    if (typeof window.alokExport !== 'function' || !window.alokWardrobe?.assets || !window.fflate?.unzipSync) {
-      throw new Error('Bộ tạo file chưa sẵn sàng. Hãy chờ trang phục tải xong rồi thử lại.');
+    if (typeof window.alokExport !== 'function' || typeof window.alokEnsureExport !== 'function' || !window.alokWardrobe?.assets || !window.fflate?.unzipSync) {
+      throw new Error('Bộ tạo file chưa sẵn sàng. Hãy chờ dữ liệu trang phục và dữ liệu build tải xong rồi thử lại.');
     }
     const selection = {};
     for (const field of ['hair','top','bottom','shoes','mask','face','action']) {
@@ -1107,16 +1147,23 @@ self.onmessage=async event=>{
     building = true; window.__nzmBuilding3105 = true;
     zipButton.disabled = true; patchButton.disabled = true; cancelButton.disabled = true;
     progressBox.hidden = false; errorBox.hidden = true; progressBar.value = 0;
-    progressText.textContent = 'Đang build bundle iOS…';
+    progressText.textContent = 'Đang nạp dữ liệu build…';
     try {
+      // The normal ZIP flow first loads export data; direct patch creation must do that too.
+      await window.alokEnsureExport(percent => {
+        progressBar.value = Math.max(0, Math.min(22, Number(percent) * .22 || 0));
+        progressText.textContent = 'Đang nạp dữ liệu build… '+Math.round(Number(percent)||0)+'%';
+      });
+      progressText.textContent = 'Đang build bundle iOS…';
       const output = asBytes(await window.alokExport(selection, version, percent => {
-        progressBar.value = Math.max(0, Math.min(90, Number(percent) * .9 || 0));
+        progressBar.value = 22 + Math.max(0, Math.min(66, Number(percent) * .66 || 0));
         progressText.textContent = 'Đang build bundle iOS… '+Math.round(Number(percent)||0)+'%';
       }));
-      progressText.textContent = 'Đang đóng gói định dạng .3105…'; progressBar.value = 92;
+      progressText.textContent = 'Đang đọc ZIP export và đóng gói .3105…'; progressBar.value = 90;
       const entries = window.fflate.unzipSync(output);
-      const bundleBytes = chooseAssetFile(entries);
-      const patchBytes = await make3105Package(bundleBytes);
+      const bundleBytes = chooseAssetFile(entries, target.path);
+      if (!bundleBytes.length) throw new Error('Bundle xuất ra rỗng, không tạo patch.');
+      const patchBytes = await make3105Package(bundleBytes, target.path, target.bundleID);
       // Lightweight self-check for the format magic before downloading.
       const magic = new TextDecoder().decode(patchBytes.slice(0, 10));
       if (magic !== '3105PATCH\0') throw new Error('Không xác minh được tiêu đề gói .3105.');
