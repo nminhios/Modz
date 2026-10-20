@@ -458,15 +458,15 @@ self.onmessage=async event=>{
 <style id="nminhios-modz-redesign">
   :root {
     color-scheme: light;
-    --bg: #f4f7fc;
+    --bg: #f3f6fc;
     --panel: #ffffff;
-    --line: #e1e7f1;
-    --muted: #687790;
+    --line: #e2e8f2;
+    --muted: #66758c;
     --text: #17243b;
-    --accent: #4f5fd5;
-    --green: #0b8796;
+    --accent: #3b5bdb;
+    --green: #087f73;
     --surface: #f7f9ff;
-    --shadow: 0 18px 56px rgba(33, 54, 96, .085);
+    --shadow: 0 18px 56px rgba(33, 54, 96, .09);
   }
   *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; background: var(--bg); }
@@ -597,7 +597,7 @@ self.onmessage=async event=>{
   .download-area { margin-top: 23px; border-top: 1px solid #e6ebf4; padding-top: 21px; }
   .selection-caption { color: #76849b; font-size: 9px; text-transform: uppercase; letter-spacing: .15em; font-weight: 850; margin: 0 0 7px; }
   .selection-summary { font-size: 12px; color: #344661; margin: 0 0 17px; min-height: 36px; line-height: 1.75; overflow-wrap: anywhere; }
-  .download { display: flex; width: 100%; gap: 10px; justify-content: center; align-items: center; background: linear-gradient(115deg, #4f46e5 0%, #3b6fe8 58%, #0891b2 100%); color: #fff; border: 0; border-radius: 13px; padding: 14px 16px; font-weight: 800; font-size: 13px; box-shadow: 0 8px 20px rgba(58, 91, 213, .18); transition: transform .18s ease, box-shadow .18s ease, filter .18s ease; }
+  .download { display: flex; width: 100%; gap: 10px; justify-content: center; align-items: center; background: linear-gradient(110deg, #3859d8 0%, #426fe8 53%, #0c9d91 100%); color: #fff; border: 0; border-radius: 13px; padding: 14px 16px; font-weight: 800; font-size: 13px; box-shadow: 0 8px 20px rgba(58, 91, 213, .18); transition: transform .18s ease, box-shadow .18s ease, filter .18s ease; }
   .download:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 12px 25px rgba(58, 91, 213, .25); filter: saturate(1.08); }
   .download:disabled { background: #e5eaf3; color: #8b97aa; box-shadow: none; }
   .download svg { width: 17px; height: 17px; }
@@ -758,12 +758,13 @@ self.onmessage=async event=>{
 (()=>{
  const viewport=document.getElementById('viewport'),overlay=document.getElementById('web-skeleton-overlay'),toggle=document.getElementById('web-mode-toggle');
  if(!viewport||!overlay||!toggle)return;
- const ctx=overlay.getContext('2d');let raf=0,lastFrame=0;
- function resize(){const r=viewport.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,1.5);overlay.width=Math.max(1,Math.round(r.width*d));overlay.height=Math.max(1,Math.round(r.height*d));ctx.setTransform(d,0,0,d,0,0);}
- function draw(t){if(!toggle.checked){raf=0;return;}if(t-lastFrame<32){raf=requestAnimationFrame(draw);return;}lastFrame=t;
-  const w=viewport.clientWidth,h=viewport.clientHeight,cx=w*.5,bodyH=Math.min(h*.67,390),bodyW=Math.min(w*.43,170),top=h*.17;
-  ctx.clearRect(0,0,w,h);ctx.save();ctx.translate(cx,h*.51);ctx.scale(bodyW/170,bodyH/390);ctx.rotate(Math.sin(t*.00022)*.009);
-  // Thin, softly glowing contour following a compact human silhouette.
+ const ctx=overlay.getContext('2d');
+ function resize(){const r=viewport.getBoundingClientRect(),d=Math.min(window.devicePixelRatio||1,1.5);overlay.width=Math.max(1,Math.round(r.width*d));overlay.height=Math.max(1,Math.round(r.height*d));ctx.setTransform(d,0,0,d,0,0);}
+ function draw(){
+  if(!toggle.checked)return;
+  const w=viewport.clientWidth,h=viewport.clientHeight;
+  const scale=Math.min(h*.74/307,w*.55/164);
+  ctx.clearRect(0,0,w,h);ctx.save();ctx.translate(w*.5,h*.52);ctx.scale(scale,scale);
   const silhouette=new Path2D();
   silhouette.moveTo(0,-150);silhouette.bezierCurveTo(24,-150,31,-126,25,-108);
   silhouette.bezierCurveTo(39,-103,54,-96,63,-83);silhouette.lineTo(77,-31);
@@ -775,20 +776,22 @@ self.onmessage=async event=>{
   silhouette.lineTo(-48,-63);silhouette.lineTo(-68,-10);silhouette.bezierCurveTo(-76,-7,-82,-17,-77,-31);
   silhouette.lineTo(-63,-83);silhouette.bezierCurveTo(-54,-96,-39,-103,-25,-108);
   silhouette.bezierCurveTo(-31,-126,-24,-150,0,-150);silhouette.closePath();
-  ctx.strokeStyle='rgba(255,255,255,.36)';ctx.lineWidth=1.05;ctx.shadowColor='rgba(235,246,255,.22)';ctx.shadowBlur=3;ctx.stroke(silhouette);
-  // Web filaments clipped inside the silhouette: fine, sparse crossing curves, not a bulky cage.
-  ctx.save();ctx.clip(silhouette);ctx.lineWidth=.62;ctx.strokeStyle='rgba(255,255,255,.31)';ctx.shadowBlur=1.5;
-  for(let y=-142;y<=145;y+=17){ctx.beginPath();ctx.moveTo(-82,y);ctx.bezierCurveTo(-32,y-7,32,y+7,82,y);ctx.stroke();}
-  for(let x=-76;x<=76;x+=15){ctx.beginPath();ctx.moveTo(x,-158);ctx.bezierCurveTo(x+Math.sin(x*.07)*9,-65,x-Math.sin(x*.05)*8,65,x,158);ctx.stroke();}
-  // A few anatomical contour arcs keep the strands visually wrapped around head, shoulders and limbs.
-  ctx.strokeStyle='rgba(255,255,255,.43)';ctx.lineWidth=.72;
+  ctx.strokeStyle='rgba(255,255,255,.48)';ctx.lineWidth=1.05;ctx.shadowColor='rgba(235,246,255,.22)';ctx.shadowBlur=2.2;ctx.stroke(silhouette);
+  // Filaments stay inside the character silhouette: light, human-shaped web instead of a large outer cage.
+  ctx.save();ctx.clip(silhouette);ctx.lineWidth=.62;ctx.strokeStyle='rgba(255,255,255,.34)';ctx.shadowBlur=1;
+  for(let y=-142;y<=145;y+=19){ctx.beginPath();ctx.moveTo(-82,y);ctx.bezierCurveTo(-32,y-7,32,y+7,82,y);ctx.stroke();}
+  for(let x=-76;x<=76;x+=17){ctx.beginPath();ctx.moveTo(x,-158);ctx.bezierCurveTo(x+Math.sin(x*.07)*9,-65,x-Math.sin(x*.05)*8,65,x,158);ctx.stroke();}
+  ctx.strokeStyle='rgba(255,255,255,.42)';ctx.lineWidth=.7;
   for(const [x,y,rx,ry] of [[0,-128,24,25],[0,-70,53,30],[0,-12,35,31],[-48,-45,13,35],[48,-45,13,35],[-18,73,12,48],[18,73,12,48]]){
-   for(let k=0;k<3;k++){ctx.beginPath();ctx.ellipse(x,y,rx,ry,k*.52,0,Math.PI*2);ctx.stroke();}
+   ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.stroke();
   }
-  ctx.restore();ctx.restore();raf=requestAnimationFrame(draw);
+  ctx.restore();ctx.restore();
  }
- toggle.addEventListener('change',()=>{viewport.classList.toggle('web-mode',toggle.checked);if(toggle.checked){resize();lastFrame=0;raf=requestAnimationFrame(draw);}else{if(raf)cancelAnimationFrame(raf);raf=0;ctx.clearRect(0,0,overlay.width,overlay.height);}});
- if('ResizeObserver'in window)new ResizeObserver(()=>{if(toggle.checked)resize();}).observe(viewport);else window.addEventListener('resize',()=>{if(toggle.checked)resize();});
+ function setMode(){viewport.classList.toggle('web-mode',toggle.checked);if(toggle.checked){resize();draw();}else{ctx.clearRect(0,0,overlay.width,overlay.height);}}
+ toggle.addEventListener('change',setMode);
+ if('ResizeObserver' in window)new ResizeObserver(()=>{if(toggle.checked){resize();draw();}}).observe(viewport);
+ else window.addEventListener('resize',()=>{if(toggle.checked){resize();draw();}});
+ setMode();
 })();
 </script>
 
@@ -812,7 +815,7 @@ self.onmessage=async event=>{
   @media(max-width:480px){.nzm-backdrop{padding:16px}.nzm-card{padding:25px 20px 19px;border-radius:23px}.nzm-logo{width:74px;height:74px;border-radius:21px}.nzm-desc{font-size:12px}}
   @media(prefers-reduced-motion:reduce){.nzm-card{animation:none}.nzm-primary{transition:none}}
 </style>
-<div id="nzm-zalo-modal-root" aria-live="polite">
+<div id="nminhios-zalo-modals" aria-live="polite">
   <section id="nzm-welcome" class="nzm-backdrop" role="dialog" aria-modal="true" aria-labelledby="nzm-welcome-title" aria-describedby="nzm-welcome-desc" hidden>
     <div class="nzm-card"><div class="nzm-glow"></div>
       <img class="nzm-logo" src="https://cdn.upanhlaylink.com/i/TLOGJDhT.png" alt="Logo nminhios modz" loading="eager">
@@ -842,7 +845,7 @@ self.onmessage=async event=>{
     </div>
   </section>
 </div>
-<script id="nminhios-zalo-modals">
+<script id="nzm-zalo-modal-script">
 (()=>{
  const welcome=document.getElementById('nzm-welcome');
  const thanks=document.getElementById('nzm-thanks');
@@ -940,8 +943,8 @@ self.onmessage=async event=>{
   const progressBar = document.getElementById('nzm-choice-progress-bar');
   const errorBox = document.getElementById('nzm-choice-error');
   const targetConfigs = {
-    'ios-normal': { bundleID: 'com.dts.freefireth', path: 'Documents/contentcache/Optional/ios/optionalavatarres/gameassetbundles/optionalab_avatar_66.1GZrX1l5Sm~2FgqXYqB7dDyULWdn4~3D' },
-    'ios-max': { bundleID: 'com.dts.freefiremax', path: 'Documents/contentcache/Optional/ios/optionalavatarres/gameassetbundles/optionalab_avatar_66.PB9xjBkeW6coem1hSCiGvokg7O8~3D' }
+    'ios-normal': { bundleID: 'com.dts.freefireth', path: 'Documents/contentcache/Optional/ios/optionalavatarres/gameassetbundles/optionalab_avatar_66.1GZrX1l5Sm~2FgqXYqB7dDyULWdn4~3D', label: 'iOS · FF thường' },
+    'ios-max': { bundleID: 'com.dts.freefiremax', path: 'Documents/contentcache/Optional/ios/optionalavatarres/gameassetbundles/optionalab_avatar_66.PB9xjBkeW6coem1hSCiGvokg7O8~3D', label: 'iOS · FF MAX' }
   };
   let sourceButton = null;
   let bypassNextClick = false;
@@ -953,8 +956,16 @@ self.onmessage=async event=>{
     progressBox.hidden = true;
     progressBar.value = 0;
     zipButton.disabled = false;
-    patchButton.disabled = false;
     cancelButton.disabled = false;
+    const activeVersion = document.getElementById('version')?.value || window.currentAlokVersion || 'android-normal';
+    const patchSupported = activeVersion === 'ios-normal' || activeVersion === 'ios-max';
+    patchButton.disabled = !patchSupported;
+    const choiceDesc = document.getElementById('nzm-choice-desc');
+    if (choiceDesc) choiceDesc.textContent = activeVersion === 'ios-max'
+      ? 'Tạo patch .3105 cho iOS · FF MAX (com.dts.freefiremax). Tên gói: nminhios modz; tác giả: nminhios.'
+      : activeVersion === 'ios-normal'
+        ? 'Tạo patch .3105 cho iOS · FF thường (com.dts.freefireth). Tên gói: nminhios modz; tác giả: nminhios.'
+        : 'ZIP vẫn dùng được cho phiên bản đang chọn. Để tạo .3105, hãy đóng hộp này, chọn iOS · FF thường hoặc iOS · FF MAX rồi bấm Tải file lại.';
     modal.hidden = false;
   }
   function closeChoice() { modal.hidden = true; }
@@ -1154,10 +1165,10 @@ self.onmessage=async event=>{
         progressBar.value = Math.max(0, Math.min(22, Number(percent) * .22 || 0));
         progressText.textContent = 'Đang nạp dữ liệu build… '+Math.round(Number(percent)||0)+'%';
       });
-      progressText.textContent = 'Đang build bundle iOS…';
+      progressText.textContent = 'Đang build bundle ' + target.label + '…';
       const output = asBytes(await window.alokExport(selection, version, percent => {
         progressBar.value = 22 + Math.max(0, Math.min(66, Number(percent) * .66 || 0));
-        progressText.textContent = 'Đang build bundle iOS… '+Math.round(Number(percent)||0)+'%';
+        progressText.textContent = 'Đang build bundle ' + target.label + '… '+Math.round(Number(percent)||0)+'%';
       }));
       progressText.textContent = 'Đang đọc ZIP export và đóng gói .3105…'; progressBar.value = 90;
       const entries = window.fflate.unzipSync(output);
@@ -1167,7 +1178,7 @@ self.onmessage=async event=>{
       // Lightweight self-check for the format magic before downloading.
       const magic = new TextDecoder().decode(patchBytes.slice(0, 10));
       if (magic !== '3105PATCH\0') throw new Error('Không xác minh được tiêu đề gói .3105.');
-      progressBar.value = 100; progressText.textContent = 'Hoàn tất — đang lưu nminhios modz.3105';
+      progressBar.value = 100; progressText.textContent = 'Hoàn tất — đang lưu nminhios modz.3105 (' + target.label + ')';
       saveFile(patchBytes, 'nminhios modz.3105', 'application/x-3105-patch');
       closeChoice();
       const thanks = document.getElementById('nzm-thanks');
@@ -1204,6 +1215,39 @@ self.onmessage=async event=>{
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && !building) closeChoice(); });
 })();
 </script>
+
+
+<style id="nzm-final-consistency">
+  :root { color-scheme: light; --accent: #4b63dc; }
+  html, body, button, select, input, textarea { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif; }
+  select, select:focus, select:active { color: #243550 !important; -webkit-text-fill-color: #243550; background-color: #f8faff !important; color-scheme: light; }
+  select option { color: #243550; background: #fff; }
+  #wardrobe-workspace .panel button[aria-pressed="true"],
+  #wardrobe-workspace .panel button[aria-selected="true"],
+  #wardrobe-workspace .panel button[aria-checked="true"],
+  #wardrobe-workspace .panel button.selected, #wardrobe-workspace .panel button.active,
+  #wardrobe-workspace .panel button.is-selected, #wardrobe-workspace .panel button[data-selected="true"],
+  #wardrobe-workspace .panel [role="option"][aria-selected="true"],
+  #wardrobe-workspace .panel [role="option"][aria-checked="true"] {
+    color: #17243b !important; -webkit-text-fill-color: #17243b;
+    background: #e7edff !important; border-color: #536fe0 !important;
+    box-shadow: inset 0 0 0 1px rgba(83,111,224,.15) !important;
+  }
+  #wardrobe-workspace .panel button[aria-pressed="true"] *,
+  #wardrobe-workspace .panel button[aria-selected="true"] *,
+  #wardrobe-workspace .panel button[aria-checked="true"] *,
+  #wardrobe-workspace .panel button.selected *, #wardrobe-workspace .panel button.active *,
+  #wardrobe-workspace .panel button.is-selected *, #wardrobe-workspace .panel button[data-selected="true"] *,
+  #wardrobe-workspace .panel [role="option"][aria-selected="true"] *,
+  #wardrobe-workspace .panel [role="option"][aria-checked="true"] * { color: inherit !important; -webkit-text-fill-color: currentColor; }
+  .nzm-skip, #nzm-choice-cancel { font-family: inherit !important; font-size: 11px; font-weight: 600; line-height: 1.5; }
+  body { background: radial-gradient(ellipse at 4% 0%, rgba(96,124,239,.09), transparent 36rem), radial-gradient(ellipse at 98% 24%, rgba(129,105,232,.075), transparent 32rem), linear-gradient(180deg,#fbfcff 0%,#f2f5fc 100%) !important; }
+  .dot { background: #6b70df !important; box-shadow: 0 0 0 4px rgba(107,112,223,.12) !important; }
+  .download:not(:disabled), .nzm-primary { background: linear-gradient(112deg,#3d58cf 0%,#4d6ce1 58%,#6a58d6 100%) !important; color: #fff !important; }
+  .download:hover:not(:disabled) { box-shadow: 0 12px 25px rgba(75,91,207,.22) !important; }
+  .nzm-choice-option:disabled { cursor: not-allowed !important; opacity: .56 !important; }
+  .nzm-choice-option:disabled:hover { transform: none !important; border-color: #e2e8f2 !important; background: #fff !important; }
+</style>
 
 </body>
 </html>
