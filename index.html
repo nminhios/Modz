@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
   <meta name="theme-color" content="#090e12">
   <meta name="description" content="nminhios modz — Tùy chỉnh trang phục Alok, xem trước 3D và xuất gói cho Android, iOS, Free Fire thường và MAX.">
   <meta name="author" content="nminhios modz">
@@ -85,7 +85,7 @@ THE SOFTWARE.
         <img class="brandmark" src="https://cdn.upanhlaylink.com/i/TLOGJDhT.png" alt="" width="44" height="44" fetchpriority="high">
         <span class="brand-lockup"><span class="brand-name">nminhios modz</span><span class="brand-subtitle">WARDROBE STUDIO</span></span>
       </a>
-      <div class="fish-top-actions"><div class="platform"><span class="dot"></span> <span id="platform-label">Chọn phiên bản</span></div><div class="fish-nav"><button id="fish-menu-toggle" class="fish-menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="fish-menu"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><nav id="fish-menu" class="fish-menu" aria-label="Menu chính" hidden><a href="./account.html">Chế độ chạy</a><a href="./earn.html">Hướng dẫn xuất</a><a href="https://t.me/modskinff0">Báo lỗi</a></nav></div></div>
+      <div class="fish-top-actions"><div class="platform"><span class="dot"></span> <span id="platform-label">Chọn phiên bản</span></div><div class="fish-nav"><button id="fish-menu-toggle" class="fish-menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="fish-menu"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><nav id="fish-menu" class="fish-menu" aria-label="Menu chính" hidden><a href="./account.html">Chế độ chạy</a><a href="./earn.html">Hướng dẫn xuất</a><a href="https://zalo.me/g/dlqhlvurg4hyfahit1ou">Báo lỗi</a></nav></div></div>
     </header>
 
 
@@ -104,9 +104,16 @@ THE SOFTWARE.
           <div id="preview-message" class="preview-message" role="status">Đang mở Alok… Nếu khung xem trước không chạy, hãy tải file xuống và mở bằng Chrome hoặc Edge.</div>
         </div>
         <div class="stage-footer">
-          <p id="preview-hint" class="hint">Dùng nút “Trong suốt” để bật hoặc tắt hiệu ứng cho riêng nhân vật.</p>
+          <p id="preview-hint" class="hint">Bấm “Trong suốt” để chỉnh mức trong suốt của riêng nhân vật.</p>
           <div class="view-tools">
-            <button class="small-button" id="character-transparency-toggle" type="button" aria-pressed="false" title="Bật hoặc tắt độ trong suốt của nhân vật">◐ Trong suốt</button>
+            <div class="transparency-control">
+              <button class="small-button" id="character-transparency-toggle" type="button" aria-pressed="false" aria-expanded="false" aria-controls="transparency-popover" title="Chỉnh độ trong suốt của nhân vật">◐ Trong suốt</button>
+              <div class="transparency-popover" id="transparency-popover" hidden>
+                <div class="transparency-popover-head"><label for="character-transparency-range">Độ trong suốt</label><output id="character-transparency-value" for="character-transparency-range">28%</output></div>
+                <input id="character-transparency-range" type="range" min="1" max="100" step="1" value="28" aria-label="Độ trong suốt của nhân vật từ 1 đến 100 phần trăm">
+                <div class="transparency-range-labels"><span>1%</span><span>100%</span></div>
+              </div>
+            </div>
             <button class="small-button" id="rotate" type="button" aria-pressed="false" title="Tự xoay nhân vật">↻ Xoay</button>
             <button class="small-button" id="front" type="button" title="Trở về góc nhìn phía trước">Đặt lại</button>
           </div>
@@ -1288,14 +1295,21 @@ self.onmessage=async event=>{
   .view-tools { display: flex; align-items: center; justify-content: flex-end; gap: 7px; flex-shrink: 0; }
   .small-button { min-width: 38px; padding: 8px 10px; border: 1px solid rgba(178,218,205,.2) !important; border-radius: 8px !important; color: #e1ece2 !important; background: rgba(255,255,255,.035) !important; font-size: 11px; font-weight: 750; white-space: nowrap; box-shadow: none !important; transition: background .16s ease, border-color .16s ease; }
   .small-button:hover { color: var(--accent) !important; border-color: rgba(201,255,87,.4) !important; background: rgba(201,255,87,.06) !important; transform: none !important; }
-  .web-toggle { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; color: #eaf5e7 !important; background: transparent !important; border: 1px solid rgba(201,255,87,.27) !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,.015) !important; backdrop-filter: blur(7px); }
+  .transparency-control { position: relative; }
+  .transparency-popover { position: absolute; z-index: 20; right: 0; bottom: calc(100% + 10px); width: min(245px, calc(100vw - 40px)); padding: 14px; border: 1px solid rgba(201,255,87,.32); border-radius: 12px; background: rgba(14,24,24,.97); box-shadow: 0 12px 36px rgba(0,0,0,.42); backdrop-filter: blur(12px); color: #eaf5e7; }
+  .transparency-popover[hidden] { display: none !important; }
+  .transparency-popover-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 12px; font-weight: 800; }
+  #character-transparency-value { color: var(--accent); font-variant-numeric: tabular-nums; }
+  #character-transparency-range { display: block; width: 100%; accent-color: var(--accent); cursor: pointer; touch-action: pan-x; }
+  .transparency-range-labels { display: flex; justify-content: space-between; margin-top: 5px; color: #9aada5; font-size: 10px; }
+  .web-toggle { display: none !important; }
   .web-toggle input { width: 14px; height: 14px; margin: 0; accent-color: var(--accent); }
   .web-toggle:has(input:checked) { color: var(--accent) !important; border-color: rgba(201,255,87,.65) !important; background: rgba(201,255,87,.07) !important; }
   #viewport.web-mode canvas:not(#web-skeleton-overlay) { opacity: 1 !important; filter: none; }
   #viewport.web-mode #fallback { opacity: 1 !important; }
   #web-skeleton-overlay { position: absolute !important; inset: 0; z-index: 2 !important; width: 100%; height: 100%; pointer-events: none; display: none; }
   #viewport.web-mode #web-skeleton-overlay { display: block; }
-  #viewport.character-transparent canvas:not(#web-skeleton-overlay), #viewport.character-transparent #fallback { opacity: .72 !important; filter: saturate(.9) brightness(1.03); transition: opacity .22s ease, filter .22s ease; }
+  #viewport.character-transparent canvas:not(#web-skeleton-overlay), #viewport.character-transparent #fallback { filter: saturate(.9) brightness(1.03); transition: opacity .12s ease, filter .22s ease; }
   #viewport.character-transparent::before { content: "ĐỘ TRONG SUỐT · BẬT"; position: absolute; z-index: 4; left: 16px; bottom: 15px; padding: 6px 9px; border: 1px solid rgba(201,255,87,.38); border-radius: 5px; color: var(--accent); background: rgba(8,15,16,.62); font-size: 9px; font-weight: 900; letter-spacing: .12em; pointer-events: none; backdrop-filter: blur(8px); }
   .panel { padding: clamp(19px,2.4vw,30px); }
   .panel-title { margin: 0 0 22px; color: #f1f6ef !important; font-size: 21px; line-height: 1.25; font-weight: 900; letter-spacing: -.035em; }
@@ -1456,25 +1470,61 @@ self.onmessage=async event=>{
   'use strict';
   const viewport = document.getElementById('viewport');
   const toggle = document.getElementById('character-transparency-toggle');
+  const popover = document.getElementById('transparency-popover');
+  const range = document.getElementById('character-transparency-range');
+  const value = document.getElementById('character-transparency-value');
   const previewBadge = document.getElementById('preview-badge');
   const hint = document.getElementById('preview-hint');
-  if (!viewport || !toggle) return;
+  if (!viewport || !toggle || !popover || !range || !value) return;
 
   let transparencyOn = false;
   const setTransparency = (enabled) => {
     transparencyOn = Boolean(enabled);
+    const percent = Number(range.value);
+    const opacity = 1 - percent / 100;
     viewport.classList.toggle('character-transparent', transparencyOn);
+    viewport.querySelectorAll('canvas:not(#web-skeleton-overlay), #fallback').forEach((el) => {
+      el.style.opacity = transparencyOn ? String(opacity) : '';
+    });
     viewport.dataset.characterTransparent = transparencyOn ? 'true' : 'false';
     toggle.setAttribute('aria-pressed', transparencyOn ? 'true' : 'false');
     toggle.textContent = transparencyOn ? '◑ Trong suốt: Bật' : '◐ Trong suốt';
+    value.value = percent + '%';
+    value.textContent = percent + '%';
     if (previewBadge) previewBadge.textContent = transparencyOn ? 'TRONG SUỐT' : 'XEM 3D';
     if (hint) hint.textContent = transparencyOn
-      ? 'Độ trong suốt đang bật cho riêng nhân vật.'
-      : 'Dùng nút “Trong suốt” để bật hoặc tắt hiệu ứng cho riêng nhân vật.';
+      ? 'Đang chỉnh độ trong suốt ' + percent + '% cho riêng nhân vật.'
+      : 'Bấm “Trong suốt” để chỉnh mức trong suốt của riêng nhân vật.';
   };
 
-  toggle.addEventListener('click', () => setTransparency(!transparencyOn));
+  toggle.addEventListener('click', () => {
+    const open = popover.hidden;
+    popover.hidden = !open;
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) setTransparency(true);
+  });
+  range.addEventListener('input', () => setTransparency(true));
+  document.addEventListener('pointerdown', (event) => {
+    if (!popover.hidden && !event.target.closest('.transparency-control')) {
+      popover.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
   setTransparency(false);
+
+  // Hạn chế phóng to trang trên trình duyệt di động; vẫn cho phép kéo thanh range.
+  document.addEventListener('gesturestart', (e) => e.preventDefault(), { passive: false });
+  document.addEventListener('gesturechange', (e) => e.preventDefault(), { passive: false });
+  document.addEventListener('gestureend', (e) => e.preventDefault(), { passive: false });
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', (e) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300 && !e.target.closest('input, button, select, textarea, a, .transparency-popover')) e.preventDefault();
+    lastTouchEnd = now;
+  }, { passive: false });
+  document.addEventListener('wheel', (e) => {
+    if (e.ctrlKey || e.metaKey) e.preventDefault();
+  }, { passive: false });
 })();
 </script>
 
