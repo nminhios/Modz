@@ -334,7 +334,7 @@ self.onmessage=async event=>{
   const bundle=await pack(base,patch,compressed,p=>postMessage({id,progress:p}));postMessage({id,progress:80});
   const [os,game]=version.split('-');
   const folder=os==='android'?(game==='max'?'com.dts.freefiremax':'com.dts.freefireth')+'/files/contentcache/Optional/android/optionalavatarres/gameassetbundles/':'Documents/contentcache/Optional/ios/optionalavatarres/gameassetbundles/';
-  const zip=fflate.zipSync({[folder+base.bundleName]:bundle,['Bản quyền mod thuộc về nminhios modz.TXT']:decode('QuG6o24gcXV54buBbiBtb2QgdGh14buZYyB24buBIG5taW5oaW9zIG1vZHo=')},{level:0});
+  const zip=fflate.zipSync({[folder+base.bundleName]:bundle,['Bản quyền mod thuộc về nminh ios.TXT']:decode('QuG6o24gcXV54buBbiBtb2QgdGh14buZYyB24buBIG5taW5oIGlvcw==')},{level:0});
   postMessage({id,result:zip.buffer},[zip.buffer]);
  }catch(error){postMessage({id,error:error.message||String(error)});}
 };
@@ -404,8 +404,8 @@ self.onmessage=async event=>{
 </script>
 <script id="alok-download-package">(() => {
  const prefixes={'android-normal':'nminhios modz ALOK THỨC TỈNH ADR FFTH','android-max':'nminhios modz ALOK THỨC TỈNH ADR FFM','ios-normal':'nminhios modz ALOK THỨC TỈNH IOS FFTH','ios-max':'nminhios modz ALOK THỨC TỈNH IOS FFM'};
- const copyrightName="Bản quyền mod thuộc về nminhios modz.TXT";
- const copyrightBytes=Uint8Array.from(atob("QuG6o24gcXV54buBbiBtb2QgdGh14buZYyB24buBIG5taW5oaW9zIG1vZHo="),c=>c.charCodeAt(0));
+ const copyrightName="Bản quyền mod thuộc về nminh ios.TXT";
+ const copyrightBytes=Uint8Array.from(atob("QuG6o24gcXV54buBbiBtb2QgdGh14buZYyB24buBIG5taW5oIGlvcw=="),c=>c.charCodeAt(0));
  const usedCodes=new Set();
  let lastCode;try{lastCode=localStorage.getItem("alok-last-export-code");}catch{}
  window.alokPackageDownload=(bytes,version)=>{
