@@ -99,15 +99,14 @@ THE SOFTWARE.
       <section class="stage" aria-label="Xem trước nhân vật Alok">
         <div class="stage-head"><span class="character-name">ALOK</span><span class="badge" id="preview-badge">XEM 3D</span></div>
         <div id="viewport">
-          <canvas id="web-skeleton-overlay" aria-hidden="true"></canvas>
           <span class="watermark" aria-hidden="true">ALOK</span>
           <img id="fallback" alt="Alok mặc bộ trang phục đang chọn">
           <div id="preview-message" class="preview-message" role="status">Đang mở Alok… Nếu khung xem trước không chạy, hãy tải file xuống và mở bằng Chrome hoặc Edge.</div>
         </div>
         <div class="stage-footer">
-          <p id="preview-hint" class="hint">Chạm vào nhân vật 3D để bật hoặc tắt độ trong suốt.</p>
+          <p id="preview-hint" class="hint">Dùng nút “Trong suốt” để bật hoặc tắt hiệu ứng cho riêng nhân vật.</p>
           <div class="view-tools">
-            <label class="small-button web-toggle"><input id="web-mode-toggle" type="checkbox"> Màng nhện</label>
+            <button class="small-button" id="character-transparency-toggle" type="button" aria-pressed="false" title="Bật hoặc tắt độ trong suốt của nhân vật">◐ Trong suốt</button>
             <button class="small-button" id="rotate" type="button" aria-pressed="false" title="Tự xoay nhân vật">↻ Xoay</button>
             <button class="small-button" id="front" type="button" title="Trở về góc nhìn phía trước">Đặt lại</button>
           </div>
@@ -744,56 +743,8 @@ self.onmessage=async event=>{
   #wardrobe-workspace .choice-card.active small { color:#465b91 !important; }
   .web-toggle { color:#304361 !important; background:rgba(255,255,255,.92) !important; border-color:#d5deed !important; }
 </style>
-<style id="web-mode-style">
-#web-skeleton-overlay{position:absolute!important;inset:0;z-index:2!important;width:100%;height:100%;pointer-events:none;display:none}
-#viewport.web-mode #web-skeleton-overlay{display:block}
-/* Fade the render modestly to suggest translucency without washing out the whole scene. */
-#viewport.web-mode canvas:not(#web-skeleton-overlay){opacity:.34;filter:saturate(.72)}
-#viewport.web-mode #fallback{opacity:.34}
-.web-toggle{display:inline-flex;align-items:center;gap:6px;cursor:pointer;user-select:none}
-.web-toggle input{accent-color:#3b5bdb;width:14px;height:14px}
-@media(max-width:520px){.web-toggle{font-size:10px;padding:8px 7px}}
-</style>
-<script id="web-mode-effect">
-(()=>{
- const viewport=document.getElementById('viewport'),overlay=document.getElementById('web-skeleton-overlay'),toggle=document.getElementById('web-mode-toggle');
- if(!viewport||!overlay||!toggle)return;
- const ctx=overlay.getContext('2d');
- function resize(){const r=viewport.getBoundingClientRect(),d=Math.min(window.devicePixelRatio||1,1.5);overlay.width=Math.max(1,Math.round(r.width*d));overlay.height=Math.max(1,Math.round(r.height*d));ctx.setTransform(d,0,0,d,0,0);}
- function draw(){
-  if(!toggle.checked)return;
-  const w=viewport.clientWidth,h=viewport.clientHeight;
-  const scale=Math.min(h*.74/307,w*.55/164);
-  ctx.clearRect(0,0,w,h);ctx.save();ctx.translate(w*.5,h*.52);ctx.scale(scale,scale);
-  const silhouette=new Path2D();
-  silhouette.moveTo(0,-150);silhouette.bezierCurveTo(24,-150,31,-126,25,-108);
-  silhouette.bezierCurveTo(39,-103,54,-96,63,-83);silhouette.lineTo(77,-31);
-  silhouette.bezierCurveTo(82,-17,76,-7,68,-10);silhouette.lineTo(48,-63);
-  silhouette.lineTo(40,-27);silhouette.lineTo(36,20);silhouette.lineTo(28,83);
-  silhouette.lineTo(23,143);silhouette.bezierCurveTo(22,157,8,157,5,144);
-  silhouette.lineTo(0,84);silhouette.lineTo(-5,144);silhouette.bezierCurveTo(-8,157,-22,157,-23,143);
-  silhouette.lineTo(-28,83);silhouette.lineTo(-36,20);silhouette.lineTo(-40,-27);
-  silhouette.lineTo(-48,-63);silhouette.lineTo(-68,-10);silhouette.bezierCurveTo(-76,-7,-82,-17,-77,-31);
-  silhouette.lineTo(-63,-83);silhouette.bezierCurveTo(-54,-96,-39,-103,-25,-108);
-  silhouette.bezierCurveTo(-31,-126,-24,-150,0,-150);silhouette.closePath();
-  ctx.strokeStyle='rgba(255,255,255,.48)';ctx.lineWidth=1.05;ctx.shadowColor='rgba(235,246,255,.22)';ctx.shadowBlur=2.2;ctx.stroke(silhouette);
-  // Filaments stay inside the character silhouette: light, human-shaped web instead of a large outer cage.
-  ctx.save();ctx.clip(silhouette);ctx.lineWidth=.62;ctx.strokeStyle='rgba(255,255,255,.34)';ctx.shadowBlur=1;
-  for(let y=-142;y<=145;y+=19){ctx.beginPath();ctx.moveTo(-82,y);ctx.bezierCurveTo(-32,y-7,32,y+7,82,y);ctx.stroke();}
-  for(let x=-76;x<=76;x+=17){ctx.beginPath();ctx.moveTo(x,-158);ctx.bezierCurveTo(x+Math.sin(x*.07)*9,-65,x-Math.sin(x*.05)*8,65,x,158);ctx.stroke();}
-  ctx.strokeStyle='rgba(255,255,255,.42)';ctx.lineWidth=.7;
-  for(const [x,y,rx,ry] of [[0,-128,24,25],[0,-70,53,30],[0,-12,35,31],[-48,-45,13,35],[48,-45,13,35],[-18,73,12,48],[18,73,12,48]]){
-   ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.stroke();
-  }
-  ctx.restore();ctx.restore();
- }
- function setMode(){viewport.classList.toggle('web-mode',toggle.checked);if(toggle.checked){resize();draw();}else{ctx.clearRect(0,0,overlay.width,overlay.height);}}
- toggle.addEventListener('change',setMode);
- if('ResizeObserver' in window)new ResizeObserver(()=>{if(toggle.checked){resize();draw();}}).observe(viewport);
- else window.addEventListener('resize',()=>{if(toggle.checked){resize();draw();}});
- setMode();
-})();
-</script>
+<style id="web-mode-style">#web-skeleton-overlay,.web-toggle{display:none!important}</style>
+
 
 
 <style id="nminhios-zalo-modal-style">
@@ -1340,11 +1291,11 @@ self.onmessage=async event=>{
   .web-toggle { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; color: #eaf5e7 !important; background: transparent !important; border: 1px solid rgba(201,255,87,.27) !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,.015) !important; backdrop-filter: blur(7px); }
   .web-toggle input { width: 14px; height: 14px; margin: 0; accent-color: var(--accent); }
   .web-toggle:has(input:checked) { color: var(--accent) !important; border-color: rgba(201,255,87,.65) !important; background: rgba(201,255,87,.07) !important; }
-  #viewport.web-mode canvas:not(#web-skeleton-overlay) { opacity: .40 !important; filter: saturate(.72); }
-  #viewport.web-mode #fallback { opacity: .40 !important; }
+  #viewport.web-mode canvas:not(#web-skeleton-overlay) { opacity: 1 !important; filter: none; }
+  #viewport.web-mode #fallback { opacity: 1 !important; }
   #web-skeleton-overlay { position: absolute !important; inset: 0; z-index: 2 !important; width: 100%; height: 100%; pointer-events: none; display: none; }
   #viewport.web-mode #web-skeleton-overlay { display: block; }
-  #viewport.character-transparent canvas:not(#web-skeleton-overlay), #viewport.character-transparent #fallback { opacity: .16 !important; filter: saturate(.55) brightness(1.18); transition: opacity .22s ease, filter .22s ease; }
+  #viewport.character-transparent canvas:not(#web-skeleton-overlay), #viewport.character-transparent #fallback { opacity: .72 !important; filter: saturate(.9) brightness(1.03); transition: opacity .22s ease, filter .22s ease; }
   #viewport.character-transparent::before { content: "ĐỘ TRONG SUỐT · BẬT"; position: absolute; z-index: 4; left: 16px; bottom: 15px; padding: 6px 9px; border: 1px solid rgba(201,255,87,.38); border-radius: 5px; color: var(--accent); background: rgba(8,15,16,.62); font-size: 9px; font-weight: 900; letter-spacing: .12em; pointer-events: none; backdrop-filter: blur(8px); }
   .panel { padding: clamp(19px,2.4vw,30px); }
   .panel-title { margin: 0 0 22px; color: #f1f6ef !important; font-size: 21px; line-height: 1.25; font-weight: 900; letter-spacing: -.035em; }
@@ -1504,66 +1455,25 @@ self.onmessage=async event=>{
 (() => {
   'use strict';
   const viewport = document.getElementById('viewport');
-  const toggle = document.getElementById('web-mode-toggle');
+  const toggle = document.getElementById('character-transparency-toggle');
   const previewBadge = document.getElementById('preview-badge');
   const hint = document.getElementById('preview-hint');
-  if (!viewport) return;
+  if (!viewport || !toggle) return;
 
   let transparencyOn = false;
-  let pointerStart = null;
-  const isPreviewSurface = (target) => target instanceof Element && (
-    target.matches('#fallback') || target.matches('#viewport canvas:not(#web-skeleton-overlay)')
-  );
   const setTransparency = (enabled) => {
     transparencyOn = Boolean(enabled);
     viewport.classList.toggle('character-transparent', transparencyOn);
     viewport.dataset.characterTransparent = transparencyOn ? 'true' : 'false';
+    toggle.setAttribute('aria-pressed', transparencyOn ? 'true' : 'false');
+    toggle.textContent = transparencyOn ? '◑ Trong suốt: Bật' : '◐ Trong suốt';
     if (previewBadge) previewBadge.textContent = transparencyOn ? 'TRONG SUỐT' : 'XEM 3D';
     if (hint) hint.textContent = transparencyOn
-      ? 'Độ trong suốt đang bật. Chạm nhân vật lần nữa để trở về bình thường.'
-      : 'Chạm vào nhân vật 3D để bật hoặc tắt độ trong suốt.';
+      ? 'Độ trong suốt đang bật cho riêng nhân vật.'
+      : 'Dùng nút “Trong suốt” để bật hoặc tắt hiệu ứng cho riêng nhân vật.';
   };
-  const decorateCanvas = () => {
-    viewport.querySelectorAll('canvas:not(#web-skeleton-overlay)').forEach((canvas) => {
-      if (!canvas.hasAttribute('aria-label')) canvas.setAttribute('aria-label', 'Nhân vật 3D. Chạm hoặc nhấp để bật hoặc tắt độ trong suốt.');
-      if (!canvas.hasAttribute('tabindex')) canvas.setAttribute('tabindex', '0');
-    });
-  };
-  decorateCanvas();
-  if ('MutationObserver' in window) {
-    new MutationObserver(decorateCanvas).observe(viewport, { childList: true, subtree: true });
-  }
 
-  viewport.addEventListener('pointerdown', (event) => {
-    if (!isPreviewSurface(event.target) || event.button > 0) { pointerStart = null; return; }
-    pointerStart = { x: event.clientX, y: event.clientY, time: performance.now(), id: event.pointerId, target: event.target };
-  }, { passive: true });
-  viewport.addEventListener('pointerup', (event) => {
-    if (!pointerStart || pointerStart.id !== event.pointerId) return;
-    const start = pointerStart;
-    pointerStart = null;
-    if (performance.now() - start.time > 700) return;
-    if (Math.hypot(event.clientX - start.x, event.clientY - start.y) > 9) return;
-    const rect = viewport.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    // Restrict the gesture to the central model area so edge gestures remain normal UI interactions.
-    if (x < rect.width * .18 || x > rect.width * .82 || y < rect.height * .08 || y > rect.height * .96) return;
-    setTransparency(!transparencyOn);
-  }, { passive: true });
-  viewport.addEventListener('pointercancel', () => { pointerStart = null; }, { passive: true });
-  viewport.addEventListener('keydown', (event) => {
-    if (!isPreviewSurface(event.target) || (event.key !== 'Enter' && event.key !== ' ')) return;
-    event.preventDefault();
-    setTransparency(!transparencyOn);
-  });
-  if (toggle) {
-    // Keep the existing checkbox / web overlay behavior, while allowing its button surface to stay transparent.
-    toggle.addEventListener('change', () => {
-      const label = toggle.closest('.web-toggle');
-      if (label) label.setAttribute('aria-label', toggle.checked ? 'Tắt hiệu ứng màng nhện' : 'Bật hiệu ứng màng nhện');
-    });
-  }
+  toggle.addEventListener('click', () => setTransparency(!transparencyOn));
   setTransparency(false);
 })();
 </script>
