@@ -153,6 +153,42 @@ THE SOFTWARE.
         </div>
       </section>
     </main>
+    <section id="nminh-voice-studio" aria-labelledby="nminh-voice-title">
+      <div class="nv-shell">
+        <div class="nv-hero">
+          <div class="nv-kicker"><span class="nv-live-dot"></span> NMINHIOS LAB · VOICE AI</div>
+          <h2 id="nminh-voice-title">Studio tạo giọng AI</h2>
+          <p>Tạo câu thoại, nghe thử, rồi nhúng PCM vào đúng resource của file mod. Không đổi tên các file dữ liệu gốc.</p>
+          <div class="nv-meta"><span>PCM mono · 16 kHz</span><span>Giới hạn slot: 2,832 giây</span><span>Văn bản được gửi tới API TTS.ai</span></div>
+        </div>
+        <div class="nv-card" id="nv-gate">
+          <div class="nv-step">01 <span>MỞ KHÓA TÍNH NĂNG</span></div>
+          <label for="nv-key">Key Voice AI</label>
+          <div class="nv-key-row"><input id="nv-key" type="password" autocomplete="off" spellcheck="false" placeholder="Nhập key mở khóa" aria-describedby="nv-gate-status"><button id="nv-unlock" type="button">Mở khóa</button></div>
+          <p class="nv-status" id="nv-gate-status" role="status" aria-live="polite">Nhập key để mở Studio Voice AI.</p>
+        </div>
+        <div class="nv-card" id="nv-workspace" hidden>
+          <div class="nv-step">02 <span>CHỌN GIỌNG VÀ SOẠN LỜI</span></div>
+          <div class="nv-fields nv-fields-three">
+            <div class="nv-field"><label for="nv-language">Ngôn ngữ</label><select id="nv-language"><option value="vi">Tiếng Việt</option><option value="en">English</option><option value="zh">中文</option><option value="ja">日本語</option><option value="ko">한국어</option><option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option></select></div>
+            <div class="nv-field"><label for="nv-voice">Giọng AI</label><select id="nv-voice" disabled><option value="">Đang tải danh sách giọng…</option></select></div>
+            <div class="nv-field nv-refresh-field"><label>&nbsp;</label><button class="nv-button nv-button-soft" type="button" id="nv-refresh-voices">Tải lại giọng</button></div>
+          </div>
+          <p id="nv-voices-status" class="nv-substatus" role="status" aria-live="polite">Danh sách giọng được lấy từ TTS.ai.</p>
+          <div class="nv-field nv-text-field"><label for="nv-text">Nội dung muốn nói <span id="nv-char-count">0/500</span></label><textarea id="nv-text" maxlength="500" rows="4" placeholder="Nhập câu thoại muốn giọng AI nói… Ví dụ: Xin chào, đây là NMINHIOS MODZ!" spellcheck="true"></textarea><p class="nv-help">Lưu ý: file mod chỉ có một slot thoại dài 2,832 giây. Câu ngắn sẽ giữ giọng tự nhiên hơn; câu dài sẽ được tăng tốc để vừa slot.</p></div>
+          <div class="nv-fields nv-fields-two">
+            <div class="nv-field"><label for="nv-speed">Tốc độ tạo giọng <strong id="nv-speed-value">1.0×</strong></label><input id="nv-speed" type="range" min="0.7" max="2" step="0.1" value="1"><div class="nv-range-labels"><span>Chậm</span><span>Nhanh</span></div></div>
+            <div class="nv-field"><label for="nv-style">Phong cách nói <span class="nv-optional">tùy chọn</span></label><input id="nv-style" maxlength="250" type="text" placeholder="Ví dụ: vui vẻ, rõ ràng, dứt khoát"><p class="nv-help">Tùy model, hướng dẫn phong cách có thể được hỗ trợ khác nhau.</p></div>
+          </div>
+          <div class="nv-actions"><button id="nv-generate" class="nv-button nv-button-primary" type="button" disabled><span aria-hidden="true">✦</span> Tạo giọng AI</button><button id="nv-cancel" class="nv-button nv-button-soft" type="button" hidden>Hủy tạo</button><a id="nv-download-preview" class="nv-button nv-button-soft" href="#" download="nminhios-voice-preview.wav" hidden>Tải WAV nghe thử</a></div>
+          <div id="nv-preview-wrap" class="nv-preview-wrap" hidden><div class="nv-preview-heading"><strong>Nghe thử giọng vừa tạo</strong><span id="nv-audio-duration">—</span></div><audio id="nv-audio" controls preload="none"></audio><p class="nv-help">Âm thanh nghe thử là bản AI vừa tạo. Khi áp dụng, hệ thống chuyển về PCM 16 kHz và giữ đúng độ dài của slot trong game.</p></div>
+          <div class="nv-apply-box"><div><strong>03 · ÁP DỤNG VÀ TẠO MOD</strong><p id="nv-apply-info">Tạo giọng và nghe thử trước, sau đó mới áp dụng vào file.</p></div><div class="nv-actions"><button id="nv-apply" class="nv-button nv-button-primary" type="button" disabled>Áp dụng vào file mod</button><button id="nv-reset" class="nv-button nv-button-danger" type="button">Khôi phục giọng gốc</button></div></div>
+          <div class="nv-actions nv-create-actions"><button id="nv-create-one" class="nv-button nv-button-create" type="button" disabled>Tạo file mod · phiên bản đang chọn</button><button id="nv-create-all" class="nv-button nv-button-soft" type="button" disabled>Tạo đủ 4 phiên bản</button></div>
+          <p class="nv-status" id="nv-main-status" role="status" aria-live="polite">Chưa tạo giọng AI.</p>
+          <div class="nv-footnote"><strong>Giới hạn dịch vụ:</strong> danh sách giọng và sinh thoại dùng API TTS.ai; hạn mức/các model khả dụng phụ thuộc dịch vụ bên ngoài. Văn bản được gửi tới TTS.ai để xử lý. Key mở khóa ở đây là khóa giao diện tĩnh, không thay thế xác thực phía máy chủ.</div>
+        </div>
+      </div>
+    </section>
     <noscript><p class="noscript">Bật JavaScript để chọn trang phục và tải file.</p></noscript>
     <footer><span>Dữ liệu Alok cho Android và iOS · Free Fire thường / MAX.</span><span>nminhios modz · 4 phiên bản.</span></footer>
   </div>
@@ -326,10 +362,61 @@ async function pack(base,patch,values,progress){
  position=64;for(const block of blocks){bundle.set(block.data,position);position+=block.data.length;}
  bundle.set(info,base.physicalSize-info.length);return bundle;
 }
+async function injectVoicePCM(base,values,input){
+ if(!input)return;
+ const pcm=input instanceof Uint8Array?input:new Uint8Array(input);
+ if(pcm.byteLength!==90624)throw Error('Audio tùy chỉnh không đúng kích thước PCM 90.624 byte. Hãy bấm Áp dụng lại.');
+ const resources=base?.fast?.resources||[];
+ const resource=resources.find(r=>r.size===538168&&r.name==='CAB-f8c3eb715f84f14b893995ea2dd8e798.resource');
+ if(!resource||!resource.key||!values[resource.key])throw Error('Không tìm thấy resource giọng nói trong phiên bản này.');
+ const packed=decode(values[resource.key]);
+ if(packed.length<6)throw Error('Dữ liệu resource nén không hợp lệ.');
+ const length=new Uint8Array(8);new DataView(length.buffer).setBigUint64(0,BigInt(resource.size),true);
+ const standard=join([packed.slice(0,5),length,packed.slice(5)]);
+ const rawResult=await new Promise((resolve,reject)=>LZMA_WORKER.decompress(standard,(result,error)=>{
+  if(error)return reject(Error('Không giải nén được resource giọng nói: '+String(error)));
+  const raw=typeof result==='string'?new TextEncoder().encode(result):Uint8Array.from(result);
+  if(raw.length!==resource.size)return reject(Error('Kích thước resource giọng nói không khớp.'));
+  resolve(raw);
+ }));
+ const raw=rawResult;const view=new DataView(raw.buffer,raw.byteOffset,raw.byteLength);
+ const tag=(at,n)=>String.fromCharCode(...raw.subarray(at,at+n));
+ let selected=null;
+ for(let off=0;off+12<=raw.length;off++){
+  if(tag(off,4)!=='RIFF'||tag(off+8,4)!=='WAVE')continue;
+  const riffSize=view.getUint32(off+4,true),riffEnd=off+8+riffSize;
+  if(riffEnd>raw.length||riffEnd<off+12)continue;
+  let pos=off+12,fmt=null,data=null;
+  while(pos+8<=riffEnd){
+   const chunkName=tag(pos,4),chunkSize=view.getUint32(pos+4,true),chunkData=pos+8;
+   if(chunkData+chunkSize>riffEnd)break;
+   if(chunkName==='fmt '&&chunkSize>=16)fmt={format:view.getUint16(chunkData,true),channels:view.getUint16(chunkData+2,true),rate:view.getUint32(chunkData+4,true),bits:view.getUint16(chunkData+14,true)};
+   if(chunkName==='data')data={offset:chunkData,size:chunkSize};
+   if(fmt&&data)break;
+   pos=chunkData+chunkSize+(chunkSize&1);
+  }
+  if(fmt&&data&&fmt.format===1&&fmt.channels===1&&fmt.rate===16000&&fmt.bits===16&&data.size===pcm.byteLength){selected={off,data};break;}
+ }
+ if(!selected)throw Error('Không xác thực được vùng WAV PCM 16 kHz trong resource. Đã hủy để tránh làm hỏng file.');
+ raw.set(pcm,selected.data.offset);
+ const custom=await new Promise((resolve,reject)=>LZMA_WORKER.compress(raw,2,(result,error)=>{
+  if(error)return reject(Error('Không nén lại được resource giọng nói: '+String(error)));
+  const bytes=Uint8Array.from(result);
+  if(bytes.length<14)return reject(Error('Kết quả nén resource không hợp lệ.'));
+  resolve(join([bytes.slice(0,5),bytes.slice(13)]));
+ }));
+ let binary='';for(let i=0;i<custom.length;i+=0x8000)binary+=String.fromCharCode(...custom.subarray(i,Math.min(i+0x8000,custom.length)));
+ values[resource.key]=btoa(binary);
+ // The worker is reused between exports, so invalidate the cached *compressed* block.
+ if(decoded.has(resource.key)){cacheBytes-=decoded.get(resource.key).length;decoded.delete(resource.key);}
+ rawDecoded.delete(resource.key);
+}
 self.onmessage=async event=>{
- const {id,base,objects,patches,version,compressed}=event.data;
+ const {id,base,objects,patches,version,compressed,voicePcm}=event.data;
  try{
-  postMessage({id,progress:10});const patch={};
+  postMessage({id,progress:10});
+  if(voicePcm){postMessage({id,progress:18});await injectVoicePCM(base,compressed,voicePcm);}
+  const patch={};
   for(const refs of patches)for(const [pid,key]of Object.entries(refs))patch[pid]=objects[key];
   const bundle=await pack(base,patch,compressed,p=>postMessage({id,progress:p}));postMessage({id,progress:80});
   const [os,game]=version.split('-');
@@ -366,13 +453,13 @@ self.onmessage=async event=>{
  }
  window.alokCancelExport=()=>{for(const w of workers.values())w.terminate();workers.clear();for(const task of pending.values())task.reject(new DOMException('Đã hủy tạo file','AbortError'));pending.clear();running.clear();};
  window.alokExport = (selection,version,progress) => {
-  const assets=window.alokWardrobe.assets;const voice='fish'; if(assets.characterId==='ignis'&&assets.itemCatalog.top[selection.top]?.id==='top-sasuke')return window.ignisIG38Export(assets,selection,version,progress);
+  const assets=window.alokWardrobe.assets;const voice='fish';const customVoicePcm=window.nminhCustomVoicePcm?new Uint8Array(window.nminhCustomVoicePcm):null;const voiceTag=customVoicePcm?(window.nminhVoiceBuildId||'custom'):'stock'; if(assets.characterId==='ignis'&&assets.itemCatalog.top[selection.top]?.id==='top-sasuke')return window.ignisIG38Export(assets,selection,version,progress);
   if((!assets.voiceProfile?.enabled||voice==='alok') && Object.keys(selection).every(k=>assets.itemCatalog[k]?.[selection[k]]?.default)){
    const original=assets.originals[version];if(!original||!assets.downloads[original.url])return Promise.reject(Error('Thiếu file gốc của nhân vật và phiên bản này.'));
    const binary=atob(assets.downloads[original.url]);const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));progress?.(100);return Promise.resolve(bytes);
   }
   const engine=assets.mixEngine;
-  const cacheKey=(assets.characterId||'alok')+'|'+voice+'|'+version+'|'+Object.keys(selection).sort().map(k=>assets.itemCatalog[k][selection[k]].id).join('|');
+  const cacheKey=(assets.characterId||'alok')+'|'+voice+'|'+voiceTag+'|'+version+'|'+Object.keys(selection).sort().map(k=>assets.itemCatalog[k][selection[k]].id).join('|');
   if(recent.has(cacheKey)){
    const bytes=recent.get(cacheKey);recent.delete(cacheKey);recent.set(cacheKey,bytes);
    progress?.(100);return Promise.resolve(bytes);
@@ -392,7 +479,7 @@ self.onmessage=async event=>{
   for(const block of blocks)compressed[block.key]=engine.compressed[block.key];
   const result=new Promise((resolve,reject)=>{
    const requestId=++id;
-   try{const worker=getWorker(version,assets.characterId);pending.set(requestId,{resolve,reject,progress,worker});worker.postMessage({id:requestId,base,objects,patches,version,compressed});}
+   try{const worker=getWorker(version,assets.characterId);pending.set(requestId,{resolve,reject,progress,worker});const message={id:requestId,base,objects,patches,version,compressed};if(customVoicePcm){message.voicePcm=customVoicePcm.buffer;worker.postMessage(message,[message.voicePcm]);}else worker.postMessage(message);}
    catch(error){pending.delete(requestId);reject(error);}
   }).then(bytes=>{
    recent.set(cacheKey,bytes);while(recent.size>4)recent.delete(recent.keys().next().value);
@@ -1654,6 +1741,39 @@ self.onmessage=async event=>{
   document.addEventListener('wheel', (e) => {
     if (e.ctrlKey || e.metaKey) e.preventDefault();
   }, { passive: false });
+})();
+</script>
+
+<style id="nminh-voice-studio-css">
+#nminh-voice-studio{padding:26px 0 20px;color:#14233b;font-family:inherit}#nminh-voice-studio *{box-sizing:border-box}#nminh-voice-studio [hidden]{display:none!important}.nv-shell{width:min(1120px,100% - 32px);margin:0 auto}.nv-hero{padding:26px 28px;border-radius:24px;background:radial-gradient(circle at 88% 6%,#dedaff 0,transparent 36%),linear-gradient(135deg,#10192d,#202a46 72%,#2d2857);color:#fff;box-shadow:0 18px 48px #18223c18}.nv-kicker{display:flex;align-items:center;gap:9px;color:#c4caff;font-size:11px;letter-spacing:.16em;font-weight:800}.nv-live-dot{display:inline-block;width:8px;height:8px;border-radius:99px;background:#b2f58d;box-shadow:0 0 0 4px #b2f58d22}.nv-hero h2{font-size:clamp(26px,4vw,38px);line-height:1.12;letter-spacing:-.035em;margin:14px 0 10px;color:#fff}.nv-hero p{max-width:750px;line-height:1.65;color:#d7deee;margin:0}.nv-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.nv-meta span{font-size:11px;border:1px solid #ffffff2d;border-radius:99px;background:#ffffff0c;padding:7px 10px;color:#e5e9fa}.nv-card{margin-top:14px;padding:22px;border:1px solid #e0e6f0;border-radius:20px;background:#fff;box-shadow:0 10px 30px #2030500a}.nv-step{display:flex;align-items:center;gap:10px;margin-bottom:16px;color:#5348c8;font-size:12px;font-weight:900;letter-spacing:.09em}.nv-step span{color:#1a2943}.nv-field,.nv-card>label{display:flex;flex-direction:column;gap:7px}.nv-card label{font-size:12px;font-weight:800;color:#273650}.nv-key-row{display:flex;gap:8px}.nv-key-row input{flex:1;min-width:0}.nv-key-row button,.nv-button{border:0;min-height:42px;border-radius:12px;padding:10px 15px;font-size:12px;line-height:1.35;font-weight:800;cursor:pointer;transition:transform .15s ease,opacity .15s ease,box-shadow .15s ease}.nv-key-row button,.nv-button-primary{background:#5145d9;color:#fff;box-shadow:0 6px 18px #5145d928}.nv-button-soft{background:#eef1f8;color:#25344f;border:1px solid #e0e6f1}.nv-button-danger{background:#fff1f1;color:#9f2525;border:1px solid #f3cccc}.nv-button-create{background:#17243d;color:#fff;box-shadow:0 8px 20px #14213a1c}.nv-button:hover,.nv-key-row button:hover{transform:translateY(-1px)}.nv-button:disabled,.nv-key-row button:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}.nv-card input:not([type=range]),.nv-card select,.nv-card textarea{width:100%;min-height:42px;border:1px solid #d6deea;border-radius:11px;background:#fbfcff;color:#17243b;padding:10px 12px;font:inherit;font-size:13px;outline:none}.nv-card input:focus,.nv-card select:focus,.nv-card textarea:focus{border-color:#7d72ee;box-shadow:0 0 0 3px #7d72ee1b}.nv-card textarea{resize:vertical;min-height:100px;line-height:1.55}.nv-fields{display:grid;gap:13px}.nv-fields-three{grid-template-columns:1fr 1.45fr auto;align-items:end}.nv-fields-two{grid-template-columns:1fr 1.3fr;margin-top:15px}.nv-refresh-field{min-width:128px}.nv-refresh-field .nv-button{width:100%}.nv-text-field{margin-top:14px}.nv-card label span{font-weight:500;color:#8792a7}.nv-card label #nv-char-count{float:right;font-variant-numeric:tabular-nums}.nv-card input[type=range]{width:100%;accent-color:#5145d9;margin:5px 0}.nv-range-labels{display:flex;justify-content:space-between;font-size:10px;color:#8993a5;margin-top:-4px}.nv-help,.nv-substatus{font-size:11px;line-height:1.55;color:#768398;margin:0}.nv-substatus{margin:10px 0 0}.nv-optional{font-size:10px}.nv-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}.nv-actions .nv-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;text-decoration:none}.nv-preview-wrap{margin-top:18px;border:1px solid #dfe5f0;border-radius:16px;background:#f8f9fd;padding:15px}.nv-preview-heading{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:12px;margin-bottom:10px}.nv-preview-heading span{font-size:11px;color:#66748c}.nv-preview-wrap audio{display:block;width:100%;height:42px}.nv-preview-wrap .nv-help{margin-top:7px}.nv-apply-box{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;background:#f5f6ff;border:1px solid #dfdfff;border-radius:16px;padding:15px;margin-top:18px}.nv-apply-box strong{font-size:12px;color:#29285d}.nv-apply-box p{font-size:11px;color:#68748b;line-height:1.5;margin:5px 0 0}.nv-apply-box .nv-actions{margin:0}.nv-create-actions{margin-top:14px}.nv-create-actions .nv-button{flex:1;min-width:190px}.nv-status{margin:14px 0 0;padding:10px 12px;border-radius:10px;background:#f3f5fa;color:#53627a;font-size:12px;line-height:1.55;overflow-wrap:anywhere}.nv-status[data-kind=error]{background:#fff0f0;color:#982f36}.nv-status[data-kind=success]{background:#eefaed;color:#236a38}.nv-footnote{margin-top:13px;font-size:10px;line-height:1.7;color:#808ba0}.nv-footnote strong{color:#58647a}@media(max-width:700px){#nminh-voice-studio{padding-top:17px}.nv-shell{width:calc(100% - 22px)}.nv-hero{padding:21px 18px;border-radius:19px}.nv-card{padding:16px;border-radius:16px}.nv-fields-three{grid-template-columns:1fr}.nv-refresh-field{min-width:0}.nv-fields-two{grid-template-columns:1fr}.nv-key-row{align-items:stretch}.nv-key-row button{padding:10px 12px}.nv-apply-box{align-items:stretch}.nv-apply-box .nv-actions{width:100%}.nv-apply-box .nv-button{flex:1}.nv-create-actions .nv-button{width:100%}.nv-meta{gap:6px}.nv-meta span{font-size:10px}}
+</style>
+<script id="nminh-voice-studio-script">
+(()=>{
+ 'use strict';
+ const $=id=>document.getElementById(id);
+ const API='https://api.tts.ai/v1';
+ const TARGET_RATE=16000,TARGET_SAMPLES=45312,TARGET_PCM_BYTES=TARGET_SAMPLES*2,TARGET_SECONDS=TARGET_SAMPLES/TARGET_RATE;
+ const KEY_HASH='f329309a9c06e8dd5b3c60d4973de075235a582478bcdaec3a8f30401942a70a';
+ const FREE_MODELS=new Set(['piper','vits','melotts','kokoro']);
+ const labels={vi:'Tiếng Việt',en:'English',zh:'中文',ja:'日本語',ko:'한국어',es:'Español',fr:'Français',de:'Deutsch'};
+ let voiceCache=new Map(),currentBlob=null,currentObjectUrl='',previewObjectUrl='',controller=null,unlocked=false;
+ const setStatus=(element,message,kind='')=>{element.textContent=message;element.dataset.kind=kind;};
+ const sleep=(ms,signal)=>new Promise((resolve,reject)=>{const timer=setTimeout(resolve,ms);if(signal)signal.addEventListener('abort',()=>{clearTimeout(timer);reject(new DOMException('Đã hủy tạo giọng','AbortError'));},{once:true});});
+ const hex=bytes=>Array.from(new Uint8Array(bytes),b=>b.toString(16).padStart(2,'0')).join('');
+ async function isValidKey(value){if(!crypto?.subtle)throw Error('Trình duyệt không hỗ trợ kiểm tra key. Hãy mở bằng Safari hoặc Chrome bản mới.');return hex(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value.trim())))===KEY_HASH;}
+ function revealWorkspace(){unlocked=true;$('nv-gate').hidden=true;$('nv-workspace').hidden=false;loadVoices($('nv-language').value).catch(()=>{});}
+ async function unlock(){const input=$('nv-key').value;if(!input.trim()){setStatus($('nv-gate-status'),'Bạn chưa nhập key.','error');return;}const button=$('nv-unlock');button.disabled=true;button.textContent='Đang kiểm tra…';try{if(await isValidKey(input)){try{sessionStorage.setItem('nminhios-voice-unlocked-v1','1')}catch{};$('nv-key').value='';setStatus($('nv-gate-status'),'Mở khóa thành công. Đang tải danh sách giọng AI.','success');revealWorkspace();}else setStatus($('nv-gate-status'),'Key không đúng. Vui lòng kiểm tra và nhập lại.','error');}catch(error){setStatus($('nv-gate-status'),error.message||'Không kiểm tra được key.','error')}finally{button.disabled=false;button.textContent='Mở khóa';}}
+ async function fetchVoices(language,force=false){if(!force&&voiceCache.has(language))return voiceCache.get(language);const response=await fetch(API+'/voices/?language='+encodeURIComponent(language),{method:'GET',cache:'no-store',headers:{'Accept':'application/json'}});if(!response.ok){let extra='';try{extra=(await response.text()).slice(0,180)}catch{};throw Error('API danh sách giọng trả lỗi HTTP '+response.status+(extra?': '+extra:''));}const data=await response.json();if(!Array.isArray(data.voices))throw Error('API trả về danh sách giọng không đúng định dạng.');const rows=data.voices.filter(v=>v&&v.id&&FREE_MODELS.has(String(v.model||v.model_id||'').toLowerCase())&&(!v.language||String(v.language).toLowerCase().startsWith(language)));if(!rows.length)throw Error('Hiện chưa có giọng miễn phí cho '+(labels[language]||language)+'. Hãy thử ngôn ngữ khác hoặc tải lại danh sách.');rows.sort((a,b)=>String(a.name||a.id).localeCompare(String(b.name||b.id),'vi'));voiceCache.set(language,rows);return rows;}
+ async function loadVoices(language,force=false){const select=$('nv-voice'),status=$('nv-voices-status');select.disabled=true;select.replaceChildren(new Option('Đang tải giọng…',''));setStatus(status,'Đang kết nối API TTS.ai để lấy giọng '+(labels[language]||language)+'…');try{const rows=await fetchVoices(language,force);select.replaceChildren();for(const voice of rows){const model=String(voice.model||voice.model_id).toLowerCase();const gender=voice.gender?({'female':'Nữ','male':'Nam','neutral':'Trung tính'}[String(voice.gender).toLowerCase()]||voice.gender):'';const option=new Option((voice.name||voice.id)+(gender?' · '+gender:'')+' · '+model,voice.id);option.dataset.model=model;option.dataset.language=voice.language||language;select.add(option);}select.disabled=false;setStatus(status,'Có '+rows.length+' giọng miễn phí cho '+(labels[language]||language)+'. Chọn giọng rồi nhập nội dung.','success');$('nv-generate').disabled=!select.value||!$('nv-text').value.trim();}catch(error){select.replaceChildren(new Option('Không tải được giọng',''));setStatus(status,(error instanceof TypeError?'Không kết nối được API. Hãy kiểm tra mạng, HTTPS và chính sách CORS của dịch vụ. ': '')+error.message,'error');$('nv-generate').disabled=true;}}
+ async function fetchResultAudio(response,signal){const contentType=(response.headers.get('content-type')||'').toLowerCase();if(!response.ok){let message='HTTP '+response.status;try{const body=await response.json();message=body.detail||body.message||body.error||message;}catch{}throw Error('TTS.ai từ chối yêu cầu: '+message);}if(contentType.startsWith('audio/')||contentType.includes('octet-stream'))return response.blob();const data=await response.json();if(data.error||data.status==='failed')throw Error(data.error||data.message||'Dịch vụ không tạo được giọng.');let resultUrl=data.result_url||data.audio_url||data.url;if(!resultUrl&&data.uuid){for(let attempt=0;attempt<80;attempt++){await sleep(1500,signal);setStatus($('nv-main-status'),'Đang chờ AI tạo giọng… '+Math.min(99,Math.round((attempt+1)/80*100))+'%');const poll=await fetch(API+'/speech/results/?uuid='+encodeURIComponent(data.uuid),{headers:{'Accept':'application/json'},cache:'no-store',signal});if(!poll.ok)throw Error('Không lấy được trạng thái job TTS (HTTP '+poll.status+').');const result=await poll.json();if(result.status==='failed')throw Error(result.error||result.message||'TTS.ai báo tạo giọng thất bại.');if(result.status==='completed'||result.result_url||result.audio_url){resultUrl=result.result_url||result.audio_url;break;}}}if(!resultUrl)throw Error('Chưa nhận được URL âm thanh từ API sau thời gian chờ.');const audioResponse=await fetch(resultUrl,{signal,cache:'no-store'});if(!audioResponse.ok)throw Error('Không tải được audio kết quả (HTTP '+audioResponse.status+').');return audioResponse.blob();}
+ async function generate(){const hadApplied=!!window.nminhCustomVoicePcm;const text=$('nv-text').value.trim(),voiceOption=$('nv-voice').selectedOptions[0],language=$('nv-language').value;if(!text){setStatus($('nv-main-status'),'Hãy nhập nội dung muốn nói trước.','error');return;}if(text.length>500){setStatus($('nv-main-status'),'Bản miễn phí giới hạn 500 ký tự cho một lần tạo.','error');return;}if(!voiceOption||!voiceOption.value||!voiceOption.dataset.model){setStatus($('nv-main-status'),'Hãy tải danh sách rồi chọn một giọng AI.','error');return;}if(!$('nv-style').value.trim()&&text.length>160)setStatus($('nv-main-status'),'Câu khá dài; giọng trong game sẽ phải tăng tốc nhiều để vừa slot 2,832 giây.');controller=new AbortController();const signal=controller.signal;$('nv-generate').disabled=true;$('nv-create-one').disabled=true;$('nv-create-all').disabled=true;$('nv-cancel').hidden=false;$('nv-cancel').disabled=false;currentBlob=null;$('nv-apply').disabled=true;$('nv-download-preview').hidden=true;$('nv-preview-wrap').hidden=true;setStatus($('nv-main-status'),'Đang gửi nội dung đến TTS.ai…');try{const body={model:voiceOption.dataset.model,text,voice:voiceOption.value,format:'mp3',speed:Number($('nv-speed').value),language};const style=$('nv-style').value.trim();if(style)body.instructions=style.slice(0,500);const response=await fetch(API+'/tts/',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json, audio/*'},body:JSON.stringify(body),signal});const blob=await fetchResultAudio(response,signal);if(!blob||!blob.size)throw Error('Dịch vụ trả về file âm thanh rỗng.');currentBlob=blob;if(currentObjectUrl)URL.revokeObjectURL(currentObjectUrl);currentObjectUrl=URL.createObjectURL(blob);$('nv-audio').onloadedmetadata=()=>{if(Number.isFinite($('nv-audio').duration))$('nv-audio-duration').textContent=$('nv-audio').duration.toFixed(2)+' giây · bản nghe thử';};$('nv-audio').src=currentObjectUrl;$('nv-preview-wrap').hidden=false;$('nv-audio-duration').textContent=(blob.size/1024).toFixed(1)+' KB · bản nghe thử';$('nv-download-preview').href=currentObjectUrl;$('nv-download-preview').hidden=false;$('nv-apply').disabled=false;setStatus($('nv-main-status'),'Đã tạo giọng AI. Hãy nghe thử; nếu ổn, bấm “Áp dụng vào file mod”.','success');}catch(error){setStatus($('nv-main-status'),error.name==='AbortError'?'Đã hủy tạo giọng.':(error instanceof TypeError?'Không gọi được TTS.ai. Hãy kiểm tra kết nối mạng/CORS. ': '')+(error.message||'Lỗi không xác định.'),'error');}finally{controller=null;$('nv-generate').disabled=!unlocked||$('nv-voice').disabled||!$('nv-voice').value||!$('nv-text').value.trim();if(!currentBlob&&hadApplied&&window.nminhCustomVoicePcm){$('nv-create-one').disabled=false;$('nv-create-all').disabled=false;}$('nv-cancel').hidden=true;$('nv-cancel').disabled=false;}}
+ function buildPreviewWav(pcm){const dataBytes=pcm.byteLength,buffer=new ArrayBuffer(44+dataBytes),view=new DataView(buffer),bytes=new Uint8Array(buffer);const write=(off,text)=>{for(let i=0;i<text.length;i++)bytes[off+i]=text.charCodeAt(i)};write(0,'RIFF');view.setUint32(4,36+dataBytes,true);write(8,'WAVE');write(12,'fmt ');view.setUint32(16,16,true);view.setUint16(20,1,true);view.setUint16(22,1,true);view.setUint32(24,TARGET_RATE,true);view.setUint32(28,TARGET_RATE*2,true);view.setUint16(32,2,true);view.setUint16(34,16,true);write(36,'data');view.setUint32(40,dataBytes,true);bytes.set(pcm,44);return new Blob([bytes],{type:'audio/wav'});}
+ async function blobToPcm(blob){const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)throw Error('Trình duyệt không hỗ trợ AudioContext. Hãy thử Chrome hoặc Safari mới.');const context=new AudioCtx();let audio;try{audio=await context.decodeAudioData(await blob.arrayBuffer());}catch{throw Error('Không giải mã được audio do dịch vụ trả về. Thử tạo lại hoặc chọn giọng khác.');}finally{try{await context.close()}catch{}}if(!audio.length||!audio.numberOfChannels)throw Error('Audio nguồn không có mẫu âm thanh.');const channels=Array.from({length:audio.numberOfChannels},(_,i)=>audio.getChannelData(i));const faster=audio.duration>TARGET_SECONDS;const samples=new Int16Array(TARGET_SAMPLES);let peak=0;for(let i=0;i<TARGET_SAMPLES;i++){let pos;if(faster)pos=i*(audio.length-1)/Math.max(1,TARGET_SAMPLES-1);else pos=i*audio.sampleRate/TARGET_RATE;if(pos>=audio.length)break;const a=Math.floor(pos),b=Math.min(audio.length-1,a+1),fraction=pos-a;let value=0;for(const channel of channels)value+=(channel[a]+(channel[b]-channel[a])*fraction)/channels.length;if(!Number.isFinite(value))value=0;samples[i]=0;peak=Math.max(peak,Math.abs(value));samples[i]=Math.max(-1,Math.min(1,value))*32767;}const gain=peak>0?Math.min(2.0,0.92/peak):1;const pcm=new Uint8Array(TARGET_PCM_BYTES),view=new DataView(pcm.buffer);for(let i=0;i<TARGET_SAMPLES;i++){const source=samples[i]/32767;const value=Math.max(-1,Math.min(1,source*gain));view.setInt16(i*2,Math.round(value<0?value*32768:value*32767),true);}return {pcm,shortened:faster,sourceDuration:audio.duration};}
+ async function applyVoice(){if(!currentBlob){setStatus($('nv-main-status'),'Hãy tạo và nghe thử giọng trước khi áp dụng.','error');return;}if(!$('mod-progress').hidden){setStatus($('nv-main-status'),'Đang xuất file mod. Hãy chờ xuất xong rồi mới đổi giọng.','error');return;}$('nv-apply').disabled=true;setStatus($('nv-main-status'),'Đang chuẩn hóa audio về PCM mono 16 kHz…');try{const out=await blobToPcm(currentBlob);if(out.pcm.byteLength!==TARGET_PCM_BYTES)throw Error('Kích thước PCM không đúng 90.624 byte.');window.nminhCustomVoicePcm=out.pcm;window.nminhVoiceBuildId='nv-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);const preview=buildPreviewWav(out.pcm);if(previewObjectUrl)URL.revokeObjectURL(previewObjectUrl);previewObjectUrl=URL.createObjectURL(preview);$('nv-download-preview').href=previewObjectUrl;$('nv-download-preview').download='nminhios-voice-preview.wav';$('nv-apply-info').textContent='Đã áp dụng giọng mới: '+TARGET_SECONDS.toFixed(3)+' giây. Audio sẽ được nhúng vào resource khi tạo file mod.';$('nv-create-one').disabled=false;$('nv-create-all').disabled=false;setStatus($('nv-main-status'),'Đã áp dụng audio mới vào phiên làm việc. '+(out.shortened?'Âm thanh dài '+out.sourceDuration.toFixed(2)+' giây đã được tăng tốc để vừa slot 2,832 giây.':'Phần còn thiếu trong slot được đệm im lặng.'),'success');}catch(error){setStatus($('nv-main-status'),error.message||'Không áp dụng được audio.','error');}finally{$('nv-apply').disabled=!currentBlob;}}
+ function restoreVoice(){delete window.nminhCustomVoicePcm;delete window.nminhVoiceBuildId;currentBlob=null;$('nv-audio').pause();$('nv-audio').removeAttribute('src');$('nv-audio').load();$('nv-preview-wrap').hidden=true;$('nv-download-preview').hidden=true;$('nv-apply').disabled=true;$('nv-create-one').disabled=true;$('nv-create-all').disabled=true;$('nv-apply-info').textContent='Đã bỏ audio tùy chỉnh. File mod sẽ dùng giọng gốc.';setStatus($('nv-main-status'),'Đã khôi phục giọng gốc cho các lần xuất tiếp theo.','success');}
+ function createMod(all){if(!window.nminhCustomVoicePcm){setStatus($('nv-main-status'),'Bạn cần bấm “Áp dụng vào file mod” trước.','error');return;}if(!$('mod-progress').hidden){setStatus($('nv-main-status'),'Một file mod đang được tạo; hãy chờ hoàn tất.','error');return;}const target=$(all?'download-all':'download');if(!target||target.disabled){setStatus($('nv-main-status'),'Nút xuất file hiện chưa sẵn sàng. Hãy chờ dữ liệu tải xong hoặc chọn lại trang phục.','error');return;}target.click();}
+ $('nv-unlock').addEventListener('click',unlock);$('nv-key').addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});$('nv-language').addEventListener('change',()=>loadVoices($('nv-language').value,true));$('nv-refresh-voices').addEventListener('click',()=>loadVoices($('nv-language').value,true));$('nv-text').addEventListener('input',()=>{$('nv-char-count').textContent=$('nv-text').value.length+'/500';$('nv-generate').disabled=!unlocked||$('nv-voice').disabled||!$('nv-voice').value||!$('nv-text').value.trim()});$('nv-speed').addEventListener('input',()=>{$('nv-speed-value').textContent=Number($('nv-speed').value).toFixed(1)+'×'});$('nv-generate').addEventListener('click',generate);$('nv-cancel').addEventListener('click',()=>{if(controller)controller.abort()});$('nv-apply').addEventListener('click',applyVoice);$('nv-reset').addEventListener('click',restoreVoice);$('nv-create-one').addEventListener('click',()=>createMod(false));$('nv-create-all').addEventListener('click',()=>createMod(true));
+ try{if(sessionStorage.getItem('nminhios-voice-unlocked-v1')==='1')revealWorkspace()}catch{}
 })();
 </script>
 
