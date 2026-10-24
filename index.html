@@ -228,60 +228,43 @@ THE SOFTWARE.
 </main>
 <section aria-labelledby="nminh-voice-title" id="nminh-voice-studio">
 <div class="nv-shell">
-<div class="nv-hero">
-<div class="nv-kicker"><span class="nv-live-dot"></span> NMINHIOS LAB · VOICE AI</div>
-<h2 id="nminh-voice-title">Studio tạo giọng AI</h2>
-<p>Tạo giọng tiếng Anh ngay trên thiết bị bằng Kokoro, hoặc tải file giọng có sẵn. Nghe thử, áp dụng rồi xuất mod; không cần API tạo giọng.</p>
-<div class="nv-meta"><span>PCM mono · 16 kHz</span><span>Độ dài slot: <strong id="nv-slot-duration">đang nhận diện…</strong></span><span>Kokoro Local · không cần API</span></div>
-</div>
-<div class="nv-card" id="nv-gate">
-<div class="nv-step">01 <span>MỞ KHÓA TÍNH NĂNG</span></div>
-<label for="nv-key">Key Voice AI</label>
-<div class="nv-key-row"><input aria-describedby="nv-gate-status" autocomplete="off" id="nv-key" placeholder="Nhập key mở khóa" spellcheck="false" type="password"/><button id="nv-unlock" type="button">Mở khóa</button></div>
-<p aria-live="polite" class="nv-status" id="nv-gate-status" role="status">Nhập key để mở Studio Voice AI.</p>
-</div>
-<div class="nv-card" hidden="" id="nv-workspace">
-<div class="nv-step">02 <span>CHỌN CÁCH THÊM ÂM THANH</span></div>
-<p class="nv-method-intro">Dùng file giọng có sẵn để thay trực tiếp, hoặc tạo giọng tiếng Anh ngay trên thiết bị. Bạn không cần API để nhập file audio.</p>
-<div class="nv-provider-card" hidden="">
-<div class="nv-field"><label for="nv-provider">Nguồn giọng AI</label><select id="nv-provider"><option selected="" value="local-kokoro">Kokoro Local · không cần API</option></select></div>
-<p class="nv-help" id="nv-provider-help">Chọn Kokoro Local để tạo giọng tiếng Anh trên thiết bị, không cần API key. Lần đầu cần tải model (~100 MB); text không gửi tới dịch vụ TTS.</p>
-</div>
+  <div class="nv-hero">
+    <div class="nv-kicker"><span class="nv-live-dot"></span> NMINHIOS LAB · AUDIO IMPORT</div>
+    <h2 id="nminh-voice-title">Studio âm thanh NMINHIOS</h2>
+    <p>Chỉ nhập file âm thanh có sẵn, nghe thử, chuẩn hóa thành PCM mono 16 kHz rồi áp dụng vào mod. Không gọi API TTS, không cần tải model AI.</p>
+    <div class="nv-meta"><span>Đầu ra: PCM mono · 16 kHz · 16-bit</span><span>Độ dài slot: <strong id="nv-slot-duration">đang nhận diện…</strong></span><span>Audio xử lý ngay trên thiết bị</span></div>
+  </div>
 
-<div class="nv-import-box">
-<div class="nv-import-heading"><span aria-hidden="true" class="nv-import-icon">♫</span><div><strong>CÁCH 1 · DÙNG FILE GIỌNG CÓ SẴN</strong><p>Tải MP3, WAV, M4A hoặc định dạng âm thanh tương thích. Hệ thống giải mã audio thật rồi chuyển sang PCM phù hợp với mod; không cần API.</p></div></div>
-<div class="nv-field"><label for="nv-audio-file">Chọn file âm thanh từ thiết bị</label><input accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.oga,.opus,.flac,.webm,.aif,.aiff,.caf,.3gp" id="nv-audio-file" aria-describedby="nv-audio-file-help" type="file"/><p class="nv-help" id="nv-audio-file-help">Nhận MP3, WAV, M4A/AAC, OGG/Opus, FLAC hoặc WebM nếu trình duyệt giải mã được (tối đa 50 MB). Đổi đuôi file không chuyển codec; hệ thống đọc và chuyển đổi dữ liệu âm thanh thật.</p></div>
-<p aria-live="polite" class="nv-import-meta" hidden="" id="nv-import-meta" role="status"></p>
-<div class="nv-actions"><button class="nv-button nv-button-soft" hidden="" id="nv-clear-import" type="button">Bỏ file đã chọn</button></div>
-</div>
-<div class="nv-subsection-kicker">CÁCH 2 · TẠO GIỌNG KOKORO TRÊN THIẾT BỊ</div><div class="nv-local-engine-card" hidden="" id="nv-local-engine-card"><div><strong>Giọng đọc chạy trên thiết bị</strong><p id="nv-local-engine-help">Lần đầu cần Internet để tải thư viện và model giọng (khoảng 100 MB hoặc hơn). Sau khi tải, Kokoro tạo âm thanh trên thiết bị; văn bản không gửi tới API TTS.</p></div><button class="nv-button nv-button-soft" id="nv-local-load" type="button">Tải model giọng</button></div>
-<div class="nv-fields nv-fields-three">
-<div class="nv-field"><label for="nv-language">Ngôn ngữ</label><select aria-label="Ngôn ngữ tạo giọng (Kokoro hiện chỉ hỗ trợ tiếng Anh)" id="nv-language"><option selected="" value="en">English · Kokoro Local</option></select></div>
-<div class="nv-field"><label for="nv-voice">Giọng AI</label><select disabled="" id="nv-voice"><option value="">Đang tải danh sách giọng…</option></select></div>
-<div class="nv-field nv-refresh-field"><label> </label><button class="nv-button nv-button-soft" id="nv-refresh-voices" type="button">Tải lại giọng</button></div>
-</div>
-<div class="nv-field nv-api-key-field" hidden="" id="nv-tts-key-field"><label for="nv-api-key">TTS.ai API Key <span class="nv-optional">tùy chọn · để mở thêm model nâng cao</span></label><input autocomplete="off" id="nv-api-key" placeholder="Để trống để dùng model miễn phí" spellcheck="false" type="password"/><p class="nv-help">API key riêng của bạn, không phải key mở khóa Studio. Chỉ nhập nếu bạn đã có tài khoản TTS.ai; key không được lưu vào localStorage hoặc ghi vào file.</p></div>
-<div class="nv-field nv-eleven-key-field" hidden="" id="nv-eleven-key-field"><label for="nv-eleven-api-key">ElevenLabs API Key <span class="nv-optional">bắt buộc để dùng Adam/ElevenLabs</span></label><input autocomplete="off" id="nv-eleven-api-key" placeholder="Dán API key ElevenLabs của bạn" spellcheck="false" type="password"/><p class="nv-help">Key chỉ nằm trong bộ nhớ trang và được gửi qua HTTPS tới ElevenLabs để tải giọng/tạo audio; không lưu vào localStorage hoặc file. Phí và quyền truy cập phụ thuộc tài khoản của bạn.</p></div>
-<div class="nv-fields nv-voice-filters">
-<div class="nv-field" hidden="" id="nv-model-field"><label for="nv-model">Bộ máy giọng</label><select id="nv-model"><option value="">Tất cả model khả dụng</option><option value="kokoro">Kokoro · tự nhiên</option><option value="piper">Piper · nhanh</option><option value="vits">VITS</option><option value="melotts">MeloTTS · đa ngôn ngữ</option></select></div>
-<div class="nv-field"><label for="nv-voice-search">Tìm tên giọng</label><input aria-label="Tìm giọng theo tên" autocomplete="off" id="nv-voice-search" placeholder="Adam, Bella, Rachel…" spellcheck="false" type="search"/></div>
-<div class="nv-field"><label for="nv-gender">Chất giọng</label><select aria-label="Lọc theo giới tính giọng" id="nv-gender"><option value="">Tất cả</option><option value="female">Nữ</option><option value="male">Nam</option></select></div>
-<div class="nv-field nv-sample-action"><label> </label><button class="nv-button nv-button-soft" disabled="" id="nv-preview-voice" type="button">▶ Nghe mẫu giọng</button></div>
-</div>
-<div class="nv-voice-sample-wrap" hidden="" id="nv-voice-sample-wrap"><audio controls="" id="nv-voice-sample" preload="none"></audio><p class="nv-help" id="nv-voice-sample-status">Mẫu được tạo ngay trên thiết bị bằng Kokoro Local.</p></div>
-<p aria-live="polite" class="nv-substatus" id="nv-voices-status" role="status">Danh sách giọng Kokoro có sẵn trên thiết bị. Chọn giọng, nghe mẫu và nhập câu thoại tiếng Anh.</p>
-<div class="nv-field nv-text-field"><label for="nv-text">Nội dung muốn nói <span id="nv-char-count">0/500</span></label><textarea id="nv-text" maxlength="500" placeholder="Nhập câu tiếng Anh muốn nói… Ví dụ: Hello, this is NMINHIOS MODZ!" rows="4" spellcheck="true"></textarea><p class="nv-help">Lưu ý: độ dài slot được đọc từ resource âm thanh của bản mod hiện tại. Câu ngắn sẽ giữ giọng tự nhiên hơn; câu dài sẽ được tăng tốc để vừa slot.</p></div>
-<div class="nv-fields nv-fields-two">
-<div class="nv-field"><label for="nv-speed">Tốc độ tạo giọng <strong id="nv-speed-value">1.0×</strong></label><input aria-label="Tốc độ tạo giọng" id="nv-speed" max="2" min="0.7" step="0.1" type="range" value="1"/><div class="nv-range-labels"><span>Chậm</span><span>Nhanh</span></div></div>
-<div class="nv-field" hidden=""><label for="nv-style">Phong cách nói <span class="nv-optional">tùy chọn</span></label><input id="nv-style" maxlength="250" placeholder="Ví dụ: vui vẻ, rõ ràng, dứt khoát" type="text"/><p class="nv-help" id="nv-style-help">TTS.ai gửi hướng dẫn phong cách cho các model có hỗ trợ. Khi dùng ElevenLabs, lựa chọn phong cách sẽ ảnh hưởng nhẹ tới độ biểu cảm; mức hỗ trợ phụ thuộc voice/model.</p></div>
-</div>
-<div class="nv-actions"><button class="nv-button nv-button-primary" disabled="" id="nv-generate" type="button"><span aria-hidden="true">✦</span> Tạo giọng trên thiết bị</button><button class="nv-button nv-button-soft" hidden="" id="nv-cancel" type="button">Hủy tạo</button><a class="nv-button nv-button-soft" download="nminhios-voice-preview.wav" hidden="" href="#" id="nv-download-preview">Tải WAV nghe thử</a></div>
-<div class="nv-preview-wrap" hidden="" id="nv-preview-wrap"><div class="nv-preview-heading"><strong id="nv-preview-heading-title">Nghe thử giọng vừa tạo</strong><span id="nv-audio-duration">—</span></div><audio controls="" id="nv-audio" preload="none"></audio><p class="nv-help" id="nv-preview-help">Nghe bản gốc trước. Khi áp dụng, âm thanh được chuyển thành PCM mono 16 kHz/16-bit và khớp chính xác kích thước slot trong resource.</p></div>
-<div class="nv-apply-box"><div><strong>03 · ÁP DỤNG VÀ TẠO MOD</strong><p id="nv-apply-info">Tạo giọng hoặc tải file âm thanh lên, nghe thử rồi áp dụng trước khi xuất mod.</p></div><div class="nv-actions"><button class="nv-button nv-button-primary" disabled="" id="nv-apply" type="button">Áp dụng vào file mod</button><button class="nv-button nv-button-danger" id="nv-reset" type="button">Dùng lại giọng gốc</button></div></div>
-<div class="nv-actions nv-create-actions"><button class="nv-button nv-button-create" disabled="" id="nv-create-one" type="button">Xuất mod · phiên bản đang chọn</button><button class="nv-button nv-button-soft" disabled="" id="nv-create-all" type="button">Xuất đủ 4 phiên bản</button></div>
-<p aria-live="polite" class="nv-status" id="nv-main-status" role="status">Chưa tạo giọng AI.</p>
-<div class="nv-footnote"><strong>Lưu ý: </strong>Kokoro Local tạo giọng tiếng Anh và cần tải model lần đầu. Để dùng tiếng Việt hoặc giọng đã có sẵn, chọn file âm thanh ở “Cách 1”. Sau khi nghe thử, bấm “Áp dụng vào file mod” rồi mới xuất bản mod.</div>
-</div>
+  <div class="nv-card" id="nv-gate">
+    <div class="nv-step">01 <span>MỞ KHÓA CHỨC NĂNG NHẬP AUDIO</span></div>
+    <label for="nv-key">Key Voice Studio</label>
+    <div class="nv-key-row"><input aria-describedby="nv-gate-status" autocomplete="off" id="nv-key" placeholder="Nhập key mở khóa" spellcheck="false" type="password"/><button id="nv-unlock" type="button">Mở khóa</button></div>
+    <p aria-live="polite" class="nv-status" id="nv-gate-status" role="status">Nhập key để mở chức năng nhập và áp dụng audio. Key không được lưu vào trình duyệt.</p>
+  </div>
+
+  <div class="nv-card" hidden id="nv-workspace">
+    <div class="nv-step">02 <span>CHỌN FILE ÂM THANH</span></div>
+    <div class="nv-import-box">
+      <div class="nv-import-heading"><span aria-hidden="true" class="nv-import-icon">♫</span><div><strong>DÙNG FILE GIỌNG CÓ SẴN</strong><p>Chọn MP3, WAV hoặc định dạng tương thích. File được giải mã thật trên thiết bị, không chỉ đổi đuôi tên file.</p></div></div>
+      <div class="nv-field"><label for="nv-audio-file">Chọn file âm thanh từ thiết bị</label><input accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.oga,.opus,.flac,.webm,.aif,.aiff,.caf,.3gp" id="nv-audio-file" aria-describedby="nv-audio-file-help" type="file"/><p class="nv-help" id="nv-audio-file-help">Tối đa 50 MB. Hỗ trợ MP3, WAV, M4A/AAC, OGG/Opus, FLAC hoặc WebM nếu trình duyệt giải mã được. Nếu file quá dài so với slot của game, hệ thống sẽ nén thời lượng để vừa slot.</p></div>
+      <p aria-live="polite" class="nv-import-meta" hidden id="nv-import-meta" role="status"></p>
+      <div class="nv-actions"><button class="nv-button nv-button-soft" hidden id="nv-clear-import" type="button">Bỏ file đã chọn</button></div>
+    </div>
+
+    <div aria-live="polite" class="nv-task-progress" hidden id="nv-task-progress" role="status">
+      <div class="nv-task-progress-head"><strong id="nv-task-progress-title">Đang xử lý…</strong><span id="nv-task-progress-percent">Đang chạy…</span></div>
+      <progress aria-label="Tiến trình xử lý âm thanh" id="nv-task-progress-bar" max="100"></progress>
+      <p id="nv-task-progress-detail">Đang xử lý dữ liệu âm thanh.</p>
+      <div class="nv-task-progress-meta"><span id="nv-task-elapsed">Đã chạy 0 giây</span><span id="nv-task-progress-stage">Xử lý trên thiết bị</span></div>
+    </div>
+
+    <div class="nv-preview-wrap" hidden id="nv-preview-wrap"><div class="nv-preview-heading"><strong id="nv-preview-heading-title">Nghe thử audio</strong><span id="nv-audio-duration">—</span></div><audio controls id="nv-audio" preload="none"></audio><p class="nv-help" id="nv-preview-help">Nghe thử file trước khi áp dụng.</p><div class="nv-actions"><a class="nv-button nv-button-soft" download="nminhios-audio.wav" hidden href="#" id="nv-download-preview">Tải audio</a></div></div>
+
+    <div class="nv-apply-box"><div><strong>03 · ÁP DỤNG VÀ TẠO MOD</strong><p id="nv-apply-info">Chọn file âm thanh, nghe thử, sau đó áp dụng để chuẩn hóa PCM cho mod.</p></div><div class="nv-actions"><button class="nv-button nv-button-primary" disabled id="nv-apply" type="button">Áp dụng vào file mod</button><button class="nv-button nv-button-danger" id="nv-reset" type="button">Dùng lại giọng gốc</button></div></div>
+    <div class="nv-actions nv-create-actions"><button class="nv-button nv-button-create" disabled id="nv-create-one" type="button">Xuất mod · phiên bản đang chọn</button><button class="nv-button nv-button-soft" disabled id="nv-create-all" type="button">Xuất đủ 4 phiên bản</button></div>
+    <p aria-live="polite" class="nv-status" id="nv-main-status" role="status">Chưa chọn file âm thanh.</p>
+    <p class="nv-help nv-security-note"><strong>Quyền riêng tư:</strong> việc chọn, nghe, chuyển đổi và áp dụng audio đều chạy trong trình duyệt; Voice Studio không gọi dịch vụ TTS hoặc gửi file âm thanh lên máy chủ.</p>
+  </div>
 </div>
 </section>
 <noscript><p class="noscript">Bật JavaScript để chọn trang phục và tải file.</p></noscript>
@@ -1893,321 +1876,128 @@ self.onmessage=async event=>{
 </style>
 <script id="nminh-voice-studio-script">
 (()=>{
- 'use strict';
- const $=id=>document.getElementById(id);
- const API='https://api.tts.ai/v1';
- const ELEVEN_API='https://api.elevenlabs.io/v1';
- const KOKORO_MODEL='onnx-community/Kokoro-82M-v1.0-ONNX';
- const LOCAL_KOKORO_VOICES=[
-  ['af_heart','Heart · Nữ Mỹ','female'],['af_alloy','Alloy · Nữ Mỹ','female'],['af_aoede','Aoede · Nữ Mỹ','female'],['af_bella','Bella · Nữ Mỹ','female'],['af_jessica','Jessica · Nữ Mỹ','female'],['af_kore','Kore · Nữ Mỹ','female'],['af_nicole','Nicole · Nữ Mỹ','female'],['af_nova','Nova · Nữ Mỹ','female'],['af_river','River · Nữ Mỹ','female'],['af_sarah','Sarah · Nữ Mỹ','female'],['af_sky','Sky · Nữ Mỹ','female'],['am_adam','Adam · Nam Mỹ','male'],['am_echo','Echo · Nam Mỹ','male'],['am_eric','Eric · Nam Mỹ','male'],['am_fenrir','Fenrir · Nam Mỹ','male'],['am_liam','Liam · Nam Mỹ','male'],['am_michael','Michael · Nam Mỹ','male'],['am_onyx','Onyx · Nam Mỹ','male'],['am_puck','Puck · Nam Mỹ','male'],['am_santa','Santa · Nam Mỹ','male'],['bf_alice','Alice · Nữ Anh','female'],['bf_emma','Emma · Nữ Anh','female'],['bf_isabella','Isabella · Nữ Anh','female'],['bf_lily','Lily · Nữ Anh','female'],['bm_daniel','Daniel · Nam Anh','male'],['bm_fable','Fable · Nam Anh','male'],['bm_george','George · Nam Anh','male'],['bm_lewis','Lewis · Nam Anh','male']
- ];
- let localKokoro=null,localKokoroPromise=null,localSampleObjectUrl='';
-  const TARGET_RATE=16000,DEFAULT_TARGET_SECONDS=2.832;
+  'use strict';
+  const $=id=>document.getElementById(id);
+  const TARGET_RATE=16000, DEFAULT_TARGET_SECONDS=2.832, MAX_FILE_BYTES=50*1024*1024;
+  // PBKDF2 verifier only: the unlock phrase itself is not embedded in the page.
+  // This client-side gate is deterrence, not server-grade authorization.
+  const KEY_KDF=Object.freeze({version:3,saltHex:'90dc74eeaa396fb4bea1d92977661f39',rounds:350000,digestHex:'d50cd4d6ca9bd002de145876a8406b46f9a835ec6186b6e50f5e9d580b89d1c0'});
+  let unlocked=false, failedAttempts=0, blockedUntil=0;
+  let currentBlob=null,currentSource='',currentObjectUrl='',previewObjectUrl='',audioImporting=false;
+  let taskTimer=null,taskStarted=0,taskMode='idle';
+
+  const setStatus=(el,msg,kind='')=>{if(!el)return;el.textContent=msg;el.dataset.kind=kind;};
+  const elapsedLabel=ms=>{const s=Math.max(0,Math.floor(ms/1000));return s<60?`Đã chạy ${s} giây`:`Đã chạy ${Math.floor(s/60)} phút ${String(s%60).padStart(2,'0')} giây`;};
+  function progressStart(title,detail){
+    clearInterval(taskTimer);taskStarted=Date.now();taskMode='running';
+    const box=$('nv-task-progress'),bar=$('nv-task-progress-bar');box.hidden=false;box.dataset.kind='';bar.removeAttribute('value');
+    $('nv-task-progress-title').textContent=title;$('nv-task-progress-percent').textContent='Đang chạy…';$('nv-task-progress-detail').textContent=detail;$('nv-task-elapsed').textContent='Đã chạy 0 giây';$('nv-task-progress-stage').textContent='Xử lý trên thiết bị';
+    taskTimer=setInterval(()=>{$('nv-task-elapsed').textContent=elapsedLabel(Date.now()-taskStarted);if(Date.now()-taskStarted>30000)$('nv-task-progress-stage').textContent='Đang xử lý; thời gian tùy dung lượng file và thiết bị';},500);
+  }
+  function progressStep(pct,title,detail){const bar=$('nv-task-progress-bar');bar.value=Math.max(0,Math.min(100,pct));$('nv-task-progress-percent').textContent=Math.round(pct)+'%';$('nv-task-progress-title').textContent=title;$('nv-task-progress-detail').textContent=detail;}
+  function progressDone(title,detail){clearInterval(taskTimer);taskTimer=null;taskMode='done';const box=$('nv-task-progress'),bar=$('nv-task-progress-bar');box.hidden=false;box.dataset.kind='success';bar.value=100;$('nv-task-progress-title').textContent=title;$('nv-task-progress-percent').textContent='100%';$('nv-task-progress-detail').textContent=detail;$('nv-task-elapsed').textContent=elapsedLabel(Date.now()-taskStarted);$('nv-task-progress-stage').textContent='Hoàn tất';setTimeout(()=>{if(taskMode==='done')box.hidden=true;},3500);}
+  function progressFail(title,detail){clearInterval(taskTimer);taskTimer=null;taskMode='error';const box=$('nv-task-progress'),bar=$('nv-task-progress-bar');box.hidden=false;box.dataset.kind='error';bar.removeAttribute('value');$('nv-task-progress-title').textContent=title;$('nv-task-progress-percent').textContent='Lỗi';$('nv-task-progress-detail').textContent=detail;$('nv-task-elapsed').textContent=elapsedLabel(Date.now()-taskStarted);$('nv-task-progress-stage').textContent='Có thể thử lại';}
+  function releaseUrl(url){if(url){try{URL.revokeObjectURL(url);}catch{}}}
   async function getTargetConfig(){
-    // Wait for the current game data so the voice length follows the actual resource,
-    // including installations where the slot was previously extended to 3.226125 seconds.
-    if(window.alokBoot&&typeof window.alokBoot.then==='function'){
-      try{await window.alokBoot;}catch{}
-    }
+    if(window.alokBoot&&typeof window.alokBoot.then==='function'){try{await window.alokBoot;}catch{}}
     const profile=window.alokWardrobe?.assets?.voiceProfile||window.__alokPackedAssets?.voiceProfile;
-    const reported=Number(profile?.duration);
-    const seconds=Number.isFinite(reported)&&reported>=0.5&&reported<=15?reported:DEFAULT_TARGET_SECONDS;
-    const samples=Math.max(1,Math.round(seconds*TARGET_RATE));
-    return {rate:TARGET_RATE,samples,bytes:samples*2,seconds:samples/TARGET_RATE};
+    const reported=Number(profile?.duration);const seconds=Number.isFinite(reported)&&reported>=0.5&&reported<=15?reported:DEFAULT_TARGET_SECONDS;
+    const samples=Math.max(1,Math.round(seconds*TARGET_RATE));return{rate:TARGET_RATE,samples,bytes:samples*2,seconds:samples/TARGET_RATE};
   }
- // Verifier một chiều PBKDF2-SHA-256: không lưu key gốc trong HTML.
- // Salt + digest có thể công khai; PBKDF2 làm chậm dò thử so với SHA-256 đơn.
- const KEY_KDF=Object.freeze({version:2,saltHex:'1ef20925f7516bf0f5518cee0ef123c5',rounds:350000,digestHex:'4a8e0d2740293ba404d4930a25571abd2e1c71c216168acce0b7ae7eca0ff287'});
- const FREE_MODELS=new Set(['piper','vits','melotts','kokoro']);
- const labels={vi:'Tiếng Việt',en:'English',zh:'中文',ja:'日本語',ko:'한국어',es:'Español',fr:'Français',de:'Deutsch',it:'Italiano',pt:'Português',hi:'हिन्दी',ru:'Русский',ar:'العربية',nl:'Nederlands',pl:'Polski',uk:'Українська',tr:'Türkçe',da:'Dansk',fi:'Suomi',el:'Ελληνικά',hu:'Magyar',cs:'Čeština'};
- let voiceCache=new Map(),currentBlob=null,currentSource='tts',currentObjectUrl='',previewObjectUrl='',controller=null,unlocked=false,voiceLoadSerial=0,audioImporting=false;
- const setStatus=(element,message,kind='')=>{element.textContent=message;element.dataset.kind=kind;};
- const syncGenerateButton=()=>{const button=$('nv-generate'),voice=$('nv-voice'),text=$('nv-text');if(!button||!voice||!text)return;const imported=currentSource==='upload'&&!!currentBlob;button.disabled=!unlocked||audioImporting||imported||voice.disabled||!voice.value||!text.value.trim();};
- const getTtsApiKey=()=>String($('nv-api-key')?.value||'').trim();
- const getElevenApiKey=()=>String($('nv-eleven-api-key')?.value||'').trim();
- const activeProvider=()=>String($('nv-provider')?.value||'ttsai');
- const sleep=(ms,signal)=>new Promise((resolve,reject)=>{const timer=setTimeout(resolve,ms);if(signal)signal.addEventListener('abort',()=>{clearTimeout(timer);reject(new DOMException('Đã hủy tạo giọng','AbortError'));},{once:true});});
- const hex=bytes=>Array.from(new Uint8Array(bytes),b=>b.toString(16).padStart(2,'0')).join('');
- async function isValidKey(value){
-   const subtle=window.crypto&&window.crypto.subtle;
-   if(!subtle)throw Error('Trình duyệt không hỗ trợ kiểm tra key an toàn. Hãy mở website bằng HTTPS trên Safari hoặc Chrome bản mới.');
-   const material=await subtle.importKey('raw',new TextEncoder().encode(String(value).trim()),'PBKDF2',false,['deriveBits']);
-   const salt=Uint8Array.from(KEY_KDF.saltHex.match(/.{2}/g),part=>parseInt(part,16));
-   const derived=await subtle.deriveBits({name:'PBKDF2',salt,iterations:KEY_KDF.rounds,hash:'SHA-256'},material,256);
-   const candidate=hex(derived),expected=KEY_KDF.digestHex;
-   if(candidate.length!==expected.length)return false;
-   let diff=0;for(let i=0;i<candidate.length;i++)diff|=candidate.charCodeAt(i)^expected.charCodeAt(i);
-   return diff===0;
- }
- function revealWorkspace(){unlocked=true;$('nv-gate').hidden=true;$('nv-workspace').hidden=false;loadVoices($('nv-language').value).catch(()=>{});}
- async function unlock(){const input=$('nv-key').value;if(!input.trim()){setStatus($('nv-gate-status'),'Bạn chưa nhập key.','error');return;}const button=$('nv-unlock');button.disabled=true;button.setAttribute('aria-busy','true');button.textContent='Đang xác thực…';try{if(await isValidKey(input)){$('nv-key').value='';setStatus($('nv-gate-status'),'Xác thực thành công. Đang tải danh sách giọng AI.','success');revealWorkspace();}else setStatus($('nv-gate-status'),'Key không đúng. Vui lòng kiểm tra và nhập lại.','error');}catch(error){setStatus($('nv-gate-status'),error.message||'Không kiểm tra được key.','error')}finally{button.disabled=false;button.removeAttribute('aria-busy');button.textContent='Mở khóa';}}
-  async function fetchVoices(language,force=false){
-    const apiKey=getTtsApiKey(),cacheKey=language+'|'+(apiKey?'account':'free');
-    if(!force&&voiceCache.has(cacheKey))return voiceCache.get(cacheKey);
-    const headers={'Accept':'application/json'};if(apiKey)headers.Authorization='Bearer '+apiKey;
-    const response=await fetch(API+'/voices/?language='+encodeURIComponent(language),{method:'GET',cache:'no-store',headers});
-    if(!response.ok){let extra='';try{extra=(await response.text()).slice(0,180)}catch{};throw Error('API danh sách giọng trả lỗi HTTP '+response.status+(extra?': '+extra:''));}
-    const data=await response.json();if(!Array.isArray(data.voices))throw Error('API trả về danh sách giọng không đúng định dạng.');
-    const rows=data.voices.filter(v=>v&&v.id&&(apiKey||FREE_MODELS.has(String(v.model||v.model_id||'').toLowerCase()))&&(!v.language||String(v.language).toLowerCase().startsWith(language.toLowerCase())));
-    rows.sort((a,b)=>String(a.name||a.id).localeCompare(String(b.name||b.id),'vi'));
-    // Put common readable voices near the top so users do not need to search a long list.
-    rows.sort((a,b)=>{const rank=v=>/\badam\b|am_adam/i.test(String(v.name||'')+' '+String(v.id||''))?-2:/\bheart\b|\bbella\b/i.test(String(v.name||'')+' '+String(v.id||''))?-1:0;return rank(a)-rank(b)||String(a.name||a.id).localeCompare(String(b.name||b.id),'vi');});
-    voiceCache.set(cacheKey,rows);return rows;
+  function hex(bytes){return Array.from(new Uint8Array(bytes),b=>b.toString(16).padStart(2,'0')).join('');}
+  async function verifyKey(value){
+    if(!window.crypto?.subtle)throw Error('Trình duyệt không hỗ trợ kiểm tra key an toàn. Hãy mở website qua HTTPS bằng Safari/Chrome mới.');
+    const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(String(value).trim()),'PBKDF2',false,['deriveBits']);
+    const salt=Uint8Array.from(KEY_KDF.saltHex.match(/.{2}/g),x=>parseInt(x,16));
+    const derived=hex(await crypto.subtle.deriveBits({name:'PBKDF2',salt,iterations:KEY_KDF.rounds,hash:'SHA-256'},material,256));
+    if(derived.length!==KEY_KDF.digestHex.length)return false;let diff=0;
+    for(let i=0;i<derived.length;i++)diff|=derived.charCodeAt(i)^KEY_KDF.digestHex.charCodeAt(i);
+    return diff===0;
   }
-  async function fetchElevenVoices(force=false){
-    const apiKey=getElevenApiKey();
-    if(!apiKey)throw Error('Để dùng Adam và các giọng ElevenLabs, hãy nhập API key ElevenLabs của chính bạn bên trên. Nếu chưa có key, hãy chuyển về TTS.ai để dùng model miễn phí.');
-    const cacheKey='elevenlabs|account';if(!force&&voiceCache.has(cacheKey))return voiceCache.get(cacheKey);
-    const response=await fetch(ELEVEN_API+'/voices?show_legacy=true',{method:'GET',cache:'no-store',headers:{'Accept':'application/json','xi-api-key':apiKey}});
-    if(!response.ok){let message='HTTP '+response.status;try{const body=await response.json();const detail=body.detail;message=(typeof detail==='string'?detail:(detail?.message||detail?.status))||body.message||message;}catch{}throw Error('ElevenLabs không tải được danh sách giọng: '+message+'. Kiểm tra API key và quyền tài khoản.');}
-    const data=await response.json();if(!Array.isArray(data.voices))throw Error('ElevenLabs trả về danh sách giọng không đúng định dạng.');
-    const rows=data.voices.filter(v=>v&&(v.voice_id||v.id)).map(v=>{const labels=v.labels||{},verified=Array.isArray(v.verified_languages)?v.verified_languages:[],supported=Array.isArray(v.high_quality_base_model_ids)?v.high_quality_base_model_ids:[];const en=verified.find(x=>String(x.language||'').toLowerCase()==='en')||verified[0]||{};const chosenModel=supported.includes('eleven_multilingual_v2')?'eleven_multilingual_v2':(supported.find(m=>/multilingual|v4|turbo|flash/i.test(m))||supported[0]||'eleven_multilingual_v2');return{id:v.voice_id||v.id,name:v.name||v.voice_id||v.id,model:chosenModel,language:en.language||labels.language||'',gender:String(labels.gender||'').toLowerCase(),accent:labels.accent||'',category:v.category||'',description:v.description||'',preview_url:en.preview_url||v.preview_url||(v.samples?.[0]?.sample_url)||'',provider:'elevenlabs'};});
-    rows.sort((a,b)=>{const rank=v=>/\badam\b/i.test(v.name+' '+v.id)?-3:/\bbrian\b|\bgeorge\b/i.test(v.name)?-2:/\brachel\b|\balice\b/i.test(v.name)?-1:0;return rank(a)-rank(b)||a.name.localeCompare(b.name,'vi');});
-    voiceCache.set(cacheKey,rows);return rows;
-  }
-  function syncModelOptions(rows){
-    const select=$('nv-model'),keep=select.value;
-    for(const option of Array.from(select.options)){if(option.dataset.dynamic==='1')option.remove();}
-    const known=new Set(Array.from(select.options).map(option=>option.value));
-    const names={kokoro:'Kokoro · tự nhiên',piper:'Piper · nhanh',vits:'VITS',melotts:'MeloTTS · đa ngôn ngữ',chatterbox:'Chatterbox · nâng cao',cosyvoice2:'CosyVoice 2 · nâng cao',gpt_sovits:'GPT-SoVITS · nâng cao',gpt_sovits2:'GPT-SoVITS · nâng cao',tortoise:'Tortoise · nâng cao',styletts2:'StyleTTS 2 · nâng cao',openvoice:'OpenVoice · nâng cao',bark:'Bark · nâng cao',dia:'Dia TTS · nâng cao',parler:'Parler TTS · nâng cao',f5_tts:'F5-TTS · nâng cao',indextts2:'IndexTTS-2 · nâng cao'};
-    const models=Array.from(new Set(rows.map(v=>String(v.model||v.model_id||'').toLowerCase()).filter(Boolean))).sort();
-    for(const model of models){if(!known.has(model)){const option=new Option(names[model]||model+' · model từ API',model);option.dataset.dynamic='1';select.add(option);}}
-    if(keep&&Array.from(select.options).some(option=>option.value===keep))select.value=keep;else if(keep)select.value='';
-  }
-  function getLocalVoiceRows(){return LOCAL_KOKORO_VOICES.map(([id,name,gender])=>({id,name,gender,model:'kokoro-local',language:'en',provider:'local-kokoro',description:'Chạy ngay trên thiết bị'}));}
-  async function loadLocalKokoroEngine(){
-    if(localKokoro)return localKokoro;
-    if(localKokoroPromise)return localKokoroPromise;
-    localKokoroPromise=(async()=>{
-      setStatus($('nv-local-engine-help'),'Đang tải thư viện Kokoro…', '');
-      $('nv-local-load').disabled=true;$('nv-local-load').setAttribute('aria-busy','true');$('nv-local-load').textContent='Đang tải…';
-      try{
-        // Only the library and pretrained model weights are downloaded. Text-to-speech inference runs locally.
-        const module=await import('https://esm.sh/kokoro-js@1.2.1?bundle');
-        const KokoroTTS=module.KokoroTTS||module.default?.KokoroTTS;
-        if(typeof KokoroTTS!=='function')throw Error('Thư viện Kokoro không cung cấp bộ tạo giọng tương thích.');
-        setStatus($('nv-local-engine-help'),'Đang tải model giọng (~100 MB hoặc hơn tùy bản trình duyệt chọn). Không đóng trang trong lúc tải.', '');
-        localKokoro=await KokoroTTS.from_pretrained(KOKORO_MODEL,{dtype:'q8',device:'wasm'});
-        $('nv-local-load').textContent='Engine đã sẵn sàng';
-        setStatus($('nv-local-engine-help'),'Engine đã nạp. Tạo giọng được xử lý cục bộ trên thiết bị; lần sau model có thể được dùng lại từ cache.','success');
-        return localKokoro;
-      }catch(error){localKokoro=null;throw Error('Không nạp được engine Kokoro Local. Kiểm tra kết nối mạng và bộ nhớ thiết bị, hoặc thử Chrome/Edge mới. Chi tiết: '+(error?.message||'lỗi không xác định'));}
-      finally{$('nv-local-load').disabled=false;$('nv-local-load').removeAttribute('aria-busy');if(!localKokoro)$('nv-local-load').textContent='Thử tải engine lại';}
-    })().catch(error=>{localKokoroPromise=null;throw error;});
-    return localKokoroPromise;
-  }
-  function localRawAudioToWav(raw){
-    let samples=raw?.audio||raw?.data||raw;
-    if(Array.isArray(samples)&&samples.length===1&&(ArrayBuffer.isView(samples[0])||Array.isArray(samples[0])))samples=samples[0];
-    if(!samples||!Number.isFinite(samples.length)||samples.length<1)throw Error('Kokoro không trả về mẫu âm thanh hợp lệ.');
-    const rate=Number(raw?.sampling_rate||raw?.sampleRate||raw?.samplingRate)||24000;
-    const buffer=new ArrayBuffer(44+samples.length*2),view=new DataView(buffer),bytes=new Uint8Array(buffer);
-    const write=(offset,text)=>{for(let i=0;i<text.length;i++)bytes[offset+i]=text.charCodeAt(i)};
-    write(0,'RIFF');view.setUint32(4,36+samples.length*2,true);write(8,'WAVE');write(12,'fmt ');view.setUint32(16,16,true);view.setUint16(20,1,true);view.setUint16(22,1,true);view.setUint32(24,rate,true);view.setUint32(28,rate*2,true);view.setUint16(32,2,true);view.setUint16(34,16,true);write(36,'data');view.setUint32(40,samples.length*2,true);
-    for(let i=0;i<samples.length;i++){const f=Math.max(-1,Math.min(1,Number(samples[i])||0));view.setInt16(44+i*2,Math.round(f<0?f*32768:f*32767),true);}
-    return new Blob([buffer],{type:'audio/wav'});
-  }
-  async function generateLocalKokoro(text,voice,speed){
-    if(!String($('nv-language').value).startsWith('en'))throw Error('Kokoro Local hiện hỗ trợ tiếng Anh. Hãy chọn English hoặc chuyển lại TTS.ai để dùng ngôn ngữ khác.');
-    const engine=await loadLocalKokoroEngine();
-    setStatus($('nv-main-status'),'Đang tạo giọng ngay trên thiết bị bằng Kokoro. Văn bản không được gửi tới API TTS…');
-    const result=await engine.generate(text,{voice,speed:Math.max(0.7,Math.min(2,Number(speed)||1))});
-    return localRawAudioToWav(result);
-  }
-  async function loadVoices(language,force=false){
-    const serial=++voiceLoadSerial;
-    const select=$('nv-voice'),status=$('nv-voices-status'),oldValue=select.value;
-    select.disabled=true;select.replaceChildren(new Option('Đang tải giọng…',''));
-    $('nv-preview-voice').disabled=true;
-    const provider=activeProvider();
-    const providerName=provider==='elevenlabs'?'ElevenLabs':provider==='local-kokoro'?'Kokoro Local':'TTS.ai';
-    setStatus(status,provider==='local-kokoro'?'Đang chuẩn bị danh sách giọng offline…':'Đang tải thư viện giọng '+providerName+' '+(labels[language]||language)+'…');
+  async function unlock(){
+    if(Date.now()<blockedUntil){setStatus($('nv-gate-status'),'Đang tạm khóa sau nhiều lần nhập sai. Hãy chờ '+Math.ceil((blockedUntil-Date.now())/1000)+' giây.','error');return;}
+    const input=$('nv-key'),button=$('nv-unlock'),value=input.value;
+    if(!value.trim()){setStatus($('nv-gate-status'),'Bạn chưa nhập key.','error');return;}
+    button.disabled=true;button.textContent='Đang kiểm tra…';button.setAttribute('aria-busy','true');
     try{
-      let allRows;
-      if(provider==='local-kokoro'){
-        if(language!=='en')throw Error('Kokoro Local hiện chỉ hỗ trợ giọng tiếng Anh. Hãy chọn English.');
-        allRows=getLocalVoiceRows();
-      }else allRows=provider==='elevenlabs'?await fetchElevenVoices(force):await fetchVoices(language,force);
-      if(serial!==voiceLoadSerial)return;if(provider==='ttsai')syncModelOptions(allRows);
-      const modelFilter=provider==='ttsai'?$('nv-model').value:'',genderFilter=$('nv-gender').value,searchFilter=String($('nv-voice-search').value||'').trim().toLowerCase();
-      const rows=allRows.filter(v=>{
-        const model=String(v.model||v.model_id||'').toLowerCase();
-        const gender=String(v.gender||'').toLowerCase();
-        const searchable=[v.name,v.id,v.accent,v.category,v.description].filter(Boolean).join(' ').toLowerCase();
-        return (!modelFilter||provider!=='ttsai'||model===modelFilter)&&(!genderFilter||gender===genderFilter)&&(!searchFilter||searchable.includes(searchFilter));
-      });
-      select.replaceChildren();
-      if(!rows.length){select.add(new Option('Không có giọng phù hợp bộ lọc',''));select.disabled=true;setStatus(status,'Không có giọng phù hợp cho '+(labels[language]||language)+' với bộ lọc hiện tại. Hãy đổi bộ lọc hoặc ngôn ngữ.','error');syncGenerateButton();return;}
-      for(const voice of rows){
-        const model=String(voice.model||voice.model_id||'').toLowerCase();
-        const gender=voice.gender?({'female':'Nữ','male':'Nam','neutral':'Trung tính'}[String(voice.gender).toLowerCase()]||voice.gender):'';
-        const description=provider==='elevenlabs'?[voice.accent,voice.category].filter(Boolean).join(' · '):provider==='local-kokoro'?'LOCAL · '+(voice.id.startsWith('b')?'British English':'American English'):model;
-        const option=new Option((voice.name||voice.id)+(gender?' · '+gender:'')+(description?' · '+description:''),voice.id);
-        option.dataset.model=model||(provider==='elevenlabs'?'eleven_multilingual_v2':'');option.dataset.language=voice.language||language;option.dataset.previewUrl=voice.preview_url||'';option.dataset.gender=String(voice.gender||'').toLowerCase();option.dataset.provider=provider;option.dataset.description=voice.description||'';
-        select.add(option);
+      if(await verifyKey(value)){unlocked=true;failedAttempts=0;input.value='';$('nv-gate').hidden=true;$('nv-workspace').hidden=false;setStatus($('nv-gate-status'),'Đã mở khóa.','success');
+        const slot=$('nv-slot-duration');try{const cfg=await getTargetConfig();slot.textContent=cfg.seconds.toFixed(3)+' giây';}catch{slot.textContent=DEFAULT_TARGET_SECONDS.toFixed(3)+' giây';}
+        setStatus($('nv-main-status'),'Đã mở khóa. Chọn file audio có sẵn để tiếp tục.','success');
+      }else{
+        failedAttempts++;const remaining=5-(failedAttempts%5||5);let message='Key không đúng. Còn '+Math.max(0,remaining)+' lần trước khi tạm khóa.';
+        if(failedAttempts%5===0){const seconds=failedAttempts>=10?60:20;blockedUntil=Date.now()+seconds*1000;message='Nhập sai nhiều lần. Tạm khóa '+seconds+' giây.';}
+        setStatus($('nv-gate-status'),message,'error');
       }
-      if(oldValue&&rows.some(v=>String(v.id)===oldValue))select.value=oldValue;
-      select.disabled=false;$('nv-preview-voice').disabled=!select.value;
-      const message=provider==='local-kokoro'?'Đang hiển thị '+rows.length+' giọng Kokoro có sẵn (không cần API key). Hỗ trợ tiếng Anh; lần đầu tạo giọng cần tải model về trình duyệt.':provider==='elevenlabs'?'Đang hiển thị '+rows.length+' giọng trong tài khoản ElevenLabs. Giọng Adam được ưu tiên ở đầu danh sách nếu tài khoản có quyền truy cập.':'Đang hiển thị '+rows.length+' giọng TTS.ai cho '+(labels[language]||language)+'. '+(getTtsApiKey()?'Đã bật danh sách theo API key tài khoản.':'Đang lọc các model dùng được không cần API key.');
-      setStatus(status,message,'success');
-      syncGenerateButton();
-    }catch(error){if(serial!==voiceLoadSerial)return;select.replaceChildren(new Option(provider==='elevenlabs'?'Nhập API key để tải giọng':provider==='local-kokoro'?'Không tải được danh sách giọng offline':'Không tải được giọng',''));setStatus(status,(error instanceof TypeError?'Không kết nối được dịch vụ. Hãy kiểm tra mạng, HTTPS và chính sách CORS. ':'')+error.message,'error');syncGenerateButton();}
+    }catch(error){setStatus($('nv-gate-status'),error?.message||'Không kiểm tra được key.','error');}
+    finally{button.disabled=false;button.removeAttribute('aria-busy');button.textContent='Mở khóa';}
   }
-  async function previewSelectedVoice(){
-    const select=$('nv-voice'),option=select.selectedOptions[0];
-    if(!option||!option.value){setStatus($('nv-voices-status'),'Hãy chọn một giọng trước.','error');return;}
-    const audio=$('nv-voice-sample'),wrap=$('nv-voice-sample-wrap'),provider=activeProvider();
-    if(provider==='local-kokoro'){
-      try{
-        const sampleText=$('nv-text').value.trim()||'Hello! This is a sample of the selected Kokoro voice.';
-        setStatus($('nv-voices-status'),'Đang tạo mẫu giọng local. Lần đầu sẽ nạp model; có thể mất thời gian tải xuống.');
-        const blob=await generateLocalKokoro(sampleText,option.value,Number($('nv-speed').value)||1);
-        if(localSampleObjectUrl)URL.revokeObjectURL(localSampleObjectUrl);localSampleObjectUrl=URL.createObjectURL(blob);
-        audio.pause();audio.src=localSampleObjectUrl;audio.load();wrap.hidden=false;$('nv-voice-sample-status').textContent='Mẫu tạo ngay trong trình duyệt · '+option.textContent;
-        try{await audio.play();}catch{}setStatus($('nv-voices-status'),'Đã tạo mẫu giọng Kokoro Local. Bấm Play nếu thiết bị không tự phát.','success');
-      }catch(error){setStatus($('nv-voices-status'),error.message||'Không tạo được mẫu giọng local.','error');}
-      return;
-    }
-    let url=option.dataset.previewUrl||(provider==='elevenlabs'?'':API+'/voices/preview/'+encodeURIComponent(option.value)+'.mp3');
-    if(!url){setStatus($('nv-voices-status'),'Giọng này không có URL nghe mẫu trong thư viện. Bạn vẫn có thể tạo một câu ngắn để kiểm tra nếu tài khoản được phép.','error');return;}
-    try{const parsed=new URL(url);if(parsed.protocol!=='https:')throw Error('URL mẫu giọng không an toàn.');}catch(error){setStatus($('nv-voices-status'),error.message||'URL nghe mẫu không hợp lệ.','error');return;}
-    audio.pause();audio.src=url;audio.load();wrap.hidden=false;$('nv-voice-sample-status').textContent='Đang tải mẫu: '+option.textContent;
-    try{await audio.play();}catch{setStatus($('nv-voices-status'),'Đã mở mẫu giọng. Nếu không tự phát, hãy bấm Play trong trình nghe mẫu bên dưới.','success');}
+  async function decodeAudio(blob){
+    const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)throw Error('Trình duyệt không hỗ trợ giải mã audio. Hãy thử Safari hoặc Chrome bản mới.');
+    const context=new AudioCtx();try{const decoded=await context.decodeAudioData(await blob.arrayBuffer());if(!decoded||!decoded.length||!decoded.numberOfChannels||!Number.isFinite(decoded.duration)||decoded.duration<=0)throw Error('File không chứa âm thanh hợp lệ.');return decoded;}catch(error){if(error?.message==='File không chứa âm thanh hợp lệ.')throw error;throw Error('Không giải mã được file này trên trình duyệt. Hãy chuyển nó sang WAV PCM hoặc MP3 chuẩn rồi thử lại. Đổi đuôi tên file không chuyển đổi codec.');}finally{try{await context.close();}catch{}}
   }
-  $('nv-voice-sample').addEventListener('error',()=>{setStatus($('nv-voice-sample-status'),'Không phát được mẫu của giọng này. Bạn vẫn có thể chọn giọng và tạo thử câu thoại.','error');});
- async function fetchResultAudio(response,signal){const contentType=(response.headers.get('content-type')||'').toLowerCase();if(!response.ok){let message='HTTP '+response.status;try{const body=await response.json();message=body.detail||body.message||body.error||message;}catch{}throw Error((activeProvider()==='elevenlabs'?'ElevenLabs từ chối yêu cầu: ':'TTS.ai từ chối yêu cầu: ')+message);}if(contentType.startsWith('audio/')||contentType.includes('octet-stream'))return response.blob();const data=await response.json();if(data.error||data.status==='failed')throw Error(data.error||data.message||'Dịch vụ không tạo được giọng.');let resultUrl=data.result_url||data.audio_url||data.url;if(!resultUrl&&data.uuid){for(let attempt=0;attempt<80;attempt++){await sleep(1500,signal);setStatus($('nv-main-status'),'Đang chờ AI tạo giọng… '+Math.min(99,Math.round((attempt+1)/80*100))+'%');const pollHeaders={'Accept':'application/json'},apiKey=getTtsApiKey();if(apiKey)pollHeaders.Authorization='Bearer '+apiKey;const poll=await fetch(API+'/speech/results/?uuid='+encodeURIComponent(data.uuid),{headers:pollHeaders,cache:'no-store',signal});if(!poll.ok)throw Error('Không lấy được trạng thái job TTS (HTTP '+poll.status+').');const result=await poll.json();if(result.status==='failed')throw Error(result.error||result.message||'TTS.ai báo tạo giọng thất bại.');if(result.status==='completed'||result.result_url||result.audio_url){resultUrl=result.result_url||result.audio_url;break;}}}if(!resultUrl)throw Error('Chưa nhận được URL âm thanh từ API sau thời gian chờ.');const audioResponse=await fetch(resultUrl,{signal,cache:'no-store'});if(!audioResponse.ok)throw Error('Không tải được audio kết quả (HTTP '+audioResponse.status+').');return audioResponse.blob();}
- async function generate(){
-   if(audioImporting||(currentSource==='upload'&&currentBlob)){setStatus($('nv-main-status'),'Bạn đang dùng file âm thanh có sẵn. Hãy bấm “Bỏ file đã chọn” trước khi chuyển sang tạo giọng AI.','error');syncGenerateButton();return;}
-   const hadApplied=!!window.nminhCustomVoicePcm;
-   const text=$('nv-text').value.trim(),voiceOption=$('nv-voice').selectedOptions[0],language=$('nv-language').value,provider=activeProvider();
-   if(!text){setStatus($('nv-main-status'),'Hãy nhập nội dung muốn nói trước.','error');return;}
-   if(text.length>500){setStatus($('nv-main-status'),'Bản này giới hạn 500 ký tự cho một lần tạo.','error');return;}
-   if(!voiceOption||!voiceOption.value||!voiceOption.dataset.model){setStatus($('nv-main-status'),'Hãy tải danh sách rồi chọn một giọng trước.','error');return;}
-   if(provider==='local-kokoro'&&language!=='en'){setStatus($('nv-main-status'),'Kokoro Local hiện chỉ hỗ trợ tiếng Anh. Hãy chọn English.','error');return;}
-   if(!$('nv-style').value.trim()&&text.length>160)setStatus($('nv-main-status'),'Câu khá dài; giọng trong game có thể phải tăng tốc để vừa độ dài slot của resource hiện tại.');
-   if(provider==='elevenlabs'&&!getElevenApiKey()){setStatus($('nv-main-status'),'Bạn cần nhập API key ElevenLabs trước khi tạo giọng Adam hoặc các giọng từ thư viện này.','error');return;}
-   controller=new AbortController();const signal=controller.signal;let generationSucceeded=false;
-   $('nv-generate').disabled=true;$('nv-audio-file').disabled=true;$('nv-reset').disabled=true;$('nv-create-one').disabled=true;$('nv-create-all').disabled=true;$('nv-cancel').hidden=provider==='local-kokoro';$('nv-cancel').disabled=false;$('nv-apply').disabled=true;$('nv-download-preview').hidden=true;$('nv-preview-wrap').hidden=true;
-   setStatus($('nv-main-status'),provider==='local-kokoro'?'Đang khởi động Kokoro Local. Lần đầu sẽ tải model giọng, không cần API key…':provider==='elevenlabs'?'Đang tạo giọng bằng ElevenLabs…':'Đang gửi nội dung đến TTS.ai…');
-   try{
-     let blob;
-     if(provider==='local-kokoro'){
-       // Kokoro synthesizes on this device; only static library/model weights are fetched on first use.
-       blob=await generateLocalKokoro(text,voiceOption.value,Number($('nv-speed').value)||1);
-     }else{
-       let response;const style=$('nv-style').value.trim();
-       if(provider==='elevenlabs'){
-         const speed=Math.max(0.7,Math.min(1.2,Number($('nv-speed').value)||1));
-         const normalizedStyle=style.toLowerCase();let styleAmount=0.18;if(/vui|phấn khích|excited|happy|năng động/.test(normalizedStyle))styleAmount=0.45;else if(/bình tĩnh|điềm tĩnh|neutral|calm|rõ ràng|nghiêm túc/.test(normalizedStyle))styleAmount=0.08;else if(/mạnh mẽ|dramatic|trầm|tough|hùng/.test(normalizedStyle))styleAmount=0.3;
-         const body={text,model_id:voiceOption.dataset.model||'eleven_multilingual_v2',voice_settings:{stability:0.45,similarity_boost:0.82,style:styleAmount,speed,use_speaker_boost:true}};
-         response=await fetch(ELEVEN_API+'/text-to-speech/'+encodeURIComponent(voiceOption.value)+'?output_format=mp3_44100_128',{method:'POST',headers:{'Content-Type':'application/json','Accept':'audio/mpeg','xi-api-key':getElevenApiKey()},body:JSON.stringify(body),signal});
-       }else{
-         const body={model:voiceOption.dataset.model,text,voice:voiceOption.value,format:'mp3',speed:Number($('nv-speed').value),language};if(style)body.instructions=style.slice(0,500);
-         const ttsHeaders={'Content-Type':'application/json','Accept':'application/json, audio/*'},apiKey=getTtsApiKey();if(apiKey)ttsHeaders.Authorization='Bearer '+apiKey;response=await fetch(API+'/tts/',{method:'POST',headers:ttsHeaders,body:JSON.stringify(body),signal});
-       }
-       blob=await fetchResultAudio(response,signal);
-     }
-     if(!blob||!blob.size)throw Error('Bộ tạo giọng trả về audio rỗng.');
-     delete window.nminhCustomVoicePcm;delete window.nminhVoiceBuildId;
-     currentBlob=blob;currentSource=provider==='local-kokoro'?'local':'tts';generationSucceeded=true;
-     if(currentObjectUrl)URL.revokeObjectURL(currentObjectUrl);currentObjectUrl=URL.createObjectURL(blob);
-     $('nv-audio').onloadedmetadata=()=>{if(Number.isFinite($('nv-audio').duration))$('nv-audio-duration').textContent=$('nv-audio').duration.toFixed(2)+' giây · bản nghe thử';};
-     $('nv-audio').src=currentObjectUrl;$('nv-audio').load();$('nv-preview-wrap').hidden=false;$('nv-preview-heading-title').textContent=provider==='local-kokoro'?'Giọng Kokoro được tạo trên thiết bị':'Nghe thử giọng AI vừa tạo';
-     $('nv-preview-help').textContent=provider==='local-kokoro'?'Audio được tạo cục bộ bằng Kokoro; văn bản thoại không gửi tới API TTS. Nghe thử trước khi áp dụng vào mod.':'Nghe thử trước khi áp dụng. Khi áp dụng, hệ thống chuyển về PCM mono 16 kHz/16-bit và khớp độ dài slot trong game.';
-     $('nv-audio-duration').textContent=(blob.size/1024).toFixed(1)+' KB · WAV nghe thử';$('nv-download-preview').href=currentObjectUrl;$('nv-download-preview').download='nminhios-voice-source.wav';$('nv-download-preview').textContent='Tải WAV giọng đã tạo';$('nv-download-preview').hidden=false;$('nv-apply').disabled=false;
-     clearImportLabel();$('nv-apply-info').textContent='Audio đã sẵn sàng. Nghe thử rồi bấm Áp dụng vào file mod.';
-     setStatus($('nv-main-status'),provider==='local-kokoro'?'Đã tạo giọng bằng Kokoro Local. Văn bản được xử lý trên thiết bị; hãy nghe thử rồi áp dụng.':'Đã tạo giọng AI. Hãy nghe thử; nếu ổn, bấm “Áp dụng vào file mod”.','success');
-   }catch(error){
-     setStatus($('nv-main-status'),error.name==='AbortError'?'Đã hủy tạo giọng.':(error instanceof TypeError?(provider==='local-kokoro'?'Không tải được engine Kokoro từ CDN/model. Kiểm tra kết nối, HTTPS và CORS. ':'Không gọi được '+(provider==='elevenlabs'?'ElevenLabs':'TTS.ai')+'. Hãy kiểm tra kết nối mạng/CORS và API key. '):(error.message||'Lỗi không xác định.')),'error');
-   }finally{
-     controller=null;
-     if(!generationSucceeded&&currentBlob){
-       $('nv-preview-wrap').hidden=false;$('nv-download-preview').hidden=false;
-       if(window.nminhCustomVoicePcm&&previewObjectUrl){$('nv-audio').src=previewObjectUrl;$('nv-download-preview').href=previewObjectUrl;$('nv-download-preview').download='nminhios-voice-preview.wav';$('nv-download-preview').textContent='Tải WAV đã chuẩn hóa';$('nv-preview-heading-title').textContent='Nghe thử PCM đã chuẩn hóa cho game';}
-       else if(currentSource==='upload'){$('nv-audio').src=currentObjectUrl;$('nv-download-preview').href=currentObjectUrl;$('nv-download-preview').download=currentBlob.name||'voice-audio';$('nv-download-preview').textContent='Tải file nguồn';$('nv-preview-heading-title').textContent='Nghe thử file giọng đã tải lên';}
-       else{$('nv-audio').src=currentObjectUrl;$('nv-download-preview').href=currentObjectUrl;$('nv-download-preview').download='nminhios-voice-source.wav';$('nv-download-preview').textContent='Tải audio gốc';$('nv-preview-heading-title').textContent='Nghe thử giọng vừa tạo';}
-       $('nv-audio').load();
-     }
-     syncGenerateButton();$('nv-apply').disabled=!currentBlob;
-     if(!generationSucceeded&&hadApplied&&window.nminhCustomVoicePcm){$('nv-create-one').disabled=false;$('nv-create-all').disabled=false;}
-     $('nv-cancel').hidden=true;$('nv-cancel').disabled=false;$('nv-audio-file').disabled=false;$('nv-reset').disabled=false;
-   }
- }
-  async function probeAudioBlob(blob){
-    const AudioCtx=window.AudioContext||window.webkitAudioContext;
-    if(!AudioCtx)throw Error('Trình duyệt không hỗ trợ giải mã audio. Hãy dùng Safari hoặc Chrome bản mới.');
-    const context=new AudioCtx();
-    try{
-      const decoded=await context.decodeAudioData(await blob.arrayBuffer());
-      if(!decoded||!decoded.length||!decoded.numberOfChannels||!Number.isFinite(decoded.duration)||decoded.duration<=0)throw Error('File không chứa audio hợp lệ.');
-      return {duration:decoded.duration,rate:decoded.sampleRate,channels:decoded.numberOfChannels};
-    }catch(error){
-      if(error.message==='File không chứa audio hợp lệ.')throw error;
-      throw Error('Không giải mã được định dạng này trên trình duyệt hiện tại. Hãy thử xuất lại thành WAV PCM hoặc MP3 rồi tải lên. Đổi tên đuôi file không chuyển đổi được codec.');
-    }finally{try{await context.close()}catch{}}
-  }
-  function clearImportLabel(){
-    const input=$('nv-audio-file');if(input)input.value='';
-    $('nv-import-meta').hidden=true;$('nv-import-meta').textContent='';$('nv-clear-import').hidden=true;
+  function clearImportMeta(){const input=$('nv-audio-file');if(input)input.value='';$('nv-import-meta').hidden=true;$('nv-import-meta').textContent='';$('nv-clear-import').hidden=true;}
+  function isModExporting(){const progress=$('mod-progress');return !!progress&&!progress.hidden;}
+  function updateButtons(){
+    $('nv-audio-file').disabled=!unlocked||audioImporting;$('nv-apply').disabled=!unlocked||!currentBlob||audioImporting;
+    $('nv-reset').disabled=!unlocked||audioImporting;$('nv-clear-import').disabled=audioImporting;
+    const applied=!!window.nminhCustomVoicePcm&&!audioImporting;
+    $('nv-create-one').disabled=!applied;$('nv-create-all').disabled=!applied;
   }
   async function importAudioFile(file){
-    if(!file)return;
-    if(file.size>50*1024*1024){setStatus($('nv-main-status'),'File quá lớn (giới hạn 50 MB). Hãy cắt đoạn cần dùng trước khi tải lên.','error');$('nv-audio-file').value='';return;}
-    const ext=(file.name.split('.').pop()||'').toLowerCase();
-    const allowed=new Set(['mp3','wav','m4a','aac','ogg','oga','opus','flac','webm','aif','aiff','caf','3gp']);
-    if(!allowed.has(ext)&&!String(file.type||'').startsWith('audio/')){setStatus($('nv-main-status'),'Tệp đã chọn không nhận diện là file âm thanh. Hãy chọn MP3, WAV, M4A/AAC, OGG/Opus, FLAC hoặc định dạng audio khác được trình duyệt hỗ trợ.','error');$('nv-audio-file').value='';return;}
-    const button=$('nv-clear-import'),input=$('nv-audio-file');button.disabled=true;audioImporting=true;input.disabled=true;input.setAttribute('aria-busy','true');syncGenerateButton();$('nv-apply').disabled=true;$('nv-reset').disabled=true;$('nv-create-one').disabled=true;$('nv-create-all').disabled=true;setStatus($('nv-main-status'),'Đang kiểm tra và giải mã file âm thanh…');
+    if(!file)return;if(isModExporting()){setStatus($('nv-main-status'),'Đang xuất file mod. Hãy chờ xuất xong rồi mới đổi file âm thanh.','error');$('nv-audio-file').value='';return;}if(!unlocked){setStatus($('nv-main-status'),'Hãy nhập key để mở khóa trước khi chọn audio.','error');$('nv-audio-file').value='';return;}
+    if(file.size>MAX_FILE_BYTES){setStatus($('nv-main-status'),'File quá lớn (giới hạn 50 MB). Hãy cắt đoạn cần dùng trước khi tải lên.','error');$('nv-audio-file').value='';return;}
+    const ext=(file.name.split('.').pop()||'').toLowerCase(),allowed=new Set(['mp3','wav','m4a','aac','ogg','oga','opus','flac','webm','aif','aiff','caf','3gp']);
+    if(!allowed.has(ext)&&!String(file.type||'').startsWith('audio/')){setStatus($('nv-main-status'),'Tệp đã chọn không được nhận diện là âm thanh. Hãy chọn MP3, WAV hoặc định dạng audio được trình duyệt hỗ trợ.','error');$('nv-audio-file').value='';return;}
+    if(audioImporting)return;
+    audioImporting=true;updateButtons();$('nv-audio-file').setAttribute('aria-busy','true');progressStart('Đang đọc file âm thanh','Đang kiểm tra file và giải mã ngay trên thiết bị.');setStatus($('nv-main-status'),'Đang kiểm tra và giải mã file âm thanh…');
     try{
-      const info=await probeAudioBlob(file);
-      if(currentObjectUrl)URL.revokeObjectURL(currentObjectUrl);currentObjectUrl=URL.createObjectURL(file);
-      if(previewObjectUrl){URL.revokeObjectURL(previewObjectUrl);previewObjectUrl='';}
-      currentBlob=file;currentSource='upload';
-      delete window.nminhCustomVoicePcm;delete window.nminhVoiceBuildId;
-      $('nv-audio').pause();$('nv-audio').src=currentObjectUrl;$('nv-audio').load();
-      $('nv-preview-wrap').hidden=false;$('nv-preview-heading-title').textContent='Nghe thử file giọng đã tải lên';
-      $('nv-preview-help').textContent='Đây là file nguồn. Khi bấm “Áp dụng”, hệ thống giải mã rồi chuyển âm thanh thành PCM mono 16 kHz/16-bit theo kích thước slot game.';
-      $('nv-audio-duration').textContent=info.duration.toFixed(2)+' giây · '+info.rate+' Hz · '+info.channels+' kênh';
-      $('nv-download-preview').href=currentObjectUrl;$('nv-download-preview').download=file.name;$('nv-download-preview').textContent='Tải file nguồn';$('nv-download-preview').hidden=false;
-      $('nv-import-meta').textContent='Đã đọc: '+file.name+' · '+(file.size/1024/1024).toFixed(2)+' MB · '+info.duration.toFixed(2)+' giây · '+info.channels+' kênh. Khi áp dụng, âm thanh sẽ được chuyển đổi thực tế, không chỉ đổi phần đuôi tên file.';
-      $('nv-import-meta').hidden=false;$('nv-clear-import').hidden=false;
-      $('nv-apply').disabled=false;$('nv-create-one').disabled=true;$('nv-create-all').disabled=true;syncGenerateButton();
-      $('nv-apply-info').textContent='File âm thanh đã tải lên. Nghe thử và bấm “Áp dụng vào file mod” để chuẩn hóa PCM.';
-      setStatus($('nv-main-status'),'Đã tải và giải mã được file âm thanh. Hãy nghe thử rồi bấm “Áp dụng vào file mod”.','success');
-    }catch(error){setStatus($('nv-main-status'),(error.message||'Không đọc được file âm thanh.')+(currentBlob?' Audio đang chọn trước đó vẫn được giữ nguyên.':''),'error');$('nv-audio-file').value='';}
-    finally{audioImporting=false;input.disabled=false;input.removeAttribute('aria-busy');button.disabled=false;$('nv-reset').disabled=false;syncGenerateButton();$('nv-apply').disabled=!currentBlob;const hasApplied=!!window.nminhCustomVoicePcm;$('nv-create-one').disabled=!hasApplied;$('nv-create-all').disabled=!hasApplied;}
+      const decoded=await decodeAudio(file);const info={duration:decoded.duration,rate:decoded.sampleRate,channels:decoded.numberOfChannels};
+      releaseUrl(currentObjectUrl);releaseUrl(previewObjectUrl);currentObjectUrl=URL.createObjectURL(file);previewObjectUrl='';currentBlob=file;currentSource='upload';delete window.nminhCustomVoicePcm;delete window.nminhVoiceBuildId;
+      const audio=$('nv-audio');audio.pause();audio.src=currentObjectUrl;audio.load();$('nv-preview-wrap').hidden=false;$('nv-preview-heading-title').textContent='Nghe thử file giọng đã chọn';$('nv-preview-help').textContent='Đây là audio nguồn. Bấm “Áp dụng vào file mod” để chuyển đổi thực tế sang PCM mono 16 kHz/16-bit theo đúng kích thước slot.';
+      $('nv-audio-duration').textContent=info.duration.toFixed(2)+' giây · '+info.rate+' Hz · '+info.channels+' kênh';$('nv-download-preview').href=currentObjectUrl;$('nv-download-preview').download=file.name;$('nv-download-preview').textContent='Tải file nguồn';$('nv-download-preview').hidden=false;
+      $('nv-import-meta').textContent='Đã đọc: '+file.name+' · '+(file.size/1024/1024).toFixed(2)+' MB · '+info.duration.toFixed(2)+' giây · '+info.channels+' kênh.';$('nv-import-meta').hidden=false;$('nv-clear-import').hidden=false;
+      $('nv-apply-info').textContent='Đã nhận file audio. Nghe thử, sau đó áp dụng để chuẩn hóa PCM trước khi xuất mod.';
+      progressDone('Đã đọc file âm thanh',`Đã giải mã ${info.duration.toFixed(2)} giây · ${info.rate} Hz · ${info.channels} kênh.`);setStatus($('nv-main-status'),'Đã đọc được file audio. Hãy nghe thử rồi bấm “Áp dụng vào file mod”.','success');
+    }catch(error){progressFail('Không đọc được file âm thanh',error?.message||'Trình duyệt không giải mã được tệp.');setStatus($('nv-main-status'),error?.message||'Không đọc được file âm thanh.','error');$('nv-audio-file').value='';}
+    finally{audioImporting=false;$('nv-audio-file').removeAttribute('aria-busy');updateButtons();}
   }
-  function clearImportedAudio(){
-    if(currentSource!=='upload'){clearImportLabel();return;}
-    if(currentObjectUrl){URL.revokeObjectURL(currentObjectUrl);currentObjectUrl='';}
-    if(previewObjectUrl){URL.revokeObjectURL(previewObjectUrl);previewObjectUrl='';}
-    currentBlob=null;currentSource='tts';delete window.nminhCustomVoicePcm;delete window.nminhVoiceBuildId;clearImportLabel();syncGenerateButton();
-    $('nv-audio').pause();$('nv-audio').removeAttribute('src');$('nv-audio').load();$('nv-preview-wrap').hidden=true;$('nv-download-preview').hidden=true;$('nv-apply').disabled=true;$('nv-create-one').disabled=true;$('nv-create-all').disabled=true;
-    $('nv-apply-info').textContent='Chưa chọn audio. Tạo giọng AI hoặc tải file âm thanh có sẵn.';
-    setStatus($('nv-main-status'),'Đã hủy file âm thanh đã chọn.','success');
+  function clearImportedAudio(message='Đã bỏ file âm thanh đã chọn.'){if(audioImporting)return;if(isModExporting()){setStatus($('nv-main-status'),'Đang xuất file mod. Hãy chờ hoàn tất rồi mới bỏ audio.','error');return;}releaseUrl(currentObjectUrl);releaseUrl(previewObjectUrl);currentObjectUrl='';previewObjectUrl='';currentBlob=null;currentSource='';delete window.nminhCustomVoicePcm;delete window.nminhVoiceBuildId;clearImportMeta();const audio=$('nv-audio');audio.pause();audio.removeAttribute('src');audio.load();$('nv-preview-wrap').hidden=true;$('nv-download-preview').hidden=true;$('nv-apply-info').textContent='Chưa có audio được áp dụng. Hãy chọn file giọng có sẵn.';updateButtons();setStatus($('nv-main-status'),message,'success');}
+  function buildPreviewWav(pcm){const dataBytes=pcm.byteLength,buffer=new ArrayBuffer(44+dataBytes),view=new DataView(buffer),bytes=new Uint8Array(buffer);const write=(off,text)=>{for(let i=0;i<text.length;i++)bytes[off+i]=text.charCodeAt(i);};write(0,'RIFF');view.setUint32(4,36+dataBytes,true);write(8,'WAVE');write(12,'fmt ');view.setUint32(16,16,true);view.setUint16(20,1,true);view.setUint16(22,1,true);view.setUint32(24,TARGET_RATE,true);view.setUint32(28,TARGET_RATE*2,true);view.setUint16(32,2,true);view.setUint16(34,16,true);write(36,'data');view.setUint32(40,dataBytes,true);bytes.set(pcm,44);return new Blob([bytes],{type:'audio/wav'});}
+  async function blobToPcm(blob,target){
+    const audio=await decodeAudio(blob);const count=target.samples,channels=Array.from({length:audio.numberOfChannels},(_,i)=>audio.getChannelData(i)),compressed=audio.duration>target.seconds+0.002;
+    const floatSamples=new Float32Array(count);let peak=0;
+    for(let i=0;i<count;i++){
+      let pos=compressed?i*(audio.length-1)/Math.max(1,count-1):i*audio.sampleRate/TARGET_RATE;
+      if(pos>=audio.length)break;const a=Math.floor(pos),b=Math.min(audio.length-1,a+1),fraction=pos-a;let sample=0;
+      for(const channel of channels)sample+=(channel[a]+(channel[b]-channel[a])*fraction)/channels.length;
+      if(!Number.isFinite(sample))sample=0;floatSamples[i]=sample;peak=Math.max(peak,Math.abs(sample));
+    }
+    const gain=peak>0?Math.min(2,0.92/peak):1,pcm=new Uint8Array(target.bytes),view=new DataView(pcm.buffer);
+    for(let i=0;i<count;i++){const value=Math.max(-1,Math.min(1,floatSamples[i]*gain));view.setInt16(i*2,Math.round(value<0?value*32768:value*32767),true);}
+    return{pcm,shortened:compressed,sourceDuration:audio.duration,target};
   }
- function buildPreviewWav(pcm){const dataBytes=pcm.byteLength,buffer=new ArrayBuffer(44+dataBytes),view=new DataView(buffer),bytes=new Uint8Array(buffer);const write=(off,text)=>{for(let i=0;i<text.length;i++)bytes[off+i]=text.charCodeAt(i)};write(0,'RIFF');view.setUint32(4,36+dataBytes,true);write(8,'WAVE');write(12,'fmt ');view.setUint32(16,16,true);view.setUint16(20,1,true);view.setUint16(22,1,true);view.setUint32(24,TARGET_RATE,true);view.setUint32(28,TARGET_RATE*2,true);view.setUint16(32,2,true);view.setUint16(34,16,true);write(36,'data');view.setUint32(40,dataBytes,true);bytes.set(pcm,44);return new Blob([bytes],{type:'audio/wav'});}
-  async function blobToPcm(blob,target){const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)throw Error('Trình duyệt không hỗ trợ AudioContext. Hãy thử Chrome hoặc Safari mới.');const context=new AudioCtx();let audio;try{audio=await context.decodeAudioData(await blob.arrayBuffer());}catch{throw Error('Không giải mã được audio do dịch vụ trả về. Thử tạo lại hoặc chọn giọng khác.');}finally{try{await context.close()}catch{}}if(!audio.length||!audio.numberOfChannels)throw Error('Audio nguồn không có mẫu âm thanh.');const sampleCount=target.samples,channels=Array.from({length:audio.numberOfChannels},(_,i)=>audio.getChannelData(i));const faster=audio.duration>target.seconds;const samples=new Int16Array(sampleCount);let peak=0;for(let i=0;i<sampleCount;i++){let pos;if(faster)pos=i*(audio.length-1)/Math.max(1,sampleCount-1);else pos=i*audio.sampleRate/TARGET_RATE;if(pos>=audio.length)break;const a=Math.floor(pos),b=Math.min(audio.length-1,a+1),fraction=pos-a;let value=0;for(const channel of channels)value+=(channel[a]+(channel[b]-channel[a])*fraction)/channels.length;if(!Number.isFinite(value))value=0;peak=Math.max(peak,Math.abs(value));samples[i]=Math.max(-1,Math.min(1,value))*32767;}const gain=peak>0?Math.min(2.0,0.92/peak):1;const pcm=new Uint8Array(target.bytes),view=new DataView(pcm.buffer);for(let i=0;i<sampleCount;i++){const source=samples[i]/32767;const value=Math.max(-1,Math.min(1,source*gain));view.setInt16(i*2,Math.round(value<0?value*32768:value*32767),true);}return {pcm,shortened:faster,sourceDuration:audio.duration,target};}
-   async function applyVoice(){if(!currentBlob){setStatus($('nv-main-status'),'Hãy tạo và nghe thử giọng trước khi áp dụng.','error');return;}if(!$('mod-progress').hidden){setStatus($('nv-main-status'),'Đang xuất file mod. Hãy chờ xuất xong rồi mới đổi giọng.','error');return;}$('nv-apply').disabled=true;setStatus($('nv-main-status'),'Đang đọc độ dài slot và chuẩn hóa audio về PCM mono 16 kHz…');try{const target=await getTargetConfig();const out=await blobToPcm(currentBlob,target);if(out.pcm.byteLength!==target.bytes)throw Error('Kích thước PCM không đúng với slot đã nhận diện.');window.nminhCustomVoicePcm=out.pcm;window.nminhVoiceBuildId='nv-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);const preview=buildPreviewWav(out.pcm);if(previewObjectUrl)URL.revokeObjectURL(previewObjectUrl);previewObjectUrl=URL.createObjectURL(preview);$('nv-audio').pause();$('nv-audio').src=previewObjectUrl;$('nv-audio').load();$('nv-preview-wrap').hidden=false;$('nv-preview-heading-title').textContent='Nghe thử PCM đã chuẩn hóa cho game';$('nv-preview-help').textContent='Đây là bản đã chuyển thành PCM mono 16 kHz/16-bit và khớp chính xác slot trong resource.';$('nv-download-preview').href=previewObjectUrl;$('nv-download-preview').download='nminhios-voice-preview.wav';$('nv-download-preview').textContent='Tải WAV đã chuẩn hóa';$('nv-download-preview').hidden=false;const durationLabel=$('nv-slot-duration');if(durationLabel)durationLabel.textContent=target.seconds.toFixed(3)+' giây';$('nv-apply-info').textContent='Đã áp dụng audio '+(currentSource==='upload'?'từ file đã tải lên':currentSource==='local'?'tạo cục bộ trên thiết bị':'do AI tạo')+': '+target.seconds.toFixed(3)+' giây. Khi tạo mod, PCM sẽ được nhúng đúng kích thước vùng âm thanh.';$('nv-create-one').disabled=false;$('nv-create-all').disabled=false;setStatus($('nv-main-status'),'Đã áp dụng audio mới vào phiên làm việc. '+(out.shortened?'Âm thanh dài '+out.sourceDuration.toFixed(2)+' giây đã được tăng tốc để vừa slot '+target.seconds.toFixed(3)+' giây.':'Phần còn thiếu trong slot được đệm im lặng. Slot hiện tại: '+target.seconds.toFixed(3)+' giây.'),'success');}catch(error){setStatus($('nv-main-status'),error.message||'Không áp dụng được audio.','error');}finally{$('nv-apply').disabled=!currentBlob;}}
-  function restoreVoice(){delete window.nminhCustomVoicePcm;delete window.nminhVoiceBuildId;currentBlob=null;currentSource='tts';syncGenerateButton();if(currentObjectUrl)URL.revokeObjectURL(currentObjectUrl);if(previewObjectUrl)URL.revokeObjectURL(previewObjectUrl);currentObjectUrl='';previewObjectUrl='';clearImportLabel();$('nv-audio').pause();$('nv-audio').removeAttribute('src');$('nv-audio').load();$('nv-preview-wrap').hidden=true;$('nv-download-preview').hidden=true;$('nv-apply').disabled=true;$('nv-create-one').disabled=true;$('nv-create-all').disabled=true;$('nv-apply-info').textContent='Đã bỏ audio tùy chỉnh. File mod sẽ dùng giọng gốc.';setStatus($('nv-main-status'),'Đã khôi phục giọng gốc cho các lần xuất tiếp theo.','success');}
- function createMod(all){if(!window.nminhCustomVoicePcm){setStatus($('nv-main-status'),'Bạn cần bấm “Áp dụng vào file mod” trước.','error');return;}if(!$('mod-progress').hidden){setStatus($('nv-main-status'),'Một file mod đang được tạo; hãy chờ hoàn tất.','error');return;}const target=$(all?'download-all':'download');if(!target||target.disabled){setStatus($('nv-main-status'),'Nút xuất file hiện chưa sẵn sàng. Hãy chờ dữ liệu tải xong hoặc chọn lại trang phục.','error');return;}target.click();}
- function syncProviderUI(reload=true){
-   const provider=activeProvider(),isEleven=provider==='elevenlabs',isLocal=provider==='local-kokoro';
-   $('nv-tts-key-field').hidden=isEleven||isLocal;$('nv-eleven-key-field').hidden=!isEleven;$('nv-model-field').hidden=isEleven||isLocal;$('nv-local-engine-card').hidden=!isLocal;
-   // Kokoro 82M is an English model; prevent mismatched language choices in local mode.
-   for(const option of Array.from($('nv-language').options))option.disabled=isLocal&&option.value!=='en';
-   if(isLocal&&$('nv-language').value!=='en')$('nv-language').value='en';
-   $('nv-provider-help').textContent=isLocal?'Tạo giọng tiếng Anh trực tiếp trên thiết bị bằng model Kokoro mã nguồn mở. Không cần TTS API/key; lần đầu cần Internet để tải thư viện và model (~100 MB trở lên), text không gửi tới dịch vụ giọng nói.':isEleven?'Dùng thư viện ElevenLabs. Cần API key của chính bạn; Adam và các giọng bạn được cấp quyền sẽ tải từ tài khoản. Nếu chưa thấy Adam, hãy thêm giọng đó vào My Voices trên ElevenLabs rồi bấm Tải lại giọng. Tốc độ ElevenLabs giới hạn 0,7×–1,2×.':'Dùng TTS.ai. Để tiếng Anh, thử Kokoro và tìm Adam, Michael, Bella hoặc các giọng có tên trong danh sách; model miễn phí không cần API key.';
-   const speedControl=$('nv-speed');speedControl.max=isEleven?'1.2':'2';if(Number(speedControl.value)>Number(speedControl.max))speedControl.value=speedControl.max;$('nv-speed-value').textContent=Number(speedControl.value).toFixed(1)+'×';
-   $('nv-style').parentElement.hidden=isLocal;
-   $('nv-style-help').textContent=isEleven?'Trường phong cách chỉnh nhẹ độ biểu cảm của ElevenLabs. Hãy nghe mẫu và thử câu ngắn; kết quả phụ thuộc voice/model.':'TTS.ai gửi hướng dẫn phong cách cho model có hỗ trợ; hãy thử mô tả ngắn, như “rõ ràng, dứt khoát, vui vẻ”.';
-   if(isLocal){$('nv-local-load').textContent=localKokoro?'Engine đã sẵn sàng':'Tải model giọng';$('nv-local-load').disabled=false;if(localKokoro)setStatus($('nv-local-engine-help'),'Engine đã nạp. Tạo giọng được xử lý cục bộ trên thiết bị.','success');}
-   if(reload){voiceCache.clear();loadVoices($('nv-language').value,true);}
- }
- $('nv-unlock').addEventListener('click',unlock);$('nv-key').addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});$('nv-language').addEventListener('change',()=>loadVoices($('nv-language').value,true));$('nv-model').addEventListener('change',()=>loadVoices($('nv-language').value,false));$('nv-gender').addEventListener('change',()=>loadVoices($('nv-language').value,false));$('nv-voice-search').addEventListener('input',()=>loadVoices($('nv-language').value,false));$('nv-provider').addEventListener('change',()=>syncProviderUI(true));$('nv-local-load').addEventListener('click',async()=>{try{await loadLocalKokoroEngine();setStatus($('nv-voices-status'),'Engine Kokoro đã sẵn sàng. Chọn giọng, nhập tiếng Anh và bấm Tạo giọng.','success');}catch(error){setStatus($('nv-local-engine-help'),error.message||'Không tải được engine.','error');setStatus($('nv-voices-status'),error.message||'Không tải được engine.','error');}});$('nv-voice').addEventListener('change',()=>{$('nv-preview-voice').disabled=!$('nv-voice').value;syncGenerateButton()});$('nv-preview-voice').addEventListener('click',previewSelectedVoice);$('nv-api-key').addEventListener('change',()=>{if(activeProvider()!=='ttsai')return;voiceCache.clear();$('nv-model').value='';loadVoices($('nv-language').value,true)});$('nv-eleven-api-key').addEventListener('change',()=>{if(activeProvider()!=='elevenlabs')return;voiceCache.clear();loadVoices($('nv-language').value,true)});$('nv-refresh-voices').addEventListener('click',()=>loadVoices($('nv-language').value,true));$('nv-text').addEventListener('input',()=>{$('nv-char-count').textContent=$('nv-text').value.length+'/500';syncGenerateButton()});$('nv-audio-file').addEventListener('change',e=>importAudioFile(e.target.files&&e.target.files[0]));$('nv-clear-import').addEventListener('click',clearImportedAudio);$('nv-speed').addEventListener('input',()=>{$('nv-speed-value').textContent=Number($('nv-speed').value).toFixed(1)+'×'});$('nv-generate').addEventListener('click',generate);$('nv-cancel').addEventListener('click',()=>{if(controller)controller.abort()});$('nv-apply').addEventListener('click',applyVoice);$('nv-reset').addEventListener('click',restoreVoice);$('nv-create-one').addEventListener('click',()=>createMod(false));$('nv-create-all').addEventListener('click',()=>createMod(true));
-  syncProviderUI(false);
-  getTargetConfig().then(target=>{const slot=$('nv-slot-duration');if(slot)slot.textContent=target.seconds.toFixed(3)+' giây';}).catch(()=>{});
-  try{sessionStorage.removeItem('nminhios-voice-unlocked-v1')}catch{}
-  // Không lưu trạng thái mở khóa; mỗi lần tải lại cần xác thực key.
+  async function applyVoice(){
+    if(!unlocked){setStatus($('nv-main-status'),'Studio đang khóa.','error');return;}
+    if(!currentBlob){setStatus($('nv-main-status'),'Hãy chọn file âm thanh trước khi áp dụng.','error');return;}
+    if($('mod-progress')&&!$('mod-progress').hidden){setStatus($('nv-main-status'),'Đang xuất mod. Hãy chờ xong rồi mới áp dụng audio.','error');return;}
+    $('nv-apply').disabled=true;progressStart('Đang áp dụng âm thanh','Đang nhận diện slot và chuyển audio thành PCM mono 16 kHz.');setStatus($('nv-main-status'),'Đang chuẩn hóa audio…');
+    try{
+      const target=await getTargetConfig();progressStep(20,'Đã nhận diện slot âm thanh',`Đích ${target.seconds.toFixed(3)} giây · ${target.bytes.toLocaleString('en-US')} byte PCM. Đang giải mã audio nguồn…`);
+      const out=await blobToPcm(currentBlob,target);if(out.pcm.byteLength!==target.bytes)throw Error('Kích thước PCM không khớp slot. Đã hủy để tránh làm hỏng file.');
+      progressStep(85,'Đang chuẩn bị audio cho mod','Tạo bản WAV kiểm tra và chuẩn bị PCM…');window.nminhCustomVoicePcm=out.pcm;window.nminhVoiceBuildId='nv-'+Date.now().toString(36)+'-'+crypto.getRandomValues(new Uint32Array(1))[0].toString(36);
+      const preview=buildPreviewWav(out.pcm);releaseUrl(previewObjectUrl);previewObjectUrl=URL.createObjectURL(preview);const audio=$('nv-audio');audio.pause();audio.src=previewObjectUrl;audio.load();$('nv-preview-wrap').hidden=false;$('nv-preview-heading-title').textContent='Nghe thử PCM đã chuẩn hóa cho game';$('nv-preview-help').textContent='Audio đã được chuyển sang PCM mono 16 kHz/16-bit và khớp kích thước slot trong resource.';$('nv-audio-duration').textContent=target.seconds.toFixed(3)+' giây';$('nv-download-preview').href=previewObjectUrl;$('nv-download-preview').download='nminhios-voice-preview.wav';$('nv-download-preview').textContent='Tải WAV đã chuẩn hóa';$('nv-download-preview').hidden=false;$('nv-slot-duration').textContent=target.seconds.toFixed(3)+' giây';
+      $('nv-apply-info').textContent='Đã áp dụng audio từ file đã tải lên: '+target.seconds.toFixed(3)+' giây. Có thể xuất mod.';progressDone('Đã áp dụng âm thanh',`PCM mono 16 kHz đã khớp ${target.bytes.toLocaleString('en-US')} byte.`);setStatus($('nv-main-status'),'Đã áp dụng audio. '+(out.shortened?'Audio nguồn dài '+out.sourceDuration.toFixed(2)+' giây, đã được nén thời lượng để vừa slot '+target.seconds.toFixed(3)+' giây.':'Phần còn thiếu đã được đệm im lặng.') ,'success');
+    }catch(error){delete window.nminhCustomVoicePcm;delete window.nminhVoiceBuildId;progressFail('Không áp dụng được âm thanh',error?.message||'Lỗi chuẩn hóa audio.');setStatus($('nv-main-status'),error?.message||'Không áp dụng được audio.','error');}
+    finally{updateButtons();}
+  }
+  function createMod(all){if(!window.nminhCustomVoicePcm){setStatus($('nv-main-status'),'Bạn cần chọn file audio và bấm “Áp dụng vào file mod” trước.','error');return;}const progress=$('mod-progress');if(progress&&!progress.hidden){setStatus($('nv-main-status'),'Đang tạo file mod. Hãy chờ xuất xong.','error');return;}const target=$(all?'download-all':'download');if(!target||target.disabled){setStatus($('nv-main-status'),'Nút xuất file chưa sẵn sàng. Hãy chờ tải dữ liệu xong hoặc chọn lại phiên bản.','error');return;}target.click();}
+
+  $('nv-unlock').addEventListener('click',unlock);$('nv-key').addEventListener('keydown',e=>{if(e.key==='Enter')unlock();});
+  $('nv-audio-file').addEventListener('change',e=>importAudioFile(e.target.files?.[0]));$('nv-clear-import').addEventListener('click',()=>clearImportedAudio());
+  $('nv-apply').addEventListener('click',applyVoice);$('nv-reset').addEventListener('click',()=>clearImportedAudio('Đã bỏ audio tùy chỉnh. Khi xuất mod, hệ thống sẽ dùng giọng gốc.'));
+  $('nv-create-one').addEventListener('click',()=>createMod(false));$('nv-create-all').addEventListener('click',()=>createMod(true));
+  getTargetConfig().then(target=>{$('nv-slot-duration').textContent=target.seconds.toFixed(3)+' giây';}).catch(()=>{$('nv-slot-duration').textContent=DEFAULT_TARGET_SECONDS.toFixed(3)+' giây';});
+  window.addEventListener('beforeunload',()=>{clearInterval(taskTimer);releaseUrl(currentObjectUrl);releaseUrl(previewObjectUrl);});
 })();
 </script>
 <style id="nminhios-ui-consistency-v2">
@@ -2354,6 +2144,30 @@ self.onmessage=async event=>{
     #nminh-voice-studio .nv-import-box input[type="file"]::-webkit-file-upload-button{padding:8px 10px!important;margin-right:8px!important}
     #nminh-voice-studio #nv-clear-import{width:100%!important}
   }
+</style>
+
+
+<style id="nminhios-voice-progress-v1">
+#nminh-voice-studio .nv-task-progress{margin:14px 0 0;padding:15px;border:1px solid #405440;border-radius:14px;background:linear-gradient(135deg,#151f19,#101715);box-shadow:inset 3px 0 0 rgba(201,255,87,.55)}
+#nminh-voice-studio .nv-task-progress[hidden]{display:none!important}
+#nminh-voice-studio .nv-task-progress-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;color:#ecf5ed;font-size:13px;line-height:1.45}
+#nminh-voice-studio .nv-task-progress-head span{flex:0 0 auto;color:#d7ff8c;font-weight:900;font-variant-numeric:tabular-nums}
+#nminh-voice-studio #nv-task-progress-bar{display:block;width:100%;height:12px;margin:12px 0 9px;appearance:none;border:1px solid #34463a;border-radius:999px;overflow:hidden;background:#0a100d;accent-color:#c9ff57}
+#nminh-voice-studio #nv-task-progress-bar::-webkit-progress-bar{background:#0a100d;border-radius:999px}
+#nminh-voice-studio #nv-task-progress-bar::-webkit-progress-value{background:linear-gradient(90deg,#95c934,#c9ff57,#e4ff9d);border-radius:999px;box-shadow:0 0 12px rgba(201,255,87,.28);transition:width .25s ease}
+#nminh-voice-studio #nv-task-progress-bar::-moz-progress-bar{background:linear-gradient(90deg,#95c934,#c9ff57,#e4ff9d);border-radius:999px}
+#nminh-voice-studio .nv-task-progress p{margin:0;color:#a8b8ab;font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+#nminh-voice-studio .nv-task-progress-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:9px;color:#829487;font-size:10px;line-height:1.5}
+#nminh-voice-studio .nv-task-progress[data-kind="error"]{border-color:#6b3d3a;background:linear-gradient(135deg,#2b1c1d,#171212);box-shadow:inset 3px 0 0 #ff7e7e}
+#nminh-voice-studio .nv-task-progress[data-kind="error"] .nv-task-progress-head span{color:#ffc5c2}
+#nminh-voice-studio .nv-task-progress[data-kind="success"]{border-color:#31583c;box-shadow:inset 3px 0 0 #7ddf89}
+#nminh-voice-studio .nv-free-tts-fallback{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:12px;padding:14px;border:1px solid #574e36;border-radius:14px;background:linear-gradient(135deg,#211f17,#171a13)}
+#nminh-voice-studio .nv-free-tts-fallback[hidden]{display:none!important}
+#nminh-voice-studio .nv-free-tts-fallback strong{display:block;color:#f5e5ad;font-size:12px}
+#nminh-voice-studio .nv-free-tts-fallback p{margin:5px 0 0;color:#b8b39d;font-size:11px;line-height:1.55}
+#nminh-voice-studio #nv-try-free-tts{flex:0 0 auto;border-color:#716544!important}
+@media(max-width:600px){#nminh-voice-studio .nv-free-tts-fallback{align-items:stretch;flex-direction:column}#nminh-voice-studio #nv-try-free-tts{width:100%}}
+@media(max-width:480px){#nminh-voice-studio .nv-task-progress{padding:12px}#nminh-voice-studio .nv-task-progress-head{font-size:12px}#nminh-voice-studio .nv-task-progress-meta{font-size:10px}}
 </style>
 
 </body>
